@@ -1,11 +1,11 @@
-package com.titan.pdfdocumentlibrary.Elements;
+package com.titan.pdfdocumentlibrary.elements;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.pdf.PdfPCellEvent;
+import com.titan.pdfdocumentlibrary.interfaces.PdfIF;
 
-public class CellConfiguration {
+public class CellConfiguration implements PdfIF {
 
-    private final int NO_DATA = -1;
 
     /**
      * <b>row span</b> > <i>número de linhas de uma tabela que uma célula deve abranger</i>
@@ -21,15 +21,9 @@ public class CellConfiguration {
     private int  rotacao, borda;
     private int alinhamentoVertical, alinhamentoHorizontal;
     private float altura, alinhamentoTopo, alinhamentoEsquerda, alinhamentoInferior, alinhamentoDireita;
-
-
-    private BaseColor cor;
-
-
     private PdfPCellEvent evento;
-
-
     private boolean sobrePosicaoCor;
+    private BaseColor cor;
 
 
 

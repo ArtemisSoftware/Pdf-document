@@ -1,4 +1,4 @@
-package com.titan.pdfdocumentlibrary.Elements;
+package com.titan.pdfdocumentlibrary.elements;
 
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
