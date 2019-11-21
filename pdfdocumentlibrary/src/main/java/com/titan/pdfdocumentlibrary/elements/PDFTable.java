@@ -109,4 +109,23 @@ public class PDFTable {
     }
 
 
+
+
+    /**
+     * Metodo que remove o rebordo da tabela
+     */
+    public void formatarTabela(CellConfiguration formato){
+
+        for (int indice = 0; indice < table.getRows().size(); ++indice) {
+
+            for(int index = 0; index < table.getRow(indice).getCells().length; ++index){
+                try{
+
+                    formatarCelula(table.getRow(indice).getCells()[index], formato);
+                }
+                catch(NullPointerException e){}
+            }
+        }
+    }
+
 }
