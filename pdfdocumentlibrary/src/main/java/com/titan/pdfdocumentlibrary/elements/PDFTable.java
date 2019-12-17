@@ -2,6 +2,7 @@ package com.titan.pdfdocumentlibrary.elements;
 
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.titan.pdfdocumentlibrary.utils.Constants;
 
 public class PDFTable {
 
