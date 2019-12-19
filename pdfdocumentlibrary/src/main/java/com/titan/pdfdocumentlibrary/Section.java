@@ -19,7 +19,7 @@ public abstract class Section {
 
 
 
-    public Section(Context contexto, String idTarefa){
+    public Section(Context contexto){
 
         this.contexto = contexto;
 
