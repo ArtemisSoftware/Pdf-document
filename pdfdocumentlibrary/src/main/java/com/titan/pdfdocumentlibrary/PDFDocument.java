@@ -10,6 +10,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.titan.pdfdocumentlibrary.utils.Constants;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -186,9 +187,9 @@ public abstract class PDFDocument {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        File file = new File(DIRETORIA, "demo.pdf");
+        File file = new File(DIRETORIA, Constants.DEMO_PDF);
 
-        intent.setDataAndType(Uri.fromFile(file), "application/pdf" );
+        intent.setDataAndType(Uri.fromFile(file),  Constants.TYPE_PDF);
         contexto.startActivity(intent);
     }
 
