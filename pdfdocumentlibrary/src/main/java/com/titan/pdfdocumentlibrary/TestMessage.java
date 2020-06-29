@@ -101,7 +101,6 @@ public class TestMessage {
             }
             doc.add(table);
 
-            doc.close();
 
         }
         catch (DocumentException de) {
