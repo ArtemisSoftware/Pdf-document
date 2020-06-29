@@ -3,6 +3,7 @@ package com.titan.pdfdocument;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.titan.pdfdocumentlibrary.LibPdf;
 import com.titan.pdfdocumentlibrary.SimplePdf;
 
 import java.io.File;
@@ -11,12 +12,12 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
 
 
     private Context mContext;
-    private SimplePdf testPdf;
-
+    //private SimplePdf testPdf;
+    private LibPdf testPdf;
 
     public TestPdfAsyncTask(Context context){
         mContext = context;
-        testPdf = new SimplePdf();
+        testPdf = new LibPdf();
     }
 
 
@@ -24,7 +25,7 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
     protected Void doInBackground(File... files) {
 
         File dir = files[0];
-        testPdf.generateTestPdf(dir);
+        testPdf.generatePdf(dir);
 
         return null;
     }
@@ -35,7 +36,7 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
 
-        testPdf.openTestPdf(mContext);
+        testPdf.openPdf(mContext);
     }
 
 }

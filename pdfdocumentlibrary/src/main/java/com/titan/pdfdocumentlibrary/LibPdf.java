@@ -5,27 +5,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
+import com.titan.pdfdocumentlibrary.elements.Table;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class SimplePdf {
+public class LibPdf {
 
-    public static void test(Context context, String message){
 
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
-
-    }
+    public LibPdf(){};
 
 
     /**
@@ -78,16 +77,21 @@ public class SimplePdf {
             doc.open();
 
             /* Create Paragraph and Set Font */
-            Paragraph p1 = new Paragraph("Hi! I am Generating my first PDF using DroidText");
+            Paragraph p1 = new Paragraph("Hi! I am Generating my first PDF using PdfDocumentLibrary");
             p1.setAlignment(Paragraph.ALIGN_CENTER);
             doc.add(p1);
 
 
-            PdfPTable table = new PdfPTable(8);
-            for(int aw = 0; aw < 16; aw++){
-                table.addCell("hi");
+            Table table_1 = new Table();
+            CellConfiguration cellConfiguration_1 = new CellConfiguration();
+            cellConfiguration_1.horizontalAlign = Element.ALIGN_RIGHT;
+            cellConfiguration_1.verticalAlign = Element.ALIGN_MIDDLE;
+
+            for(int aw = 0; aw < 8; aw++){
+                table_1.addCell("Table 1", cellConfiguration_1);
             }
-            doc.add(table);
+
+            doc.add(table_1.getPdfTable());
 
 
         }
@@ -101,8 +105,6 @@ public class SimplePdf {
             doc.close();
         }
     }
-
-
 
 
 

@@ -1,20 +1,24 @@
 package com.titan.pdfdocumentlibrary.elements;
 
-public class Cell {
 
-    private final int NO_VALUE = -1;
+import com.titan.pdfdocumentlibrary.util.PdfConstants;
+
+/**
+ * Class that represents the configuration of a table cell
+ */
+public class CellConfiguration {
 
 
     public int rowspan, colSpan;
     public int verticalAlign, horizontalAlign;
 
-    public Cell(){
+    public CellConfiguration(){
 
-        this.rowspan = NO_VALUE;
-        this.colSpan = NO_VALUE;
+        this.rowspan = PdfConstants.NO_VALUE;
+        this.colSpan = PdfConstants.NO_VALUE;
 
-        this.verticalAlign = NO_VALUE;
-        this.horizontalAlign = NO_VALUE;
+        this.verticalAlign = PdfConstants.NO_VALUE;
+        this.horizontalAlign = PdfConstants.NO_VALUE;
 
 
         /*
