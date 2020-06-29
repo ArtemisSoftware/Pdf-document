@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class TestMessage {
+public class SimplePdf {
 
     public static void test(Context context, String message){
 
@@ -28,41 +28,29 @@ public class TestMessage {
     }
 
 
-
-
-    public void lolo (Context context, File dir){
-
-        gerarPdfTeste(dir);
-        abrirPdfTeste(context);
-    }
-
-
     /**
-     * MEtodo que abre um pdf de teste
+     * Method that allows to open a pdf test file
+     * @param context the app context
      */
-    public void abrirPdfTeste(Context context){
-
+    public void openTestPdf(Context context){
 
         String diretoriaContratos = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-
         File file = new File(diretoriaContratos, "demo.pdf");
-
 
         Uri photoURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
 
-
-
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(photoURI, "application/pdf" );
         context.startActivity(intent);
     }
 
 
     /**
-     * MEtodo que gera um pdf de teste
+     * Method that populates a pdf with test data
+     * @param dir the pdf directory
      */
-    public void gerarPdfTeste(File dir){
+    public void generateTestPdf(File dir){
 
 
         Document doc = new Document();

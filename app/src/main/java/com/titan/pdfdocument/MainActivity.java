@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.karumi.dexter.Dexter;
@@ -20,11 +19,9 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.titan.pdfdocumentlibrary.TestMessage;
+import com.titan.pdfdocumentlibrary.SimplePdf;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,30 +31,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TestMessage.test(this, "ddd-lolo");
-
-
+        SimplePdf.test(this, "ddd-lolo");
 
         requestStoragePermission();
-
-
 
     }
 
 
     private void initPdf(){
-        String diretoriaContratos = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
+        String directoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
 
 
         boolean created = false;
 
-        File dir = new File(diretoriaContratos);
+        File dir = new File(directoryPath);
         if(!dir.exists())
             created = dir.mkdirs();
 
 
-        TestMessage lolo = new TestMessage();
-        lolo.lolo(this, dir);
+        TestPdfAsyncTask task = new TestPdfAsyncTask(this);
+        task.execute(dir);
     }
 
 
