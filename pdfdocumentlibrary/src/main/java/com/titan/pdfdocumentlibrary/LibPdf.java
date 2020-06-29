@@ -8,10 +8,12 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
@@ -93,6 +95,7 @@ public class LibPdf {
 
             doc.add(table_1.getPdfTable());
 
+            doc.add(mainSection().getPdfTable());
 
         }
         catch (DocumentException de) {
@@ -108,6 +111,32 @@ public class LibPdf {
 
 
 
+
+    private Table mainSection(){
+
+        Table colorTable = new Table(2);
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.backgroundColor = BaseColor.BLUE;
+
+
+        Phrase phrase = new Phrase("Painting colors");
+        colorTable.addCell(phrase, cellConfiguration);
+        colorTable.addCell(phrase, cellConfiguration);
+
+
+        CellConfiguration cellConfiguration_2 = new CellConfiguration();
+        cellConfiguration_2.horizontalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration_2.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration_2.backgroundColor = BaseColor.MAGENTA;
+        cellConfiguration_2.colSpan = 2;
+
+        colorTable.addCell(phrase, cellConfiguration_2);
+
+        return colorTable;
+    }
 
 
 }

@@ -1,5 +1,7 @@
 package com.titan.pdfdocumentlibrary.elements;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -28,6 +30,36 @@ public class Table {
         this.table = new PdfPTable(NUMBER_OF_CELLS);
         this.table.setWidthPercentage(100);
     }
+
+
+
+    public Table(int numberOfCells){
+
+        this.NUMBER_OF_CELLS = numberOfCells;
+
+        this.numberRows = 0;
+        this.numberCells = 0;
+        this.cellCounter = 0;
+
+        this.table = new PdfPTable(NUMBER_OF_CELLS);
+        this.table.setWidthPercentage(100);
+
+
+        float cellDimensions [] = new float [NUMBER_OF_CELLS];
+
+        for(int index = 0; index < NUMBER_OF_CELLS; ++index){
+            cellDimensions[index] = 100f / NUMBER_OF_CELLS;
+        }
+
+        try {
+            this.table.setWidths(cellDimensions);
+        }
+        catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
@@ -71,6 +103,19 @@ public class Table {
 
 
 
+    /**
+     * Method to insert a phrase on a table cell
+     * @param phrase a phrase
+     * @param cellConfiguration the configuration of the cell
+     */
+    public void addCell(Phrase phrase, CellConfiguration cellConfiguration){
+
+        PdfPCell cell = new PdfPCell(phrase);
+        addCell(formatCell(cell, cellConfiguration));
+    }
+
+
+
     //------------------
     //
     //------------------
@@ -81,9 +126,9 @@ public class Table {
      */
     public void removeBorder() {
 
-        CellConfiguration formato = new CellConfiguration();
-        formato.border = 0;
-        formatBorder(formato);
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.border = 0;
+        formatBorder(cellConfiguration);
 
     }
 
@@ -120,20 +165,18 @@ public class Table {
             celula.setBackgroundColor(formato.obter_CorFundo());
         }
         else{
+*/
+            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
+     //  }
 
-            if(celula.getBackgroundColor() == BaseColor.WHITE){
-                celula.setBackgroundColor(formato.obter_CorFundo());
-            }
+        if(cellConfiguration.rowspan != PdfConstants.NO_VALUE){
+            pdfPCell.setRowspan(cellConfiguration.rowspan);
         }
 
-        if(formato.obter_RowSpan() != AppIF.SEM_REGISTO){
-            celula.setRowspan(formato.obter_RowSpan());
+        if(cellConfiguration.colSpan != PdfConstants.NO_VALUE){
+            pdfPCell.setColspan(cellConfiguration.colSpan);
         }
-
-        if(formato.obter_ColSpan() != AppIF.SEM_REGISTO){
-            celula.setColspan(formato.obter_ColSpan());
-        }
-
+ /*
         if(formato.obter_Altura() != AppIF.SEM_REGISTO ){
             celula.setFixedHeight(formato.obter_Altura());
         }
