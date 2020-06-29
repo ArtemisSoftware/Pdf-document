@@ -71,13 +71,26 @@ public class Table {
 
 
 
+    //------------------
+    //
+    //------------------
 
 
+    /**
+     * Method that removes the table borders
+     */
+    public void removeBorder() {
+
+        CellConfiguration formato = new CellConfiguration();
+        formato.border = 0;
+        formatBorder(formato);
+
+    }
 
 
 
     //--------------
-    //local methods
+    //local methods -format
     //--------------
 
 
@@ -158,6 +171,28 @@ public class Table {
 
 
 
+    /**
+     * Method that allows to format the table border
+     * @param cellConfiguration the configuration of the cells
+     */
+    public void formatBorder(CellConfiguration cellConfiguration){
+
+        for (int indice = 0; indice < table.getRows().size(); ++indice) {
+
+            for(int index = 0; index < table.getRow(indice).getCells().length; ++index){
+                try{
+
+                    formatCell(table.getRow(indice).getCells()[index], cellConfiguration);
+                }
+                catch(NullPointerException e){}
+            }
+        }
+    }
+
+
+
+
+
 
 
 
@@ -192,5 +227,6 @@ public class Table {
     private void incrementNumberRows(){
         ++numberRows;
     }
+
 
 }

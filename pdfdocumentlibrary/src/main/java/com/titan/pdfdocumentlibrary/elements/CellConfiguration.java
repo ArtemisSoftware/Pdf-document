@@ -12,6 +12,8 @@ public class CellConfiguration {
     public int rowspan, colSpan;
     public int verticalAlign, horizontalAlign;
 
+    public int border;
+
     public CellConfiguration(){
 
         this.rowspan = PdfConstants.NO_VALUE;
@@ -19,6 +21,9 @@ public class CellConfiguration {
 
         this.verticalAlign = PdfConstants.NO_VALUE;
         this.horizontalAlign = PdfConstants.NO_VALUE;
+
+
+        this.border = PdfConstants.NO_VALUE;
 
 
         /*
@@ -33,7 +38,7 @@ public class CellConfiguration {
         this.alinhamentoInferior = AppIF.SEM_REGISTO;
         this.alinhamentoDireita = AppIF.SEM_REGISTO;
 
-        this.borda = AppIF.SEM_REGISTO;
+
         this.evento = null;
 
         this.sobrePosicaoCor = true;
