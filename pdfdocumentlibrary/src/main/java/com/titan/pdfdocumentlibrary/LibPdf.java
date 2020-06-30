@@ -97,6 +97,9 @@ public class LibPdf {
 
             doc.add(mainSection().getPdfTable());
 
+            doc.add(noBorderSection().getPdfTable());
+
+
             doc.add(unevenSection().getPdfTable());
 
         }
@@ -137,6 +140,22 @@ public class LibPdf {
 
         colorTable.addCell(phrase, cellConfiguration_2);
 
+        return colorTable;
+    }
+
+
+    private Table noBorderSection(){
+
+        Table colorTable = new Table();
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.backgroundColor = BaseColor.ORANGE;
+
+
+        colorTable.addCell(new Phrase("no border table"), cellConfiguration);
+        colorTable.removeBorder();
         return colorTable;
     }
 
