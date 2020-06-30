@@ -116,6 +116,123 @@ public class Table {
 
 
 
+    //-----------------------------
+    //Metodos locais - linha
+    //-----------------------------
+
+
+    /**
+     * Method to insert a row into the table<br>
+     * The row colspan will be equal to the the table colspan
+     * @param phrase a phrase
+     * @param cellConfiguration the configuration of the cell
+     */
+    public void addLine(Phrase phrase, CellConfiguration cellConfiguration){
+
+        try {
+            CellConfiguration cellConfigurationclone = (CellConfiguration) cellConfiguration.clone();
+            cellConfigurationclone.colSpan = NUMBER_OF_CELLS;
+            addCell(phrase, cellConfigurationclone);
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /**
+     * Method to insert multiple cells into the table row
+     * @param phrases an array of phrases
+     * @param cellConfiguration the cell configuration to apply to each cell
+     * @throws Pdf_Exception
+     */
+    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration) /*throws Pdf_Exception*/{
+        addLine(phrases, cellConfiguration, 0);
+    }
+
+    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration[]) /*throws Pdf_Exception*/{
+        addLine(phrases, cellConfiguration, 0);
+    }
+
+
+
+    /**
+     * Method to insert multiple cells into the table row
+     * @param phrases an array of phrases
+     * @param cellConfiguration  the cell configuration
+     * @param position the position of the first cell
+     * @throws Pdf_Exception
+     */
+    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration, int position) /*throws Pdf_Exception*/{
+/*
+        if(phrases.length > NUMBER_OF_CELLS){
+            throw new Pdf_Exception("O numero de frases por celula a inserir - superior ao numero de celulas da tabela");
+        }
+*/
+        try {
+            CellConfiguration cellConfigurationclone = (CellConfiguration) cellConfiguration.clone();
+
+            for(int index = 0; index < phrases.length; ++index){
+
+                if((index +1) == phrases.length){ //a ultima celula vai ter o colspan alterado para completar as dimensoes da tabela
+
+                    int colSpan = NUMBER_OF_CELLS - (phrases.length - 1) - position;
+                    cellConfigurationclone.colSpan = colSpan;
+                }
+
+                addCell(phrases [index], cellConfigurationclone);
+                incrementNumberCells(cellConfigurationclone.colSpan);
+            }
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to insert multiple cells into the table row
+     * @param phrases an array of phrases
+     * @param cellConfigurations  an array of cell configurations
+     * @param position the position of the first cell
+     * @throws Pdf_Exception
+     */
+    public void addLine(Phrase phrases [], CellConfiguration cellConfigurations [], int position) /*throws Pdf_Exception*/{
+/*
+        if(frases.length > NUMERO_CELULAS){
+            throw new Pdf_Exception("O numero de frases por celula a inserir - superior ao numero de celulas da tabela");
+        }
+
+        if(cellConfigurations.length > frases.length || cellConfigurations.length < frases.length){
+            throw new Pdf_Exception("O numero de cellConfigurations por celula Não corresponde ao numero de frases");
+        }
+*/
+
+        try {
+
+            for(int index = 0; index < phrases.length; ++index){
+
+                CellConfiguration cellConfigurationclone = (CellConfiguration) getCellConfiguration(cellConfigurations, index).clone();
+
+                if((index +1) == phrases.length){ //a ultima celula vai ter o colspan alterado para completar as dimensoes da tabela
+
+                    int colSpan = NUMBER_OF_CELLS - (phrases.length - 1) - position;
+                    cellConfigurationclone.colSpan = colSpan;
+                }
+
+                addCell(phrases[index], cellConfigurationclone);
+                incrementNumberCells(cellConfigurationclone.colSpan);
+            }
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
     //------------------
     //
     //------------------
@@ -271,5 +388,23 @@ public class Table {
         ++numberRows;
     }
 
+
+    /**
+     * Method to get the cell configuration from an array<br>
+     * If the index is outside the array the last configuration of the array will be provided
+     * @param cellConfigurations an array of configurations
+     * @param index the index of the configuration
+     * @return a cell configuration
+     */
+    private CellConfiguration getCellConfiguration(CellConfiguration cellConfigurations [], int index){
+
+        try{
+            return cellConfigurations[index];
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            return cellConfigurations[cellConfigurations.length - 1];
+        }
+
+    }
 
 }

@@ -7,7 +7,7 @@ import com.titan.pdfdocumentlibrary.util.PdfConstants;
 /**
  * Class that represents the configuration of a table cell
  */
-public class CellConfiguration {
+public class CellConfiguration implements Cloneable{
 
 
     public int rowspan, colSpan;
@@ -46,4 +46,8 @@ public class CellConfiguration {
     }
 
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
