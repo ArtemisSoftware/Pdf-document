@@ -5,10 +5,12 @@ import android.util.Log;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public abstract class Template {
 
@@ -18,16 +20,18 @@ public abstract class Template {
     protected PdfWriter wp;
 
 
-    protected final String DIRETORIA;
+    protected final File DIRECTORY;
 
 
     private int paginas = 0;
     //--private HashMap<Integer, Integer> paginacao;
 
+    private List<Page> pages;
 
-    public Template(String directory){
 
-        DIRETORIA = "";//Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + AppConfigIF.DIRETORIA_PDF;
+    public Template(File directory){
+
+        DIRECTORY = directory;
 
         ficheiroPdf = null;
         documento = new Document();
@@ -37,28 +41,30 @@ public abstract class Template {
 
 
     /**
-     * Metodo que gera o pdf
+     * Method to create the pdf file
      */
-    public void gerarDocumento() {
+    public void createFile() {
 
-        //--ficheiroPdf = MetodosPdf.gerarFicheiro(this.getClass().getSimpleName(), DIRETORIA,  obterNomeFicheiro());
+        ficheiroPdf = PdfUtil.getFile(this, DIRECTORY, getFileName());
+
+        pages = getPages();
+
+
         criarDocumento();
     }
 
 
     /**
-     * MEtodo que cria um ficheiro pdf representativo do acordo
+     * Metodo que cria um ficheiro pdf representativo do acordo
      * param ficheiro ficheiro a ser criado
      */
     private void criarDocumento(){
-
 
         //--CabecalhoRodape evento = new CabecalhoRodape();
         //--fixarConteudoRodape(evento);
 
         //--documento.setPageSize(PageSize.A4);
         //--documento.setMargins(MARGEM_ESQUERDA, MARGEM_DIREITA, MARGEM_TOPO /*+ evento.obterAlturaCabecalho()*/, MARGEM_BASE);
-
 
         try {
 
@@ -72,9 +78,9 @@ public abstract class Template {
             //abrir documento
             documento.open();
 
-
-            gerarConteudoDocumento();
-
+            for (Page page: pages) {
+                addPage(page);
+            }
 
             //--MetodosPdf.adicionarMetaDados(documento, this.getClass().getName());
 
@@ -93,6 +99,47 @@ public abstract class Template {
 
 
 
+    //----------------------
+    //Pages
+    //----------------------
+
+
+
+    /**
+     * Method to add a page to the document
+     * @param pagina the page to add
+     */
+    private void addPage(Page pagina){
+
+        if(paginas != 0){
+
+            //nova página
+
+            documento.newPage();
+            //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+        }
+
+
+        for(int index = 0; index < pagina.getIndexes().size(); ++index){
+
+            try {
+
+                documento.add(pagina.getElement(index));
+
+                //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+
+                //--documento.add(obterQuebraLinha(1, ALTURA____ENTRE_SECCOES));
+
+            }
+            catch (DocumentException e){
+                e.printStackTrace();
+            }
+        }
+
+        ++paginas;
+    }
+
+
 
 
 
@@ -104,16 +151,19 @@ public abstract class Template {
 
 
     /**
-     * Metodo que permite obter o nome do ficheiro
-     * @return o nome do ficheiro
+     * Method that generates a file name
+     * @return the name of the file
      */
-    protected abstract String obterNomeFicheiro();
+    protected abstract String getFileName();
 
 
     /**
-     * Metodo que gera o conteudo do documento
+     * Method to get the pages of the document
+     * @return a list of pages
      */
-    abstract protected void gerarConteudoDocumento();
+    protected abstract List<Page> getPages();
+
+
 
 
     /**
