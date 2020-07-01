@@ -39,9 +39,9 @@ public abstract class Page {
 
 
     /**
-     * Metodo que permite obter um elemento da pagina
-     * @param index o index do elemento
-     * @return um elemento da pagina
+     * Method to get an element from the page
+     * @param index the index of the page
+     * @return an element
      */
     public PdfPTable getElement(int index){
 
