@@ -83,6 +83,18 @@ public class Table {
     /**
      * Method to insert a string on a table cell
      * @param text a string containing the text
+     */
+    public void addCell(String text){
+
+        table.addCell(text);
+        incrementNumberCells();
+    }
+
+
+
+    /**
+     * Method to insert a string on a table cell
+     * @param text a string containing the text
      * @param cellConfiguration the configuration of the cell
      */
     public void addCell(String text, CellConfiguration cellConfiguration){
@@ -447,5 +459,53 @@ public class Table {
         }
 
     }
+
+
+
+
+    //---------------------
+    //Format - painting
+    //---------------------
+
+
+
+
+    /**
+     * Method to set the border color of the table
+     * @param color the color to set
+     * @throws NullPointerException
+     */
+    public void setBorderColor(BaseColor color) throws NullPointerException{
+        setBorderColor(color, 0.0f);
+    }
+
+
+
+    /**
+     * Method to set the border color of the table
+     * @param color the color to set
+     * @param borderWidth the width of the table border
+     */
+    public void setBorderColor(BaseColor color, float borderWidth){
+
+        for (int i = 0; i < table.getRows().size(); ++i) {
+
+            int numberOfColummns = table.getRow(i).getCells().length;
+
+            for(int y = 0; y < numberOfColummns; ++y){
+                try{
+
+                    table.getRow(i).getCells()[y].setBorderColor(color);
+
+                    if(borderWidth != 0){
+                        table.getRow(i).getCells()[y].setBorderWidth(borderWidth);
+                    }
+                }
+                catch(NullPointerException e){}
+            }
+        }
+    }
+
+
 
 }
