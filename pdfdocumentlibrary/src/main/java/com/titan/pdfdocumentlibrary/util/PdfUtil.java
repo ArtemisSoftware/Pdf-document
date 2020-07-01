@@ -29,7 +29,6 @@ public class PdfUtil {
 
     /**
      * Method that creates an error table with an exception
-     * @param index the index data
      * @param exception the exception to present on the table
      * @return an error table
      */

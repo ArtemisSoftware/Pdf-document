@@ -1,6 +1,7 @@
 package com.titan.pdfdocument.pages;
 
 import com.titan.pdfdocument.sections.MainSection;
+import com.titan.pdfdocument.sections.NoBorderSection;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Section;
 import com.titan.pdfdocumentlibrary.models.Index;
@@ -21,6 +22,7 @@ public class PresentationPage extends Page {
         List<Index> indexList = new ArrayList<>();
 
         indexList.add(new Index(1, "Main Section"));
+        indexList.add(new Index(2, "No border Section"));
 
         return indexList;
     }
@@ -39,6 +41,10 @@ public class PresentationPage extends Page {
                 section = new MainSection();
                 break;
 
+            case 2:
+
+                section = new NoBorderSection();
+                break;
 
 
             default:

@@ -4,6 +4,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.titan.pdfdocumentlibrary.elements.Table;
 import com.titan.pdfdocumentlibrary.exception.InexistentSectionException;
 import com.titan.pdfdocumentlibrary.models.Index;
+import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.util.List;
 
@@ -54,8 +55,7 @@ public abstract class Page {
         }
         catch(InexistentSectionException e){
 
-            Table table = Section.getError("Seccao inexistente com o index: " + index + " - " /*+ SECCOES_PDF___idseccao_descricao.get(indexes.get(index))*/, e);
-            return table.getPdfTable();
+            return PdfUtil.getErrorTable(e).getPdfTable();
         }
     }
 
