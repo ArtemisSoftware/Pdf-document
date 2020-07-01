@@ -26,8 +26,6 @@ public abstract class Page {
 
 
 
-
-
     /**
      * Method to get the list of indexes for the sections of the page
      * @return a list od indexes
@@ -48,7 +46,11 @@ public abstract class Page {
         try{
 
             Section section = getSection(getIndex(index));
-            return section.table.getPdfTable();
+
+            if(section == null){
+                throw new InexistentSectionException("The element in position: " + index + " with id " + getIndex(index).getId() + " and description " +getIndex(index).getDescription() + " does not correspond to an existing section for the page " + this.getClass().getSimpleName());
+            }
+            return section.getSection().getPdfTable();
         }
         catch(InexistentSectionException e){
 
@@ -69,37 +71,13 @@ public abstract class Page {
         try{
             return indexes.get(index);
         }
-        catch (ArrayIndexOutOfBoundsException e){
-            throw new InexistentSectionException("The element in position: " + index + " does not correspond to an existing section", e);
+        catch (IndexOutOfBoundsException e){
+            throw new InexistentSectionException("The element in position: " + index + " does not correspond to an existing section for the page " + this.getClass().getSimpleName(), e);
         }
         catch (NullPointerException e){
-            throw new InexistentSectionException("There are no sections avaliable", e);
+            throw new InexistentSectionException("There are no sections avaliable for the page " + this.getClass().getSimpleName(), e);
         }
     }
-
-
-
-    /**
-     * Metodo que permite obter uma tabela de erro de uma determinada seccao
-     * @param index o index da seccao
-     * @return uma tabela de erro
-     */
-    /*
-    protected TabelaPdf obterTabelaErro(int index){
-
-        Fonte fonte = new Fonte();
-        Paragraph erro = new Paragraph();
-
-        erro.add(new Chunk("Seccao com o id: ", fonte.obterFonte(PdfIF.FONTE_10)));
-        erro.add(new Chunk(index + " - " + SECCOES_PDF___idseccao_descricao.get(index), fonte.obterFonte_bold(PdfIF.FONTE_12, BaseColor.BLUE)));
-
-        erro.add(new Chunk("  da pagina ", fonte.obterFonte(PdfIF.FONTE_10)));
-        erro.add(new Chunk(this.getClass().getCanonicalName(), fonte.obterFonte_bold(PdfIF.FONTE_12, BaseColor.BLUE)));
-        erro.add(new Chunk("  Não existe", fonte.obterFonte(PdfIF.FONTE_10)));
-
-        return Seccao.obterTabelaErro(erro);
-    }
-*/
 
 
 

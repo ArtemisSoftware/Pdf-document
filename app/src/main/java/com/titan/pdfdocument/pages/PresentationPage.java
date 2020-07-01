@@ -3,15 +3,14 @@ package com.titan.pdfdocument.pages;
 import com.titan.pdfdocument.sections.MainSection;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Section;
-import com.titan.pdfdocumentlibrary.exception.InexistentSectionException;
 import com.titan.pdfdocumentlibrary.models.Index;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestPage extends Page {
+public class PresentationPage extends Page {
 
-    public TestPage() {
+    public PresentationPage() {
         super(1);
     }
 

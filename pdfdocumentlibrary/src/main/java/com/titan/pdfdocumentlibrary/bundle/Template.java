@@ -1,10 +1,17 @@
 package com.titan.pdfdocumentlibrary.bundle;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.core.content.FileProvider;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.titan.pdfdocumentlibrary.util.PdfConstants;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.io.File;
@@ -119,21 +126,24 @@ public abstract class Template {
             //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
         }
 
-
-        for(int index = 0; index < pagina.getIndexes().size(); ++index){
-
+        try {
             try {
+                for (int index = 0; index < pagina.getIndexes().size(); ++index) {
 
-                documento.add(pagina.getElement(index));
+                    documento.add(pagina.getElement(index));
 
-                //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+                    //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
 
-                //--documento.add(obterQuebraLinha(1, ALTURA____ENTRE_SECCOES));
+                    //--documento.add(obterQuebraLinha(1, ALTURA____ENTRE_SECCOES));
 
+                }
             }
-            catch (DocumentException e){
-                e.printStackTrace();
+            catch(NullPointerException e){
+                documento.add(PdfUtil.getErrorTable(e).getPdfTable());
             }
+        }
+        catch (DocumentException e) {
+            e.printStackTrace();
         }
 
         ++paginas;
@@ -141,6 +151,37 @@ public abstract class Template {
 
 
 
+
+
+
+
+    //----------------------
+    //
+    //----------------------
+
+
+
+    /**
+     * Metodo que permite abrir o pdf gerado
+     */
+    public void openPdf(Context context){
+
+        Uri ficheiroURI;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            ficheiroURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", ficheiroPdf);
+        }
+        else{
+            ficheiroURI = Uri.fromFile(ficheiroPdf);
+        }
+
+
+        intent.setDataAndType(ficheiroURI, PdfConstants.MIME_TYPE_APPLICATION_PDF);
+        context.startActivity(intent);
+    }
 
 
 

@@ -73,11 +73,11 @@ public abstract class Section {
 
         Table table = new Table();
         table.addCell("ERROR", cellConfigurationTitle);
-
-        table.addCell("Section not found: " + index + " - " /*+ SECCOES_PDF___idseccao_descricao.get(indexes.get(index))*/);
+        table.addCell(exception.getMessage());
+        //table.addCell("Section not found: " + index + " - " /*+ SECCOES_PDF___idseccao_descricao.get(indexes.get(index))*/);
 
 /*
-        table.addCell(excepcao.getMessage());
+
         table.addCell(MetodosLog.formatarExcecao(excepcao));
 */
         table.setBorderColor(BaseColor.RED);
