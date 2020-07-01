@@ -14,12 +14,12 @@ public abstract class Page {
 
 
 
-    protected List<Integer> seccoes;
+    protected List<Integer> indexes;
 
     public Page(int pageId){
 
         PAGE_ID = pageId;
-        seccoes = getPageIndexes();
+        indexes = getPageIndexes();
     }
 
 
@@ -31,7 +31,7 @@ public abstract class Page {
      * @return a list od indexes
      */
     public List<Integer> getIndexes() {
-        return seccoes;
+        return indexes;
     }
 
 
@@ -45,12 +45,12 @@ public abstract class Page {
 
         try{
 
-            Section section = getSection(seccoes.get(index));
+            Section section = getSection(indexes.get(index));
             return section.table.getPdfTable();
         }
         catch(NullPointerException e){
 
-            Table table = Section.getError("Seccao inexistente com o index: " + index + " - " /*+ SECCOES_PDF___idseccao_descricao.get(seccoes.get(index))*/, e);
+            Table table = Section.getError("Seccao inexistente com o index: " + index + " - " /*+ SECCOES_PDF___idseccao_descricao.get(indexes.get(index))*/, e);
             return table.getPdfTable();
         }
     }
