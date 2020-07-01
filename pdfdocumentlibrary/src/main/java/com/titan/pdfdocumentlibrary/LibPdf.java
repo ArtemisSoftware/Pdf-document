@@ -18,6 +18,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
+import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -102,6 +103,8 @@ public class LibPdf {
 
             doc.add(unevenSection().getPdfTable());
 
+            doc.add(emptyCellsSection().getPdfTable());
+
         }
         catch (DocumentException de) {
             Log.e("PDFCreator", "DocumentException:" + de);
@@ -146,7 +149,7 @@ public class LibPdf {
 
     private Table noBorderSection(){
 
-        Table colorTable = new Table();
+        Table table = new Table();
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
@@ -154,9 +157,9 @@ public class LibPdf {
         cellConfiguration.backgroundColor = BaseColor.ORANGE;
 
 
-        colorTable.addCell(new Phrase("no border table"), cellConfiguration);
-        colorTable.removeBorder();
-        return colorTable;
+        table.addCell(new Phrase("no border table"), cellConfiguration);
+        table.removeBorder();
+        return table;
     }
 
 
@@ -178,14 +181,45 @@ public class LibPdf {
 
         Phrase phrases [] = new Phrase[]{ new Phrase("1 uneven phrase"), new Phrase("2 uneven phrase") };
 
-        table.addLine(phrases, cellConfiguration[0]);
-        table.addLine(phrases[0], cellConfiguration[1]);
+        try {
+            table.addLine(phrases, cellConfiguration[0]);
+            table.addLine(phrases[0], cellConfiguration[1]);
 
-        Phrase phrases_2 [] = new Phrase[]{ new Phrase("11 uneven phrase"), new Phrase("12 uneven phrase") , new Phrase("13 uneven phrase")};
-        table.addLine(phrases_2, cellConfiguration);
+            Phrase phrases_2[] = new Phrase[]{new Phrase("11 uneven phrase"), new Phrase("12 uneven phrase"), new Phrase("13 uneven phrase")};
+            table.addLine(phrases_2, cellConfiguration);
+        }
+        catch (PdfLineException e){
+            e.printStackTrace();
+        }
 
         return table;
     }
+
+
+    private Table emptyCellsSection(){
+
+        Table table = new Table(3);
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.backgroundColor = BaseColor.DARK_GRAY;
+
+
+        table.addEmptyCell();
+        table.addLine(new Phrase("no border table"), cellConfiguration);
+
+        try {
+            table.addEmptyCell(2);
+            table.addCell(new Phrase("no border table"), cellConfiguration);
+        }
+        catch (PdfLineException e){
+            e.printStackTrace();
+        }
+
+        return table;
+    }
+
 
 
 }

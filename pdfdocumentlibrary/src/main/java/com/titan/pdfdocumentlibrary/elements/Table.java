@@ -5,6 +5,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
 
 public class Table {
@@ -116,6 +117,8 @@ public class Table {
 
 
 
+
+
     //-----------------------------
     //Metodos locais - linha
     //-----------------------------
@@ -145,13 +148,20 @@ public class Table {
      * Method to insert multiple cells into the table row
      * @param phrases an array of phrases
      * @param cellConfiguration the cell configuration to apply to each cell
-     * @throws Pdf_Exception
+     * @throws PdfLineException
      */
-    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration) /*throws Pdf_Exception*/{
+    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration) throws PdfLineException{
         addLine(phrases, cellConfiguration, 0);
     }
 
-    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration[]) /*throws Pdf_Exception*/{
+
+    /**
+     * Method to insert multiple cells into the table row
+     * @param phrases an array of phrases
+     * @param cellConfiguration an array of cell configurations to apply to each cell
+     * @throws PdfLineException
+     */
+    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration[]) throws PdfLineException{
         addLine(phrases, cellConfiguration, 0);
     }
 
@@ -162,14 +172,14 @@ public class Table {
      * @param phrases an array of phrases
      * @param cellConfiguration  the cell configuration
      * @param position the position of the first cell
-     * @throws Pdf_Exception
+     * @throws PdfLineException
      */
-    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration, int position) /*throws Pdf_Exception*/{
-/*
+    public void addLine(Phrase phrases [], CellConfiguration cellConfiguration, int position) throws PdfLineException {
+
         if(phrases.length > NUMBER_OF_CELLS){
-            throw new Pdf_Exception("O numero de frases por celula a inserir - superior ao numero de celulas da tabela");
+            throw new PdfLineException(phrases.length, NUMBER_OF_CELLS);
         }
-*/
+
         try {
             CellConfiguration cellConfigurationclone = (CellConfiguration) cellConfiguration.clone();
 
@@ -190,23 +200,21 @@ public class Table {
         }
     }
 
+
+
     /**
      * Method to insert multiple cells into the table row
      * @param phrases an array of phrases
      * @param cellConfigurations  an array of cell configurations
      * @param position the position of the first cell
-     * @throws Pdf_Exception
+     * @throws PdfLineException
      */
-    public void addLine(Phrase phrases [], CellConfiguration cellConfigurations [], int position) /*throws Pdf_Exception*/{
-/*
-        if(frases.length > NUMERO_CELULAS){
-            throw new Pdf_Exception("O numero de frases por celula a inserir - superior ao numero de celulas da tabela");
+    public void addLine(Phrase phrases [], CellConfiguration cellConfigurations [], int position) throws PdfLineException{
+
+        if(phrases.length > NUMBER_OF_CELLS){
+            throw new PdfLineException(phrases.length, NUMBER_OF_CELLS);
         }
 
-        if(cellConfigurations.length > frases.length || cellConfigurations.length < frases.length){
-            throw new Pdf_Exception("O numero de cellConfigurations por celula Não corresponde ao numero de frases");
-        }
-*/
 
         try {
 
@@ -236,6 +244,39 @@ public class Table {
     //------------------
     //
     //------------------
+
+
+    /**
+     * Method to insert an empty cell into the table
+     */
+    public void addEmptyCell(){
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        addCell(PdfConstants.NO_DATA, cellConfiguration);
+    }
+
+
+
+    /**
+     * Method to insert an empty cell into the table
+     * @param colSpan the colspan of the cell
+     * @throws PdfLineException
+     */
+    public void addEmptyCell(int colSpan) throws PdfLineException {
+
+        if(colSpan > NUMBER_OF_CELLS){
+            throw new PdfLineException(colSpan, NUMBER_OF_CELLS);
+        }
+
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.colSpan = colSpan;
+
+        addCell(PdfConstants.NO_DATA, cellConfiguration);
+
+    }
+
+
 
 
     /**
