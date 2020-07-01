@@ -2,6 +2,8 @@ package com.titan.pdfdocumentlibrary.bundle;
 
 import com.itextpdf.text.pdf.PdfPTable;
 import com.titan.pdfdocumentlibrary.elements.Table;
+import com.titan.pdfdocumentlibrary.exception.InexistentSectionException;
+import com.titan.pdfdocumentlibrary.models.Index;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public abstract class Page {
 
 
 
-    protected List<Integer> indexes;
+    protected List<Index> indexes;
 
     public Page(int pageId){
 
@@ -30,7 +32,7 @@ public abstract class Page {
      * Method to get the list of indexes for the sections of the page
      * @return a list od indexes
      */
-    public List<Integer> getIndexes() {
+    public List<Index> getIndexes() {
         return indexes;
     }
 
@@ -45,10 +47,10 @@ public abstract class Page {
 
         try{
 
-            Section section = getSection(indexes.get(index));
+            Section section = getSection(indexes.get(index).getId());
             return section.table.getPdfTable();
         }
-        catch(NullPointerException e){
+        catch(InexistentSectionException e){
 
             Table table = Section.getError("Seccao inexistente com o index: " + index + " - " /*+ SECCOES_PDF___idseccao_descricao.get(indexes.get(index))*/, e);
             return table.getPdfTable();
@@ -91,15 +93,15 @@ public abstract class Page {
      * Method to get all the indexes of a page
      * @return an array of indexes
      */
-    protected abstract List<Integer> getPageIndexes();
+    protected abstract List<Index> getPageIndexes();
 
 
     /**
      * Method to get a specific section
-     * @param index the index of the section
+     * @param id the id of the section
      * @return a section
      */
-    protected abstract Section getSection(int index);
+    protected abstract Section getSection(int id) throws InexistentSectionException;
 
 
 }
