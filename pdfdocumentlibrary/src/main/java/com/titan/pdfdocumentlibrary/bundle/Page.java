@@ -47,7 +47,7 @@ public abstract class Page {
 
         try{
 
-            Section section = getSection(indexes.get(index).getId());
+            Section section = getSection(getIndex(index));
             return section.table.getPdfTable();
         }
         catch(InexistentSectionException e){
@@ -57,6 +57,25 @@ public abstract class Page {
         }
     }
 
+
+    /**
+     * Method to get the index data
+     * @param index a position in the list of indexes
+     * @return the index data
+     * @throws InexistentSectionException
+     */
+    private Index getIndex(int index) throws InexistentSectionException{
+
+        try{
+            return indexes.get(index);
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            throw new InexistentSectionException("The element in position: " + index + " does not correspond to an existing section", e);
+        }
+        catch (NullPointerException e){
+            throw new InexistentSectionException("There are no sections avaliable", e);
+        }
+    }
 
 
 
@@ -98,10 +117,10 @@ public abstract class Page {
 
     /**
      * Method to get a specific section
-     * @param id the id of the section
+     * @param index the index of the section
      * @return a section
      */
-    protected abstract Section getSection(int id) throws InexistentSectionException;
+    protected abstract Section getSection(Index index);
 
 
 }
