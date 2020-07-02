@@ -14,6 +14,8 @@ public class TemplateConfiguration {
     private int topMargin = 60; //108
     private int baseMargin = 70 ;//180
 
+    private float sectionSpacing = 10f ;//180
+
 
     public TemplateConfiguration() {
 
@@ -42,5 +44,9 @@ public class TemplateConfiguration {
 
     public int getBaseMargin() {
         return baseMargin;
+    }
+
+    public float getSectionSpacing() {
+        return sectionSpacing;
     }
 }

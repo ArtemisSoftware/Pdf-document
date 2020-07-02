@@ -10,6 +10,8 @@ import androidx.core.content.FileProvider;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
@@ -140,8 +142,7 @@ public abstract class Template {
 
                     //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
 
-                    //--documento.add(obterQuebraLinha(1, ALTURA____ENTRE_SECCOES));
-
+                    addSpace();
                 }
             }
             catch(NullPointerException e){
@@ -156,9 +157,15 @@ public abstract class Template {
     }
 
 
-
-
-
+    /**
+     * Method to add a space between page sections
+     * @throws DocumentException
+     */
+    private void addSpace() throws DocumentException {
+        Paragraph paragrafo = new Paragraph();
+        paragrafo.add(new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, templateConfiguration.getSectionSpacing())));
+        documento.add(paragrafo);
+    }
 
 
     //----------------------
