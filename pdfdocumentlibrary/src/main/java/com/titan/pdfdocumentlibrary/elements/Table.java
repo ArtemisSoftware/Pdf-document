@@ -335,9 +335,15 @@ public class Table {
             celula.setBackgroundColor(formato.obter_CorFundo());
         }
         else{
-*/
+
             pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
-     //  }
+       }
+*/
+
+        if(cellConfiguration.backgroundColor != BaseColor.WHITE){
+            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
+        }
+
 
         if(cellConfiguration.rowspan != PdfConstants.NO_VALUE){
             pdfPCell.setRowspan(cellConfiguration.rowspan);
@@ -350,11 +356,11 @@ public class Table {
         if(formato.obter_Altura() != AppIF.SEM_REGISTO ){
             celula.setFixedHeight(formato.obter_Altura());
         }
-
-        if(formato.obter_Borda() != AppIF.SEM_REGISTO ){
-            celula.setBorder(formato.obter_Borda());
+*/
+        if(cellConfiguration.border != PdfConstants.NO_VALUE){
+            pdfPCell.setBorder(cellConfiguration.border);
         }
-
+/*
         if(formato.obter_Evento() != null){
             celula.setCellEvent(formato.obter_Evento());
         }
