@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
@@ -30,6 +31,8 @@ public abstract class Template {
     protected final File DIRECTORY;
 
 
+    protected TemplateConfiguration templateConfiguration;
+
     private int paginas = 0;
     //--private HashMap<Integer, Integer> paginacao;
 
@@ -42,6 +45,8 @@ public abstract class Template {
 
         ficheiroPdf = null;
         documento = new Document();
+
+        templateConfiguration = new TemplateConfiguration();
 
         //--paginacao = new HashMap<Integer, Integer>();
     }
@@ -70,8 +75,8 @@ public abstract class Template {
         //--CabecalhoRodape evento = new CabecalhoRodape();
         //--fixarConteudoRodape(evento);
 
-        //--documento.setPageSize(PageSize.A4);
-        //--documento.setMargins(MARGEM_ESQUERDA, MARGEM_DIREITA, MARGEM_TOPO /*+ evento.obterAlturaCabecalho()*/, MARGEM_BASE);
+        documento.setPageSize(templateConfiguration.getPageSize());
+        documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*+ evento.obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
 
         try {
 
