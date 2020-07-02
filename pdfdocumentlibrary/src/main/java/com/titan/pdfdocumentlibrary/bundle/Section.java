@@ -51,7 +51,7 @@ public abstract class Section {
 //        }
 
 
-        if(!DEBUG) table.removeBorder();
+        //if(!DEBUG) table.removeBorder();
         return table;
     }
 

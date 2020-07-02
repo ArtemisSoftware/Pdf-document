@@ -2,6 +2,7 @@ package com.titan.pdfdocument.pages;
 
 import com.titan.pdfdocument.sections.MainSection;
 import com.titan.pdfdocument.sections.NoBorderSection;
+import com.titan.pdfdocument.sections.UnevenSection;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Section;
 import com.titan.pdfdocumentlibrary.models.Index;
@@ -23,7 +24,7 @@ public class PresentationPage extends Page {
 
         indexList.add(new Index(1, "Main Section"));
         indexList.add(new Index(2, "No border Section"));
-
+        indexList.add(new Index(3, "Uneven Section"));
         return indexList;
     }
 
@@ -46,6 +47,10 @@ public class PresentationPage extends Page {
                 section = new NoBorderSection();
                 break;
 
+            case 3:
+
+                section = new UnevenSection();
+                break;
 
             default:
                 break;
