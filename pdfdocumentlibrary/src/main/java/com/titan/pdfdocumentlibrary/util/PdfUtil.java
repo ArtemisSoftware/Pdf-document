@@ -1,14 +1,20 @@
 package com.titan.pdfdocumentlibrary.util;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.os.Environment;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PdfUtil {
 
@@ -50,5 +56,33 @@ public class PdfUtil {
         return table;
 
     }
+
+
+
+    /**
+     * Method to add metadata to the document
+     * @param context the app context
+     * @param document the document
+     * @param template the class that is generating the file
+     */
+    public static void addMetaData(Context context, Document document, Template template) {
+
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(currentTime);
+
+
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        int stringId = applicationInfo.labelRes;
+        String appName =  stringId == 0 ? applicationInfo.nonLocalizedLabel.toString() : context.getString(stringId);
+
+        document.addTitle(template.getClass().getSimpleName());
+        document.addSubject("Date: "+  formattedDate);
+        document.addCreator(appName);
+    }
+
+
+
+
 
 }

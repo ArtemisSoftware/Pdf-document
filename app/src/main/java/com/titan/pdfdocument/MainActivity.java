@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         TestPdfAsyncTask task = new TestPdfAsyncTask(this);
         //task.execute(dir);
 
-        Template presentation = new Pesentation(dir);
+        Template presentation = new Pesentation(this, dir);
         PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation);
         taskPresentation.execute();
     }

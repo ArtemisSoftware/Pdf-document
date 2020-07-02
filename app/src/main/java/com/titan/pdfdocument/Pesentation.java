@@ -1,5 +1,7 @@
 package com.titan.pdfdocument;
 
+import android.content.Context;
+
 import com.titan.pdfdocument.pages.PresentationPage;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Template;
@@ -10,8 +12,8 @@ import java.util.List;
 
 public class Pesentation extends Template {
 
-    public Pesentation(File directory) {
-        super(directory);
+    public Pesentation(Context context, File directory) {
+        super(context, directory);
     }
 
     @Override

@@ -30,7 +30,7 @@ public abstract class Template {
 
     protected final File DIRECTORY;
 
-
+    protected Context context;
     protected TemplateConfiguration templateConfiguration;
 
     private int paginas = 0;
@@ -39,8 +39,9 @@ public abstract class Template {
     private List<Page> pages;
 
 
-    public Template(File directory){
+    public Template(Context context, File directory){
 
+        this.context = context;
         DIRECTORY = directory;
 
         ficheiroPdf = null;
@@ -94,7 +95,7 @@ public abstract class Template {
                 addPage(page);
             }
 
-            //--MetodosPdf.adicionarMetaDados(documento, this.getClass().getName());
+            PdfUtil.addMetaData(context, documento, this);
 
         }
         catch (DocumentException | IOException de) {
