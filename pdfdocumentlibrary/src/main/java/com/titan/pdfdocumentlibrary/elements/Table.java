@@ -2,6 +2,7 @@ package com.titan.pdfdocumentlibrary.elements;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -128,6 +129,29 @@ public class Table {
     }
 
 
+
+
+    /**
+     * Method to insert an image on a table cell
+     * @param image the image
+     */
+    public void addCell(Image image){
+
+        table.addCell(image);
+        incrementNumberCells();
+    }
+
+
+    /**
+     * Metodo que permite inserir dados numa celula
+     * @param image the image
+     * @param cellConfiguration the configuration of the cell
+     */
+    public void addCell(Image image, CellConfiguration cellConfiguration){
+
+        PdfPCell cell = new PdfPCell(image);
+        addCell(formatCell(cell, cellConfiguration));
+    }
 
 
 

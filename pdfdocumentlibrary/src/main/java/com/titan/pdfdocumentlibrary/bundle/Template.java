@@ -162,9 +162,9 @@ public abstract class Template {
      * @throws DocumentException
      */
     private void addSpace() throws DocumentException {
-        Paragraph paragrafo = new Paragraph();
-        paragrafo.add(new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, templateConfiguration.getSectionSpacing())));
-        documento.add(paragrafo);
+        Paragraph paragraph = new Paragraph();
+        paragraph.add(new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, templateConfiguration.getSectionSpacing())));
+        documento.add(paragraph);
     }
 
 
@@ -190,7 +190,6 @@ public abstract class Template {
         else{
             ficheiroURI = Uri.fromFile(ficheiroPdf);
         }
-
 
         intent.setDataAndType(ficheiroURI, PdfConstants.MIME_TYPE_APPLICATION_PDF);
         context.startActivity(intent);

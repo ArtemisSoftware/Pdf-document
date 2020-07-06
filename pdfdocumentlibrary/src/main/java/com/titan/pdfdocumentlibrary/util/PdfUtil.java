@@ -20,7 +20,8 @@ public class PdfUtil {
 
 
     /**
-     * Method that generates a pdf file
+     * Method that generates a pdf file<br>
+     * If a file already exists it will delete it first
      * @param template the class that is generating the file
      * @param directory the directory where the file will be created
      * @param name the name of the file
@@ -29,6 +30,9 @@ public class PdfUtil {
     public static File getFile(Template template, File directory, String name) {
 
         name = template.getClass().getSimpleName() + "__" + name + PdfConstants.PDF_EXTENSION;
+
+        deleteFile(directory, name);
+
         return new File(directory, name);
     }
 
@@ -82,7 +86,44 @@ public class PdfUtil {
     }
 
 
+    /**
+     * Method to delete all pdf files from a directory
+     * @param directory the directory where the files are located
+     */
+    public static void deleteAllFiles(File directory){
+
+        File[] Files = directory.listFiles();
+
+        if(Files != null) {
+            int j;
+            for(j = 0; j < Files.length; j++) {
+
+                if(Files[j].getAbsolutePath().contains(PdfConstants.PDF_EXTENSION) == true){
+                    Files[j].delete();
+                }
+            }
+        }
+    }
 
 
+    /**
+     * Method to delete a specific pdf file from a directory
+     * @param directory the directory where the file is located
+     * @param fileName the name of the file
+     */
+    public static void deleteFile(File directory, String fileName){
+
+        File[] Files = directory.listFiles();
+
+        if(Files != null) {
+            int j;
+            for(j = 0; j < Files.length; j++) {
+
+                if(Files[j].getAbsolutePath().contains(PdfConstants.PDF_EXTENSION) == true && Files[j].getAbsolutePath().contains(fileName) == true){
+                    Files[j].delete();
+                }
+            }
+        }
+    }
 
 }
