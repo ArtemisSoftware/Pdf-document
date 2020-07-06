@@ -1,5 +1,7 @@
 package com.titan.pdfdocumentlibrary.elements;
 
+import android.content.res.Resources;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
@@ -8,6 +10,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
+import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 public class Table {
 
@@ -128,6 +131,13 @@ public class Table {
         addCell(formatCell(cell, cellConfiguration));
     }
 
+
+
+    public void addCell(Resources resources, int imageResource){
+
+        table.addCell(PdfUtil.createPdfImage(resources, imageResource));
+        incrementNumberCells();
+    }
 
 
 

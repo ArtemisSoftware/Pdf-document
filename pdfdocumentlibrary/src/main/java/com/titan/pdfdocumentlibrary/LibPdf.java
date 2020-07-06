@@ -8,10 +8,12 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -52,11 +54,10 @@ public class LibPdf {
      * Method that populates a pdf with test data
      * @param dir the pdf directory
      */
-    public void generatePdf(File dir){
+    public void generatePdf(Context context, File dir){
 
 
         Document doc = new Document();
-
 
         try {
 
@@ -105,6 +106,10 @@ public class LibPdf {
 
             doc.add(emptyCellsSection().getPdfTable());
 
+
+            doc.add(emptyCellsSection().getPdfTable());
+
+            doc.add(imageCellsSection(context).getPdfTable());
         }
         catch (DocumentException de) {
             Log.e("PDFCreator", "DocumentException:" + de);
@@ -220,6 +225,22 @@ public class LibPdf {
         return table;
     }
 
+    private Table imageCellsSection(Context context){
 
+        Table table = new Table(3);
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+
+
+        table.addCell(context.getResources(), R.drawable.tst_image);
+        table.addCell(context.getResources(), R.drawable.tst_image);
+        table.addCell(context.getResources(), R.drawable.tst_image);
+
+
+
+        return table;
+    }
 
 }

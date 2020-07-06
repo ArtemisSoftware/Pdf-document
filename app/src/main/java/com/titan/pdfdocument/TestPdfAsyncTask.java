@@ -25,7 +25,7 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
     protected Void doInBackground(File... files) {
 
         File dir = files[0];
-        testPdf.generatePdf(dir);
+        testPdf.generatePdf(mContext, dir);
 
         return null;
     }

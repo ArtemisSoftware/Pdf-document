@@ -2,16 +2,23 @@ package com.titan.pdfdocumentlibrary.util;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -125,5 +132,50 @@ public class PdfUtil {
             }
         }
     }
+
+
+
+
+
+    /**
+     * Method to create a pdf image
+     * @param resources the app resources
+     * @param imageResource the image resource
+     * @return a pdf image
+     */
+    public static Image createPdfImage(Resources resources, int imageResource) {
+
+
+        Image imagem = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap bitmap = BitmapFactory.decodeResource(resources, imageResource);
+
+       /*
+		 if(bitmap == null){
+
+			 Drawable d = contexto.getResources().getDrawable(R.drawable.no_signature);
+			 BitmapDrawable bitDw = ((BitmapDrawable) d);
+			 bitmap = bitDw.getBitmap();
+
+		 }
+		 */
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , stream);
+
+        try {
+            imagem = Image.getInstance(stream.toByteArray());
+            imagem.setAlignment(Image.MIDDLE);
+            imagem.scaleToFit(250, 150);
+
+        }
+        catch (BadElementException | IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return imagem;
+    }
+
+
+
 
 }
