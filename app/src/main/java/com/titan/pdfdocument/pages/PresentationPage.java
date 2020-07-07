@@ -20,7 +20,6 @@ public class PresentationPage extends Page {
     @Override
     protected List<Index> getPageIndexes() {
 
-
         List<Index> indexList = new ArrayList<>();
 
         indexList.add(new Index(1, "Main Section"));
@@ -34,7 +33,6 @@ public class PresentationPage extends Page {
     protected Section getSection(Index index) {
 
         Section section = null;
-
 
         switch (index.getId()) {
 
