@@ -3,6 +3,7 @@ package com.titan.pdfdocument;
 import android.content.Context;
 
 import com.titan.pdfdocument.pages.PresentationPage;
+import com.titan.pdfdocument.pages.SecondPage;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 
@@ -26,7 +27,7 @@ public class Pesentation extends Template {
 
         List<Page> pages = new ArrayList<>();
         pages.add(new PresentationPage());
-
+        pages.add(new SecondPage(context));
         return pages;
     }
 }

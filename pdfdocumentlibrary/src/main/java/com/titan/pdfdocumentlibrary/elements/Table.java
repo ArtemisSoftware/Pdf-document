@@ -139,7 +139,9 @@ public class Table {
         incrementNumberCells();
     }
 
-
+    public void addCell(Resources resources, int imageResource, CellConfiguration cellConfiguration){
+        addCell(PdfUtil.createPdfImage(resources, imageResource), cellConfiguration);
+    }
 
     /**
      * Method to insert an image on a table cell
@@ -153,7 +155,7 @@ public class Table {
 
 
     /**
-     * Metodo que permite inserir dados numa celula
+     * Method to insert an image on a table cell
      * @param image the image
      * @param cellConfiguration the configuration of the cell
      */
@@ -163,6 +165,18 @@ public class Table {
         addCell(formatCell(cell, cellConfiguration));
     }
 
+
+
+    /**
+     * Method to insert a table on a table cell
+     * @param table the table
+     * @param cellConfiguration the configuration of the cell
+     */
+    public void addCell(Table table, CellConfiguration cellConfiguration){
+
+        PdfPCell cell = new PdfPCell(table.getPdfTable());
+        addCell(formatCell(cell, cellConfiguration));
+    }
 
 
     //-----------------------------

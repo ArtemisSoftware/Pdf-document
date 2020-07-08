@@ -32,6 +32,8 @@ public class ImageSection extends Section {
         table.addCell(context.getResources(), com.titan.pdfdocumentlibrary.R.drawable.tst_image);
         table.addCell(context.getResources(), com.titan.pdfdocumentlibrary.R.drawable.tst_image);
 
-
+        table.addCell(context.getResources(), R.drawable.ic_launcher_background, cellConfiguration);
+        table.addCell(context.getResources(), com.titan.pdfdocumentlibrary.R.drawable.tst_image);
+        table.addCell(context.getResources(), R.drawable.ic_launcher_background, cellConfiguration);
     }
 }
