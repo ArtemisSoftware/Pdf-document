@@ -19,7 +19,7 @@ public abstract class Section {
 
 
     /**
-     * Tabela que possui os dados da seccao
+     * Table that holds the section data
      */
     protected Table table;
 

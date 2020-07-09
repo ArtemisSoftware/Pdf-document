@@ -166,6 +166,15 @@ public class Table {
     }
 
 
+    /**
+     * Method to insert a table on a table cell
+     * @param table the table
+     */
+    public void addCell(Table table){
+
+        table.addCell(table);
+        incrementNumberCells();
+    }
 
     /**
      * Method to insert a table on a table cell

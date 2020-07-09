@@ -3,6 +3,7 @@ package com.titan.pdfdocument.pages;
 import android.content.Context;
 
 import com.titan.pdfdocument.sections.ImageSection;
+import com.titan.pdfdocument.sections.TableSection;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Section;
 import com.titan.pdfdocumentlibrary.models.Index;
@@ -26,6 +27,7 @@ public class SecondPage extends Page {
         List<Index> indexList = new ArrayList<>();
 
         indexList.add(new Index(1, "Image Section"));
+        indexList.add(new Index(2, "Table Section"));
         return indexList;
     }
 
@@ -40,6 +42,11 @@ public class SecondPage extends Page {
             case 1:
 
                 section = new ImageSection(this.context);
+                break;
+
+            case 2:
+
+                section = new TableSection();
                 break;
 
             default:

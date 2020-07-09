@@ -110,6 +110,8 @@ public class LibPdf {
             doc.add(emptyCellsSection().getPdfTable());
 
             doc.add(imageCellsSection(context).getPdfTable());
+
+            doc.add(tableCellsSection().getPdfTable());
         }
         catch (DocumentException de) {
             Log.e("PDFCreator", "DocumentException:" + de);
@@ -242,5 +244,41 @@ public class LibPdf {
 
         return table;
     }
+
+    private Table tableCellsSection(){
+
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+
+
+        Table table1 = new Table(2);
+        table1.addCell("table-1");
+        table1.addCell("table-1-cellConfiguration", cellConfiguration);
+
+
+        CellConfiguration cellConfiguration2 = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.backgroundColor = BaseColor.ORANGE;
+
+        Table table2 = new Table(3);
+        table2.addLine(new Phrase("table-2"),cellConfiguration2);
+        table2.addCell("table-2-nothing");
+        table2.addCell("table-2-cellConfiguration", cellConfiguration);
+        table2.addCell("table-2-cellConfiguration2", cellConfiguration2);
+
+        Table table = new Table(2);
+
+        table.addCell(table1, cellConfiguration);
+        table.addCell(table2);
+
+
+
+        return table;
+    }
+
+
 
 }
