@@ -37,7 +37,6 @@ public class Table {
     }
 
 
-
     public Table(int numberOfCells){
 
         this.NUMBER_OF_CELLS = numberOfCells;
@@ -65,6 +64,33 @@ public class Table {
     }
 
 
+    public Table(float widths []){
+
+        this.NUMBER_OF_CELLS = widths.length;;
+
+        this.numberRows = 0;
+        this.numberCells = 0;
+        this.cellCounter = 0;
+
+
+        this.table = new PdfPTable(NUMBER_OF_CELLS);
+        this.table.setWidthPercentage(100);
+
+        try {
+            this.table.setWidths(widths);
+        }
+        catch (DocumentException e) {
+            e.printStackTrace();
+        }
+/*
+        int larguraTotal = 0;
+        for (float ll : converter.convert(widths)) {
+            larguraTotal += ll;
+        }
+
+        this.table.setTotalWidth(larguraTotal);
+        */
+    }
 
 
 

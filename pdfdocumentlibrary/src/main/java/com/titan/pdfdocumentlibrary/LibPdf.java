@@ -20,6 +20,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
+import com.titan.pdfdocumentlibrary.elements.TableWidthConverter;
 import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 
 import java.io.File;
@@ -112,6 +113,9 @@ public class LibPdf {
             doc.add(imageCellsSection(context).getPdfTable());
 
             doc.add(tableCellsSection().getPdfTable());
+
+            doc.add(unevenTableCellsSection().getPdfTable());
+            doc.add(unevenSecondTableCellsSection().getPdfTable());
         }
         catch (DocumentException de) {
             Log.e("PDFCreator", "DocumentException:" + de);
@@ -284,5 +288,59 @@ public class LibPdf {
     }
 
 
+    private Table unevenTableCellsSection(){
 
+        float widhts [] = new float[]{1.5f, 5f, 5f};
+
+
+        TableWidthConverter converter1 = new TableWidthConverter() {
+            @Override
+            public float[] convert(float[] widths) {
+
+                float [] medidasConvertidas = new float[widths.length];
+
+                for (int i = 0; i < widths.length; ++i) {
+                    medidasConvertidas[i] = (float) (1 * widths [i]);
+                }
+
+                return medidasConvertidas;
+            }
+        };
+
+        Table table = new Table(widhts/*, converter1*/);
+
+        table.addCell("unevenTableCellsSection");
+        table.addCell("unevenTableCellsSection");
+        table.addCell("unevenTableCellsSection");
+
+        return table;
+    }
+
+    private Table unevenSecondTableCellsSection(){
+
+        float widhts [] = new float[]{150f, 15f, 300f};
+
+
+        TableWidthConverter converter1 = new TableWidthConverter() {
+            @Override
+            public float[] convert(float[] widths) {
+
+                float [] medidasConvertidas = new float[widths.length];
+
+                for (int i = 0; i < widths.length; ++i) {
+                    medidasConvertidas[i] = (float) (2 * widths [i]);
+                }
+
+                return medidasConvertidas;
+            }
+        };
+
+        Table table = new Table(widhts/*, converter1*/);
+
+        table.addCell("unevenSecondTableCellsSection");
+        table.addCell("unevenSecondTableCellsSection");
+        table.addCell("unevenSecondTableCellsSection");
+
+        return table;
+    }
 }
