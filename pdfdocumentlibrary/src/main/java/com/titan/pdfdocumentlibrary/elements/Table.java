@@ -133,15 +133,6 @@ public class Table {
 
 
 
-    public void addCell(Resources resources, int imageResource){
-
-        table.addCell(PdfUtil.createPdfImage(resources, imageResource));
-        incrementNumberCells();
-    }
-
-    public void addCell(Resources resources, int imageResource, CellConfiguration cellConfiguration){
-        addCell(PdfUtil.createPdfImage(resources, imageResource), cellConfiguration);
-    }
 
     /**
      * Method to insert an image on a table cell
@@ -164,6 +155,30 @@ public class Table {
         PdfPCell cell = new PdfPCell(image);
         addCell(formatCell(cell, cellConfiguration));
     }
+
+
+    /**
+     * Method to insert an image on a table cell
+     * @param resources the resources reference
+     * @param imageResource the image resource
+     */
+    public void addCell(Resources resources, int imageResource){
+        addCell(PdfUtil.createPdfImage(resources, imageResource));
+    }
+
+
+    /**
+     * Method to insert an image on a table cell
+     * @param resources the resources reference
+     * @param imageResource the image resource
+     * @param cellConfiguration the configuration of the cell
+     */
+    public void addCell(Resources resources, int imageResource, CellConfiguration cellConfiguration){
+        addCell(PdfUtil.createPdfImage(resources, imageResource), cellConfiguration);
+    }
+
+
+
 
 
     /**
@@ -447,26 +462,6 @@ public class Table {
 
 
 
-    /**
-     * Method that allows to format the table border
-     * @param cellConfiguration the configuration of the cells
-     */
-    public void formatBorder(CellConfiguration cellConfiguration){
-
-        for (int indice = 0; indice < table.getRows().size(); ++indice) {
-
-            for(int index = 0; index < table.getRow(indice).getCells().length; ++index){
-                try{
-
-                    formatCell(table.getRow(indice).getCells()[index], cellConfiguration);
-                }
-                catch(NullPointerException e){}
-            }
-        }
-    }
-
-
-
 
 
 
@@ -529,6 +524,26 @@ public class Table {
     //---------------------
     //Format - painting
     //---------------------
+
+
+    /**
+     * Method that allows to format the table border
+     * @param cellConfiguration the configuration of the cells
+     */
+    public void formatBorder(CellConfiguration cellConfiguration){
+
+        for (int indice = 0; indice < table.getRows().size(); ++indice) {
+
+            for(int index = 0; index < table.getRow(indice).getCells().length; ++index){
+                try{
+
+                    formatCell(table.getRow(indice).getCells()[index], cellConfiguration);
+                }
+                catch(NullPointerException e){}
+            }
+        }
+    }
+
 
 
 
