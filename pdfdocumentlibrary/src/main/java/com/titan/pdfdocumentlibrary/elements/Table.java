@@ -172,7 +172,7 @@ public class Table {
      */
     public void addCell(Table table){
 
-        table.addCell(table);
+        this.table.addCell(table.getPdfTable());
         incrementNumberCells();
     }
 

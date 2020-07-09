@@ -12,7 +12,7 @@ public class TableSection extends Section {
 
     @Override
     protected Table getMainTable() {
-        return new Table(2);
+        return new Table(3);
     }
 
     @Override
@@ -28,9 +28,9 @@ public class TableSection extends Section {
 
 
         CellConfiguration cellConfiguration2 = new CellConfiguration();
-        cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
-        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
-        cellConfiguration.backgroundColor = BaseColor.ORANGE;
+        cellConfiguration2.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration2.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration2.backgroundColor = BaseColor.ORANGE;
 
         Table table2 = new Table(3);
         table2.addLine(new Phrase("table-2"),cellConfiguration2);
@@ -38,7 +38,11 @@ public class TableSection extends Section {
         table2.addCell("table-2-cellConfiguration", cellConfiguration);
         table2.addCell("table-2-cellConfiguration2", cellConfiguration2);
 
-        table.addCell(table1, cellConfiguration);
+        CellConfiguration cellConfiguration3 = new CellConfiguration();
+        cellConfiguration3.backgroundColor = BaseColor.PINK;
+
+        table.addCell(table1, cellConfiguration3);
         table.addCell(table2);
+        table.addCell(table1, cellConfiguration);
     }
 }

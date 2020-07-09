@@ -35,7 +35,7 @@ public abstract class Template {
     protected Context context;
     protected TemplateConfiguration templateConfiguration;
 
-    private int paginas = 0;
+    private int pageNumber;
     //--private HashMap<Integer, Integer> paginacao;
 
     private List<Page> pages;
@@ -48,6 +48,7 @@ public abstract class Template {
 
         ficheiroPdf = null;
         documento = new Document();
+        pageNumber = 0;
 
         templateConfiguration = new TemplateConfiguration();
 
@@ -126,7 +127,7 @@ public abstract class Template {
      */
     private void addPage(Page pagina){
 
-        if(paginas != 0){
+        if(pageNumber != 0){
 
             //nova página
 
@@ -135,25 +136,27 @@ public abstract class Template {
         }
 
         try {
-            try {
-                for (int index = 0; index < pagina.getIndexes().size(); ++index) {
 
+            for (int index = 0; index < pagina.getIndexes().size(); ++index) {
+
+                try {
                     documento.add(pagina.getElement(index));
 
                     //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
-
-                    addSpace();
                 }
+                catch(NullPointerException e){
+                    documento.add(PdfUtil.getErrorTable(e).getPdfTable());
+                }
+
+                addSpace();
             }
-            catch(NullPointerException e){
-                documento.add(PdfUtil.getErrorTable(e).getPdfTable());
-            }
+
         }
         catch (DocumentException e) {
             e.printStackTrace();
         }
 
-        ++paginas;
+        ++pageNumber;
     }
 
 

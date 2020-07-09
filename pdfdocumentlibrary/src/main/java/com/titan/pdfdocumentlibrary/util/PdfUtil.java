@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 
 import com.itextpdf.text.BadElementException;
@@ -12,6 +14,7 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
+import com.titan.pdfdocumentlibrary.R;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
@@ -150,15 +153,10 @@ public class PdfUtil {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeResource(resources, imageResource);
 
-       /*
-		 if(bitmap == null){
+        if(bitmap == null){
+            bitmap = BitmapFactory.decodeResource(resources, R.drawable.no_image_found);
+        }
 
-			 Drawable d = contexto.getResources().getDrawable(R.drawable.no_signature);
-			 BitmapDrawable bitDw = ((BitmapDrawable) d);
-			 bitmap = bitDw.getBitmap();
-
-		 }
-		 */
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , stream);
 
         try {
