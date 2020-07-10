@@ -50,7 +50,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         //if(ativarCabecalho == true){
 
         PdfPTable headerTable = headerSection.getSection().getPdfTable();
-        float height = headerTable.getTotalHeight();
+        float height = headerTable.getTotalHeight()/*38*/;
 
         headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
         //}

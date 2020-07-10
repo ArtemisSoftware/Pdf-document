@@ -82,15 +82,31 @@ public class Table {
         catch (DocumentException e) {
             e.printStackTrace();
         }
-/*
-        int larguraTotal = 0;
-        for (float ll : converter.convert(widths)) {
-            larguraTotal += ll;
-        }
-
-        this.table.setTotalWidth(larguraTotal);
-        */
     }
+
+
+
+    public Table(float widths [], float totalWidth, boolean quebrar){
+
+        this.NUMBER_OF_CELLS = widths.length;;
+
+        this.numberRows = 0;
+        this.numberCells = 0;
+        this.cellCounter = 0;
+
+
+        this.table = new PdfPTable(widths.length);
+        this.table.setTotalWidth(totalWidth);
+        try {
+            this.table.setWidths(widths);
+        }
+        catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        this.table.setLockedWidth(!quebrar);
+
+    }
+
 
 
 

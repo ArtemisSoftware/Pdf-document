@@ -12,6 +12,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
@@ -131,7 +132,7 @@ public abstract class Template {
             //nova página
 
             documento.newPage();
-            //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+            alterarEventoPagina(wp.getPageEvent(), pagina, true/*executarEventoPagina(pagina, wp.getPageNumber())*/);
         }
 
         try {
@@ -141,7 +142,7 @@ public abstract class Template {
                 try {
                     documento.add(pagina.getElement(index));
 
-                    //--alterarEventoPagina(pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+                    alterarEventoPagina(wp.getPageEvent(), pagina, true /*executarEventoPagina(pagina, wp.getPageNumber())*/);
                 }
                 catch(NullPointerException e){
                     documento.add(PdfUtil.getErrorTable(e).getPdfTable());
@@ -157,6 +158,13 @@ public abstract class Template {
 
         ++pageNumber;
     }
+
+
+
+
+
+
+
 
 
     /**
@@ -224,6 +232,9 @@ public abstract class Template {
      * @return a page event
      */
     protected abstract PdfPageEventHelper getPageEvent();
+
+
+    protected abstract void alterarEventoPagina(PdfPageEvent pageEvent, Page pagina, boolean executar);
 
 
     /**
