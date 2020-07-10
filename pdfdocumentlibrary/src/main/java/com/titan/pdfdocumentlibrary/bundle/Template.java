@@ -12,6 +12,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
@@ -76,6 +77,8 @@ public abstract class Template {
      */
     private void criarDocumento(){
 
+        PdfPageEventHelper pageEventHelper = getPageEvent();
+
         //--CabecalhoRodape evento = new CabecalhoRodape();
         //--fixarConteudoRodape(evento);
 
@@ -86,12 +89,8 @@ public abstract class Template {
 
             FileOutputStream fOut = new FileOutputStream(ficheiroPdf);
             wp = PdfWriter.getInstance(documento, fOut);
+            wp.setPageEvent(pageEventHelper);
 
-            //adicionar o evento
-
-            //--wp.setPageEvent(evento);
-
-            //abrir documento
             documento.open();
 
             for (Page page: pages) {
@@ -220,6 +219,11 @@ public abstract class Template {
     protected abstract List<Page> getPages();
 
 
+    /**
+     * Method to get the page event
+     * @return a page event
+     */
+    protected abstract PdfPageEventHelper getPageEvent();
 
 
     /**

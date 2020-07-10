@@ -2,6 +2,7 @@ package com.titan.pdfdocument;
 
 import android.content.Context;
 
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.titan.pdfdocument.pages.PresentationPage;
 import com.titan.pdfdocument.pages.SecondPage;
 import com.titan.pdfdocumentlibrary.bundle.Page;
@@ -29,5 +30,10 @@ public class Pesentation extends Template {
         pages.add(new PresentationPage());
         pages.add(new SecondPage(context));
         return pages;
+    }
+
+    @Override
+    protected PdfPageEventHelper getPageEvent() {
+        return null;
     }
 }
