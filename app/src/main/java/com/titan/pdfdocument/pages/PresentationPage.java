@@ -1,6 +1,7 @@
 package com.titan.pdfdocument.pages;
 
 import com.titan.pdfdocument.sections.EmptyCellsSection;
+import com.titan.pdfdocument.sections.FontSection;
 import com.titan.pdfdocument.sections.MainSection;
 import com.titan.pdfdocument.sections.NoBorderSection;
 import com.titan.pdfdocument.sections.UnevenSection;
@@ -28,6 +29,7 @@ public class PresentationPage extends Page {
         indexList.add(new Index(3, "Uneven Section"));
         indexList.add(new Index(4, "Empty cells Section"));
         indexList.add(new Index(5, "Uneven table Section"));
+        indexList.add(new Index(6, "Font Section"));
         return indexList;
     }
 
@@ -64,6 +66,10 @@ public class PresentationPage extends Page {
                 section = new UnevenTableSection();
                 break;
 
+            case 6:
+
+                section = new FontSection();
+                break;
 
             default:
                 break;

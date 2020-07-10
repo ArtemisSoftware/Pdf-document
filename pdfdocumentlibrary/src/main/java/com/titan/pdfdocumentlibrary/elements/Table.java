@@ -145,6 +145,16 @@ public class Table {
     }
 
 
+    /**
+     * Method to insert a phrase on a table cell
+     * @param phrase a phrase
+     */
+    public void addCell(Phrase phrase){
+
+        PdfPCell cell = new PdfPCell(phrase);
+        addCell(cell);
+    }
+
 
     /**
      * Method to insert a phrase on a table cell

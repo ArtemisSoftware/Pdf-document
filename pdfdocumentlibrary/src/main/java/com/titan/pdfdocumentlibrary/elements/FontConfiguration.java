@@ -5,6 +5,8 @@ import android.util.Log;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.BaseFont;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
 
@@ -15,9 +17,19 @@ public class FontConfiguration {
 
     private BaseFont normalFont, boldFont;
 
-
     public FontConfiguration(){
-        generateFont(null, null);
+        normalFont = getBaseFont(PdfConstants.BASE_FONT_FAMILY);
+        boldFont = getBaseFont(PdfConstants.BASE_FONT_FAMILY);
+    }
+
+    public FontConfiguration(FontFamily fontFamily){
+        normalFont = getBaseFont(fontFamily);
+        boldFont = getBaseFont(PdfConstants.BASE_FONT_FAMILY);
+    }
+
+    public FontConfiguration(FontFamily fontFamily, FontFamily fontBoldFamily){
+        normalFont = getBaseFont(fontFamily);
+        boldFont = getBaseFont(fontBoldFamily);
     }
 
     public FontConfiguration(String fonteNormal){
@@ -29,37 +41,52 @@ public class FontConfiguration {
     }
 
 
-
-
     /**
      * Method to generate fonts
-     * @param normalFont nome da fonte normal
-     * @param boldFont nome da fonte bold
+     * @param normalFont the name of the normal font
+     * @param boldFont the name of the bold font
      */
     private void generateFont(String normalFont, String boldFont){
-
-        Font font = new Font(PdfConstants.BASE_FONT_FAMILY);
 
         try {
             this.normalFont = BaseFont.createFont(normalFont, /*"UTF-8"*/BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         }
         catch (DocumentException | IOException e) {
 
-            Log.e("pdfdocumentlibrary", "Exception:" + e);
-            //LogApp_v3.obterInstancia(MetodosApp.obterNomeClasse(this.getClass()), LogIF.ID_LOG_GERAL).adicionarExcecaoErro("Excecao ao gerar as fontes para o pdf", e);
-            this.normalFont = font.getBaseFont();
+            Log.e("pdfdocumentlibrary", "Exception font:" + e.getMessage());
+            this.normalFont = getBaseFont(PdfConstants.BASE_FONT_FAMILY);
         }
 
         try {
             this.boldFont = BaseFont.createFont(boldFont, /*"UTF-8"*/BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         }
-        catch (DocumentException | IOException e) {
+        catch (DocumentException | IOException | NullPointerException e) {
 
-            Log.e("pdfdocumentlibrary", "Exception:" + e);
-            this.boldFont = font.getBaseFont();
+            Log.e("pdfdocumentlibrary", "Exception font:" + e.getMessage());
+            this.boldFont = getBaseFont(PdfConstants.BASE_FONT_FAMILY);
         }
-
     }
+
+
+
+    /**
+     * Method to get the base font
+     * @param fontFamily the font family
+     * @return a basefont
+     */
+    private BaseFont getBaseFont(FontFamily fontFamily){
+
+        if(fontFamily == null){
+            Font font = new Font(PdfConstants.BASE_FONT_FAMILY);
+            return font.getCalculatedBaseFont(true);
+        }
+        else{
+            Font font = new Font(fontFamily);
+            return font.getCalculatedBaseFont(true);
+        }
+    }
+
+
 
 
     /**
@@ -91,22 +118,44 @@ public class FontConfiguration {
      * @return a font
      */
     public Font getFont(float fontSize, boolean boldStyle, BaseColor fontColor){
+        return getFont(fontSize, boldStyle, fontColor, false);
+    }
+
+
+    /**
+     * Method that returns a font
+     * @param fontSize the size of the font
+     * @param boldStyle true if the font should be bold
+     * @param fontColor the color of the font
+     * @param underlineStyle true if the font should be underlined
+     * @return a font
+     */
+    public Font getFont(float fontSize, boolean boldStyle, BaseColor fontColor, boolean underlineStyle){
 
         BaseFont baseFont = normalFont;
-        boolean boldstyle = false;
         BaseColor color = BaseColor.BLACK;
+        int style = Font.NORMAL;
 
-
-        if(boldStyle == true){
+        if(boldStyle == true && underlineStyle == true){
             baseFont = boldFont;
+            style = Font.BOLD | Font.UNDERLINE;
+        }
+        else if(underlineStyle == true){
+            baseFont = normalFont;
+            style = Font.UNDERLINE;
+        }
+        else if(boldStyle == true){
+            baseFont = boldFont;
+            style = Font.BOLD;
         }
 
         if(fontColor != null){
             color = fontColor;
         }
 
-        return new Font(baseFont, fontSize, Font.NORMAL, color);
+        return new Font(baseFont, fontSize, style , color);
     }
+
 
 
 

@@ -1,6 +1,6 @@
 package com.titan.pdfdocumentlibrary.util;
 
-import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 
 public class PdfConstants {
 
@@ -20,5 +20,5 @@ public class PdfConstants {
     public static int BASE_MARGIN = 70 ;//180
 
 
-    public static Font.FontFamily BASE_FONT_FAMILY = Font.FontFamily.HELVETICA;
+    public static FontFamily BASE_FONT_FAMILY = FontFamily.HELVETICA;
 }
