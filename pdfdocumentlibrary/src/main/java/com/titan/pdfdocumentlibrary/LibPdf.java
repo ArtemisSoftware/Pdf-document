@@ -81,7 +81,7 @@ public class LibPdf {
             //open the document
             doc.open();
 
-            /* Create Paragraph and Set Font */
+            /* Create Paragraph and Set FontConfiguration */
             Paragraph p1 = new Paragraph("Hi! I am Generating my first PDF using PdfDocumentLibrary");
             p1.setAlignment(Paragraph.ALIGN_CENTER);
             doc.add(p1);
