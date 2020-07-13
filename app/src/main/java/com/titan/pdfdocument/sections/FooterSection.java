@@ -7,7 +7,7 @@ import com.titan.pdfdocumentlibrary.bundle.Section;
 import com.titan.pdfdocumentlibrary.elements.FontConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
 
-public class Footer extends Section {
+public class FooterSection extends Section {
     @Override
     protected Table getMainTable() {
         return new Table(new float[]{24, 24, 2}, 3* 175, false);
