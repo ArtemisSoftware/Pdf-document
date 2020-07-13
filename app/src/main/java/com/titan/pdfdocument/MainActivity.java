@@ -10,8 +10,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         requestStoragePermission();
 
+        ((MaterialButton)findViewById(R.id.btn_presentation_pdf)).setOnClickListener(btn_presentation_pdf__OnClickListener);
+
     }
 
 
@@ -59,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
         PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation);
         taskPresentation.execute();
     }
+
+
+
+    MaterialButton.OnClickListener btn_presentation_pdf__OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            requestStoragePermission();
+        }
+    };
 
 
 

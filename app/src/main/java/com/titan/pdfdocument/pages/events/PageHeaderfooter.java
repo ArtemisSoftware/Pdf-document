@@ -19,10 +19,13 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
     private PdfTemplate template;
     private Image total;
+    public boolean showHeader;
 
     public PageHeaderfooter(){
 
+        showHeader = true;
         headerSection = new HeaderSection();
+
 //        rodape = new Rodape();
 //        ativarCabecalho =  false;
 
@@ -47,13 +50,13 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
         //header
 
-        //if(ativarCabecalho == true){
+        if(showHeader == true){
 
         PdfPTable headerTable = headerSection.getSection().getPdfTable();
-        float height = headerTable.getTotalHeight()/*38*/;
+        float height = /*headerTable.getTotalHeight()*/0;
 
         headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
-        //}
+        }
 
     }
 

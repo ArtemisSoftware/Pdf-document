@@ -51,15 +51,26 @@ public class Pesentation extends Template {
      */
     protected void alterarEventoPagina(PdfPageEvent pageEvent, Page pagina, boolean executar){
 
-
-        if(pagina.PAGE_ID == 1) {
-
+        if(pagina.PAGE_ID == 1 && executar == true) {
+            ((PageHeaderfooter) wp.getPageEvent()).showHeader = true;
             documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
         }
         else{
-            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+            ((PageHeaderfooter)wp.getPageEvent()).showHeader = false;
+            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*-20*//*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
 
         }
+//        if(pagina.PAGE_ID == 1 && executar == true) {
+//
+//            ((PageHeaderfooter)wp.getPageEvent()).showHeader = true;
+//            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+//        }
+//        else{
+//
+//            ((PageHeaderfooter)wp.getPageEvent()).showHeader = false;
+//            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*-20*//*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+//
+//        }
 
 //        switch (pagina.ID_PAGINA) {
 //

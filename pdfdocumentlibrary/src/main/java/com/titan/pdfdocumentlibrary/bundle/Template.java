@@ -22,6 +22,7 @@ import com.titan.pdfdocumentlibrary.util.PdfUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Template {
@@ -54,7 +55,7 @@ public abstract class Template {
 
         templateConfiguration = new TemplateConfiguration();
 
-        //--paginacao = new HashMap<Integer, Integer>();
+        paginacao = new HashMap<Integer, Integer>();
     }
 
 
@@ -132,7 +133,7 @@ public abstract class Template {
             //nova página
 
             documento.newPage();
-            alterarEventoPagina(wp.getPageEvent(), pagina, true/*executarEventoPagina(pagina, wp.getPageNumber())*/);
+            alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
         }
 
         try {
@@ -142,7 +143,7 @@ public abstract class Template {
                 try {
                     documento.add(pagina.getElement(index));
 
-                    alterarEventoPagina(wp.getPageEvent(), pagina, true /*executarEventoPagina(pagina, wp.getPageNumber())*/);
+                    alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
                 }
                 catch(NullPointerException e){
                     documento.add(PdfUtil.getErrorTable(e).getPdfTable());
@@ -162,11 +163,6 @@ public abstract class Template {
 
 
 
-
-
-
-
-
     /**
      * Method to add a space between page sections
      * @throws DocumentException
@@ -176,6 +172,45 @@ public abstract class Template {
         paragraph.add(new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, templateConfiguration.getSectionSpacing())));
         documento.add(paragraph);
     }
+
+
+    private HashMap<Integer, Integer> paginacao;
+
+
+    /**
+     * Metodo que indica se um evento pode ser executado na pagina corrente
+     * @param pagina a pagina a ser implementada
+     * @param numero o numero da pagina
+     * @return true caso possa ser executado o evento ou false caso contrário
+     */
+    private boolean executarEventoPagina(Page pagina, int numero){
+
+        boolean resultado = false;
+        if(paginacao.containsKey(numero) == false){
+            resultado = true;
+            paginacao.put(numero, pagina.PAGE_ID);
+        }
+
+
+        /*
+        if(paginacao.containsKey(numero) == false){
+            resultado = false;
+        }
+
+        if(paginacao.containsKey(numero) == true & paginacao.containsValue(pagina.PAGE_ID) == true){
+            resultado = false;
+        }
+
+        if(paginacao.containsKey(numero) == false & paginacao.containsValue(pagina.PAGE_ID) == true){
+            resultado = true;
+        }
+
+        paginacao.put(numero, pagina.PAGE_ID);
+*/
+        return resultado;
+    }
+
+
 
 
     //----------------------
