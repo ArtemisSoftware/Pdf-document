@@ -68,7 +68,6 @@ public abstract class Template {
 
         pages = getPages();
 
-
         criarDocumento();
     }
 
@@ -85,7 +84,8 @@ public abstract class Template {
         //--fixarConteudoRodape(evento);
 
         documento.setPageSize(templateConfiguration.getPageSize());
-        documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*+ evento.obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+        //documento.setMargins(36, 50, 200, 70);
+        //--documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*+ evento.obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
 
         try {
 
@@ -132,8 +132,15 @@ public abstract class Template {
 
             //nova página
 
+            //--alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
             documento.newPage();
-            alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+        }
+        if(pageNumber == 0){
+
+            //nova página
+
+            //--alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+            documento.newPage();
         }
 
         try {
@@ -141,9 +148,10 @@ public abstract class Template {
             for (int index = 0; index < pagina.getIndexes().size(); ++index) {
 
                 try {
+                    //--alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
                     documento.add(pagina.getElement(index));
 
-                    alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+                    //alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
                 }
                 catch(NullPointerException e){
                     documento.add(PdfUtil.getErrorTable(e).getPdfTable());
@@ -186,13 +194,14 @@ public abstract class Template {
     private boolean executarEventoPagina(Page pagina, int numero){
 
         boolean resultado = false;
+  /*
         if(paginacao.containsKey(numero) == false){
             resultado = true;
             paginacao.put(numero, pagina.PAGE_ID);
         }
+*/
+/*
 
-
-        /*
         if(paginacao.containsKey(numero) == false){
             resultado = false;
         }
@@ -206,8 +215,10 @@ public abstract class Template {
         }
 
         paginacao.put(numero, pagina.PAGE_ID);
-*/
-        return resultado;
+
+ */
+        return true;
+
     }
 
 

@@ -30,9 +30,11 @@ public class Pesentation extends Template {
 
         List<Page> pages = new ArrayList<>();
         pages.add(new PresentationPage());
-        pages.add(new SecondPage(context));
-        pages.add(new SecondPage(context));
-        pages.add(new PresentationPage());
+        //pages.add(new SecondPage(context));
+        //pages.add(new SecondPage(context));
+        //pages.add(new PresentationPage());
+        //pages.add(new SecondPage(context));
+        //pages.add(new SecondPage(context));
         return pages;
     }
 
@@ -51,45 +53,29 @@ public class Pesentation extends Template {
      */
     protected void alterarEventoPagina(PdfPageEvent pageEvent, Page pagina, boolean executar){
 
-        if(pagina.PAGE_ID == 1 && executar == true) {
-            ((PageHeaderfooter) wp.getPageEvent()).showHeader = true;
-            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
-        }
-        else{
-            ((PageHeaderfooter)wp.getPageEvent()).showHeader = false;
-            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*-20*//*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
 
-        }
-//        if(pagina.PAGE_ID == 1 && executar == true) {
-//
-//            ((PageHeaderfooter)wp.getPageEvent()).showHeader = true;
-//            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
-//        }
-//        else{
-//
-//            ((PageHeaderfooter)wp.getPageEvent()).showHeader = false;
-//            documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*-20*//*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
-//
-//        }
 
-//        switch (pagina.ID_PAGINA) {
-//
-//            case Pagina.ID_PAGINA_REGISTO_VISITA:
-//
-//                if(executar == true){
-//
-//                    //((CabecalhoRodape)wp.getPageEvent()).fixarConteudo(obterTabelaResumoCabecalho());
-//                    documento.setMargins(MARGEM_ESQUERDA, MARGEM_DIREITA, MARGEM_TOPO + ((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho(), MARGEM_BASE);
-//                }
-//                break;
-//
-//
-//            default:
-//
-//                ((CabecalhoRodape)wp.getPageEvent()).removerCabecalho();
-//                documento.setMargins(MARGEM_ESQUERDA, MARGEM_DIREITA, MARGEM_TOPO + ((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho(), MARGEM_BASE);
-//                break;
-//        }
+        switch (pagina.PAGE_ID) {
+
+            case 1:
+
+                if(executar == true){
+
+                    ((PageHeaderfooter)wp.getPageEvent()).fixarConteudo();
+                    //--documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+                }
+                break;
+
+
+            default:
+
+                ((PageHeaderfooter)wp.getPageEvent()).removerCabecalho();
+                //--documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() -40/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+                break;
+        }
+
+
+
     }
 
 
