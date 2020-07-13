@@ -9,6 +9,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -40,12 +41,22 @@ public class PageHeaderfooter extends PdfPageEventHelper {
     }
 
 
+    private void setHeader(PdfWriter writer, Document document){
+
+        PdfPTable headerTable = headerSection.getSection().getPdfTable();
+        float height = /*headerTable.getTotalHeight()*/0;
+
+        if(document.getPageNumber() == 2 /*|| document.getPageNumber() == 4*/) {
+            headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
+        }
+    }
+
+
 
     private void setFooter(PdfWriter writer, Document document){
 
         PdfContentByte cb = writer.getDirectContent();
 
-        //rodape
 /*
         PdfContentByte canvasReferencia = writer.getDirectContent();
         canvasReferencia.beginMarkedContentSequence(PdfName.ARTIFACT);
@@ -135,7 +146,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 //            document.setMargins(36, 50, 100/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, 70);
 //        }
 //
-
+        setHeader(writer, document);
         setFooter(writer, document);
     }
 
