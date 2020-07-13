@@ -12,6 +12,8 @@ public class CellConfiguration implements Cloneable{
 
     public int rowspan, colSpan;
     public int verticalAlign, horizontalAlign;
+    public int height;
+
 
     public int border;
 
@@ -29,11 +31,12 @@ public class CellConfiguration implements Cloneable{
 
         this.border = PdfConstants.NO_VALUE;
         this.backgroundColor = BaseColor.WHITE;
+        this.height = PdfConstants.NO_VALUE;
 
         /*
         this.rotacao = AppIF.SEM_REGISTO;
 
-        this.altura = AppIF.SEM_REGISTO;
+
         this.alinhamentoTopo = AppIF.SEM_REGISTO;
         this.alinhamentoEsquerda = AppIF.SEM_REGISTO;
         this.alinhamentoInferior = AppIF.SEM_REGISTO;

@@ -46,28 +46,23 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
         PdfContentByte cb = writer.getDirectContent();
 
-        FontConfiguration font = new FontConfiguration();
-        Phrase rodape [] = new Phrase[4];
-        rodape [0] = new Phrase("First line of footer", font.getFont(8, false, BaseColor.GRAY));
-        rodape [1] = new Phrase("Second line of footer", font.getFont(8, false, BaseColor.GRAY));
-        rodape [2] = new Phrase("Third line of footer", font.getFont(8, false, BaseColor.GRAY));
-        rodape [3] = new Phrase("Fourth line of footer", font.getFont(8, false, BaseColor.GRAY));
+        footerSection.adicinarSede(cb, document);
 
-
-
-        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, rodape[0], document.left()/*(document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 10, 0);
-        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, rodape[1], document.left()/*(document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 18, 0);
-
-        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, rodape[2], document.left()/* (document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 28, 0);
-        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, rodape[3], document.left()/*(document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 38, 0);
-
-        //rodape.adicionarNumeroPagina(writer.getPageNumber(), total);
-
+        //rodape
+/*
+        PdfContentByte canvasReferencia = writer.getDirectContent();
+        canvasReferencia.beginMarkedContentSequence(PdfName.ARTIFACT);
+        footerSection.obterTabelaReferencia().obterTabela().writeSelectedRows(0, -1, 15.7f* 36, 75, canvasReferencia);
+        canvasReferencia.endMarkedContentSequence();
+*/
 
         PdfContentByte canvas = writer.getDirectContent();
         canvas.beginMarkedContentSequence(PdfName.ARTIFACT);
-        //rodape.obterTabelaPaginacao().obterTabela().writeSelectedRows(0, -1, 36, /*30*/25, canvas);
+        footerSection.adicionarNumeroPagina(writer.getPageNumber(), total);
+        footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/25, canvas);
         canvas.endMarkedContentSequence();
+
+
 
     }
 
@@ -151,6 +146,8 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
     @Override
     public void onCloseDocument(PdfWriter writer, Document document) {
-        super.onCloseDocument(writer, document);
+
+        FontConfiguration font = new FontConfiguration();
+        ColumnText.showTextAligned(template, Element.ALIGN_LEFT, new Phrase(String.valueOf(writer.getPageNumber()/* -1*/), font.getFont(7,true, BaseColor.GRAY)), 2, /*4*/7.0f, 0);
     }
 }

@@ -154,7 +154,7 @@ public class Table {
      * Method to insert a PdfPCell on a table cell
      * @param pdfPCell cell to insert
      */
-    private void addCell(PdfPCell pdfPCell){
+    public void addCell(PdfPCell pdfPCell){
 
         table.addCell(pdfPCell);
         incrementNumberCells();
@@ -427,6 +427,13 @@ public class Table {
     }
 
 
+    public void setBorder(int border) {
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.border = border;
+        formatBorder(cellConfiguration);
+
+    }
 
     //--------------
     //local methods -format
@@ -475,6 +482,11 @@ public class Table {
 
         if(cellConfiguration.colSpan != PdfConstants.NO_VALUE){
             pdfPCell.setColspan(cellConfiguration.colSpan);
+        }
+
+
+        if(cellConfiguration.height != PdfConstants.NO_VALUE){
+            pdfPCell.setFixedHeight(cellConfiguration.height);
         }
  /*
         if(formato.obter_Altura() != AppIF.SEM_REGISTO ){

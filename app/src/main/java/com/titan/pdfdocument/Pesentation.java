@@ -30,7 +30,7 @@ public class Pesentation extends Template {
 
         List<Page> pages = new ArrayList<>();
         pages.add(new PresentationPage());
-        //pages.add(new SecondPage(context));
+        pages.add(new SecondPage(context));
         //pages.add(new SecondPage(context));
         //pages.add(new PresentationPage());
         //pages.add(new SecondPage(context));
