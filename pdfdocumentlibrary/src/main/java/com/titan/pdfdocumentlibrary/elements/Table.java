@@ -12,6 +12,10 @@ import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Table {
 
     private PdfPTable table;
@@ -423,15 +427,43 @@ public class Table {
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = 0;
         formatBorder(cellConfiguration);
-
     }
 
 
+    /**
+     * Method that removes the borders of specific rows in a table
+     * @param rowPositions the positions
+     */
+    public void removeBorder(int... rowPositions) {
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.border = 0;
+        formatBorder(cellConfiguration, rowPositions);
+    }
+
+
+    /**
+     * Method that sets the border of the table
+     * @param border the specific border
+     */
     public void setBorder(int border) {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = border;
         formatBorder(cellConfiguration);
+    }
+
+
+    /**
+     * Method that sets the border of a specific table row
+     * @param border the specific border
+     * @param rowPositions the rows to affect
+     */
+    public void setBorder(int border, int... rowPositions) {
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.border = border;
+        formatBorder(cellConfiguration, rowPositions);
 
     }
 
@@ -604,6 +636,32 @@ public class Table {
                     formatCell(table.getRow(indice).getCells()[index], cellConfiguration);
                 }
                 catch(NullPointerException e){}
+            }
+        }
+    }
+
+
+    public void formatBorder(CellConfiguration cellConfiguration, int [] rowPositions){
+
+        List<Integer> intList = new ArrayList<Integer>(rowPositions.length);
+        for (int i : rowPositions)
+        {
+            intList.add(i);
+        }
+
+
+        for (int indice = 0; indice < table.getRows().size(); ++indice) {
+
+            if(intList.contains(indice) == true) {
+
+
+                for (int index = 0; index < table.getRow(indice).getCells().length; ++index) {
+                    try {
+
+                        formatCell(table.getRow(indice).getCells()[index], cellConfiguration);
+                    } catch (NullPointerException e) {
+                    }
+                }
             }
         }
     }

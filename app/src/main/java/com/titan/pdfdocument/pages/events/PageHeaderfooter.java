@@ -9,7 +9,6 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfName;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -46,8 +45,6 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
         PdfContentByte cb = writer.getDirectContent();
 
-        footerSection.adicinarSede(cb, document);
-
         //rodape
 /*
         PdfContentByte canvasReferencia = writer.getDirectContent();
@@ -58,11 +55,9 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
         PdfContentByte canvas = writer.getDirectContent();
         canvas.beginMarkedContentSequence(PdfName.ARTIFACT);
-        footerSection.adicionarNumeroPagina(writer.getPageNumber(), total);
-        footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/25, canvas);
+        footerSection.addPageNumberFooter(writer.getPageNumber(), total);
+        footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas);
         canvas.endMarkedContentSequence();
-
-
 
     }
 
@@ -148,6 +143,6 @@ public class PageHeaderfooter extends PdfPageEventHelper {
     public void onCloseDocument(PdfWriter writer, Document document) {
 
         FontConfiguration font = new FontConfiguration();
-        ColumnText.showTextAligned(template, Element.ALIGN_LEFT, new Phrase(String.valueOf(writer.getPageNumber()/* -1*/), font.getFont(7,true, BaseColor.GRAY)), 2, /*4*/7.0f, 0);
+        ColumnText.showTextAligned(template, Element.ALIGN_LEFT, new Phrase(String.valueOf(writer.getPageNumber()/* -1*/), font.getFont(7+6,true, BaseColor.GRAY)), 2, /*4*/3.6f, 0);
     }
 }

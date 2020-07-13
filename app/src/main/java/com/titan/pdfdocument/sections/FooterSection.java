@@ -31,15 +31,26 @@ public class FooterSection extends Section {
 
 
     /**
-     * Metodo que permite adicionar o numero de página ao rodape
-     * @param numeroPagina o numero da pagina
-     * @param total
+     * Method to create a table with the page number info
+     * @param pageNumber the actual page number
+     * @param pageTotal the total number of pages
      */
-    public void adicionarNumeroPagina(int numeroPagina, Image total){
+    public void addPageNumberFooter(int pageNumber, Image pageTotal){
 
         FontConfiguration font = new FontConfiguration();
 
         tableFooter = new Table(new float[]{24, 24, 2}, 3* 175, false);
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration.height = 13;
+
+
+        tableFooter.addLine( new Phrase("First line of footer", font.getFont(8)), cellConfiguration);
+        tableFooter.addLine( new Phrase("Second line of footer", font.getFont(8)), cellConfiguration);
+        tableFooter.addLine( new Phrase("Third line of footer", font.getFont(8)), cellConfiguration);
+        tableFooter.addLine( new Phrase("Fourth line of footer", font.getFont(8)), cellConfiguration);
 
         CellConfiguration cellConfiguration1 = new CellConfiguration();
         cellConfiguration1.horizontalAlign = Element.ALIGN_LEFT;
@@ -52,39 +63,15 @@ public class FooterSection extends Section {
             cellConfiguration2 = (CellConfiguration) cellConfiguration1.clone();
             cellConfiguration2.horizontalAlign = Element.ALIGN_RIGHT;
 
-            tableFooter.addCell(new Phrase(String.format("Página | %d de", numeroPagina), font.getFont(7, true, BaseColor.GRAY)), cellConfiguration2);
+            tableFooter.addCell(new Phrase(String.format("Página | %d de", pageNumber), font.getFont(7, true, BaseColor.GRAY)), cellConfiguration2);
 
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
 
-        PdfPCell cell = new PdfPCell(total);
-        cell.setBorder(Rectangle.TOP);
-        tableFooter.addCell(cell);
-        tableFooter.setBorder(Rectangle.TOP);
-    }
-
-
-    /**
-     * Metodo que permite adicionar a sede ao rodape
-     * @param cb
-     * @param document
-     */
-    public void adicinarSede(PdfContentByte cb, Document document){
-
-        FontConfiguration font = new FontConfiguration();
-
-        Phrase frase = new Phrase("First line of footer", font.getFont(8));
-        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, frase, document.left()/*(document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 10, 0);
-
-//        frase = new Phrase("Second line of footer", font.getFont(8));
-//        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, frase, document.left()/*(document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 18, 0);
-//
-//        frase = new Phrase("Third line of footer", font.getFont(8));
-//        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, frase, document.left()/* (document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 28, 0);
-//
-//        frase = new Phrase("Fourth line of footer", font.getFont(8));
-//        ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, frase, document.left()/*(document.right() - document.left()) / 2 + document.leftMargin()*/, document.bottom() - 38, 0);
+        tableFooter.addCell(pageTotal);
+        tableFooter.removeBorder(0,1,2,3);
+        tableFooter.setBorder(Rectangle.TOP, 4);
 
     }
 
