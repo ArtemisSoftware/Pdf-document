@@ -23,8 +23,20 @@ public class TemplateConfiguration {
         this.leftMargin = PdfConstants.LEFT_MARGIN;
         this.rightMargin = PdfConstants.RIGHT_MARGIN;
         this.topMargin = PdfConstants.TOP_MARGIN;
-        this.baseMargin = 100;//PdfConstants.BASE_MARGIN;
+        this.baseMargin = PdfConstants.BASE_MARGIN;
     }
+
+    public TemplateConfiguration(Rectangle pageSize, int leftMargin, int rightMargin, int topMargin, int baseMargin, float sectionSpacing) {
+
+        this.pageSize = pageSize;
+        this.leftMargin = leftMargin;
+        this.rightMargin = rightMargin;
+        this.topMargin = topMargin;
+        this.baseMargin = baseMargin;
+        this.sectionSpacing = sectionSpacing;
+    }
+
+
 
     public Rectangle getPageSize() {
         return pageSize;

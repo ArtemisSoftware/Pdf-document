@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.titan.pdfdocument.pages.PresentationConfiguration;
 import com.titan.pdfdocument.pages.PresentationPage;
 import com.titan.pdfdocument.pages.SecondPage;
 import com.titan.pdfdocument.pages.TablePage;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Pesentation extends Template {
 
     public Pesentation(Context context, File directory) {
-        super(context, directory);
+        super(context, directory, new PresentationConfiguration());
     }
 
 
@@ -35,10 +36,10 @@ public class Pesentation extends Template {
         pages.add(new PresentationPage());
         pages.add(new SecondPage(context));
         pages.add(new TablePage());
-        //pages.add(new SecondPage(context));
-        //pages.add(new PresentationPage());
-        //pages.add(new SecondPage(context));
-        //pages.add(new SecondPage(context));
+        pages.add(new SecondPage(context));
+        pages.add(new PresentationPage());
+        pages.add(new SecondPage(context));
+        pages.add(new SecondPage(context));
         return pages;
     }
 
@@ -58,19 +59,11 @@ public class Pesentation extends Template {
         switch (pageId) {
 
             case 1:
-
-                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), 115, templateConfiguration.getBaseMargin());
-                break;
-
-            case 2:
-
-                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin()/*00*/, templateConfiguration.getBaseMargin());
-                break;
-
             case 3:
 
-                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), 115, templateConfiguration.getBaseMargin());
+                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), ((PresentationConfiguration)templateConfiguration).getTopMarginHeader(), templateConfiguration.getBaseMargin());
                 break;
+
 
             default:
 

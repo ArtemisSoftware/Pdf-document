@@ -48,12 +48,25 @@ public abstract class Template {
 
         this.context = context;
         DIRECTORY = directory;
+        templateConfiguration = new TemplateConfiguration();
 
         ficheiroPdf = null;
         documento = new Document();
         chapterNumber = 0;
 
-        templateConfiguration = new TemplateConfiguration();
+        paginacao = new HashMap<Integer, Integer>();
+    }
+
+
+    public Template(Context context, File directory, TemplateConfiguration templateConfiguration){
+
+        this.context = context;
+        DIRECTORY = directory;
+        this.templateConfiguration = templateConfiguration;
+
+        ficheiroPdf = null;
+        documento = new Document();
+        chapterNumber = 0;
 
         paginacao = new HashMap<Integer, Integer>();
     }
@@ -65,8 +78,9 @@ public abstract class Template {
     public void createFile() {
 
         ficheiroPdf = PdfUtil.getFile(this, DIRECTORY, getFileName());
-
         pages = getPages();
+        chapterNumber = 0;
+        paginacao = new HashMap<Integer, Integer>();
 
         criarDocumento();
     }
@@ -95,7 +109,6 @@ public abstract class Template {
                 addPage(page);
             }
 
-            //setOnFinishTemplate();
             PdfUtil.addMetaData(context, documento, this);
 
         }

@@ -17,7 +17,7 @@ public class PdfConstants {
     public static int LEFT_MARGIN = 36;
     public static int RIGHT_MARGIN = 50; //72
     public static int TOP_MARGIN = 60; //108
-    public static int BASE_MARGIN = 70 ;//180
+    public static int BASE_MARGIN = 100;
 
 
     public static FontFamily BASE_FONT_FAMILY = FontFamily.HELVETICA;
