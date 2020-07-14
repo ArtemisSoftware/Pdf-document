@@ -1,5 +1,6 @@
 package com.titan.pdfdocument.pages;
 
+import com.titan.pdfdocument.sections.MaxTableSection;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Section;
 import com.titan.pdfdocumentlibrary.models.Index;
@@ -30,7 +31,7 @@ public class TablePage extends Page {
 
             case 1:
 
-                //section = new MainSection();
+                section = new MaxTableSection();
                 break;
 
             default:

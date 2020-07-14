@@ -38,9 +38,9 @@ public abstract class Template {
     protected Context context;
     protected TemplateConfiguration templateConfiguration;
 
-    private int pageNumber;
-    //--private HashMap<Integer, Integer> paginacao;
+    private int chapterNumber;
 
+    protected HashMap<Integer, Integer> paginacao;
     private List<Page> pages;
 
 
@@ -51,7 +51,7 @@ public abstract class Template {
 
         ficheiroPdf = null;
         documento = new Document();
-        pageNumber = 0;
+        chapterNumber = 0;
 
         templateConfiguration = new TemplateConfiguration();
 
@@ -80,12 +80,8 @@ public abstract class Template {
 
         PdfPageEventHelper pageEventHelper = getPageEvent();
 
-        //--CabecalhoRodape evento = new CabecalhoRodape();
-        //--fixarConteudoRodape(evento);
-
         documento.setPageSize(templateConfiguration.getPageSize());
-        //documento.setMargins(36, 50, 200, 70);
-        //--documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() /*+ evento.obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+        documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
 
         try {
 
@@ -99,6 +95,7 @@ public abstract class Template {
                 addPage(page);
             }
 
+            //setOnFinishTemplate();
             PdfUtil.addMetaData(context, documento, this);
 
         }
@@ -128,30 +125,18 @@ public abstract class Template {
      */
     private void addPage(Page pagina){
 
-        if(pageNumber != 0){
-
-            //nova página
-
-            //--alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
-            documento.newPage();
-        }
-        if(pageNumber == 0){
-
-            //nova página
-
-            //--alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
-            documento.newPage();
-        }
+        setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
+        setNewChapterConfigurations(chapterNumber);
 
         try {
 
             for (int index = 0; index < pagina.getIndexes().size(); ++index) {
 
                 try {
-                    //--alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
+
+                    setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
                     documento.add(pagina.getElement(index));
 
-                    //alterarEventoPagina(wp.getPageEvent(), pagina, executarEventoPagina(pagina, wp.getPageNumber()));
                 }
                 catch(NullPointerException e){
                     documento.add(PdfUtil.getErrorTable(e).getPdfTable());
@@ -159,13 +144,12 @@ public abstract class Template {
 
                 addSpace();
             }
-
         }
         catch (DocumentException e) {
             e.printStackTrace();
         }
 
-        ++pageNumber;
+        ++chapterNumber;
     }
 
 
@@ -181,45 +165,6 @@ public abstract class Template {
         documento.add(paragraph);
     }
 
-
-    private HashMap<Integer, Integer> paginacao;
-
-
-    /**
-     * Metodo que indica se um evento pode ser executado na pagina corrente
-     * @param pagina a pagina a ser implementada
-     * @param numero o numero da pagina
-     * @return true caso possa ser executado o evento ou false caso contrário
-     */
-    private boolean executarEventoPagina(Page pagina, int numero){
-
-        boolean resultado = false;
-  /*
-        if(paginacao.containsKey(numero) == false){
-            resultado = true;
-            paginacao.put(numero, pagina.PAGE_ID);
-        }
-*/
-/*
-
-        if(paginacao.containsKey(numero) == false){
-            resultado = false;
-        }
-
-        if(paginacao.containsKey(numero) == true & paginacao.containsValue(pagina.PAGE_ID) == true){
-            resultado = false;
-        }
-
-        if(paginacao.containsKey(numero) == false & paginacao.containsValue(pagina.PAGE_ID) == true){
-            resultado = true;
-        }
-
-        paginacao.put(numero, pagina.PAGE_ID);
-
- */
-        return true;
-
-    }
 
 
 
@@ -280,13 +225,20 @@ public abstract class Template {
     protected abstract PdfPageEventHelper getPageEvent();
 
 
-    protected abstract void alterarEventoPagina(PdfPageEvent pageEvent, Page pagina, boolean executar);
+    /**
+     * Method to set the configurations of a chapter
+     * @param chapterNumber the number of the chapter
+     */
+    protected abstract void setNewChapterConfigurations(int chapterNumber);
 
 
     /**
-     * Metodo que permite fixar informacao ao rodape
+     * Method to set the configurations of a page
+     * @param pageEvent the page event
+     * @param chapter the data of the chapter
+     * @param pageNumber the number of the page
      */
-    //--abstract protected void fixarConteudoRodape(CabecalhoRodape evento);
+    protected abstract void setNewPageConfigurations(PdfPageEvent pageEvent, Page chapter, int pageNumber);
 
 
 

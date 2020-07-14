@@ -1,7 +1,6 @@
 package com.titan.pdfdocumentlibrary.bundle;
 
 import com.itextpdf.text.pdf.PdfPTable;
-import com.titan.pdfdocumentlibrary.elements.Table;
 import com.titan.pdfdocumentlibrary.exception.InexistentSectionException;
 import com.titan.pdfdocumentlibrary.models.Index;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
@@ -13,15 +12,15 @@ public abstract class Page {
 
 
 
-    public final int PAGE_ID;
+    public final int CHAPTER_ID;
 
 
 
     protected List<Index> indexes;
 
-    public Page(int pageId){
+    public Page(int chapterId){
 
-        PAGE_ID = pageId;
+        CHAPTER_ID = chapterId;
         indexes = getPageIndexes();
     }
 
@@ -75,7 +74,7 @@ public abstract class Page {
             throw new InexistentSectionException("The element in position: " + index + " does not correspond to an existing section for the page " + this.getClass().getSimpleName(), e);
         }
         catch (NullPointerException e){
-            throw new InexistentSectionException("There are no sections avaliable for the page " + this.getClass().getSimpleName(), e);
+            throw new InexistentSectionException("There are no sections avaliable for the chapter " + this.getClass().getSimpleName(), e);
         }
     }
 

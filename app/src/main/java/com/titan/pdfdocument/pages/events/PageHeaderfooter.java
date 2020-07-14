@@ -18,26 +18,28 @@ import com.titan.pdfdocument.sections.FooterSection;
 import com.titan.pdfdocument.sections.HeaderSection;
 import com.titan.pdfdocumentlibrary.elements.FontConfiguration;
 
+import java.util.HashMap;
+
 public class PageHeaderfooter extends PdfPageEventHelper {
 
     private HeaderSection headerSection;
     private FooterSection footerSection;
 
-//    private boolean ativarCabecalho;
+    private HashMap<Integer, Integer> pagination;
 
     private PdfTemplate template;
     private Image total;
-    public boolean showHeader;
+
 
     public PageHeaderfooter(){
 
-        showHeader = false;
         headerSection = new HeaderSection();
         footerSection = new FooterSection();
+    }
 
-//        rodape = new Rodape();
-//        ativarCabecalho =  false;
 
+    public void setRelations(HashMap<Integer, Integer> pagination) {
+        this.pagination = pagination;
     }
 
 
@@ -46,9 +48,61 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         PdfPTable headerTable = headerSection.getSection().getPdfTable();
         float height = /*headerTable.getTotalHeight()*/0;
 
-        if(document.getPageNumber() == 2 /*|| document.getPageNumber() == 4*/) {
-            headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
+
+
+        if(this.pagination == null){
+            return;
         }
+
+
+        int chapterId = 0;
+
+        try {
+
+            chapterId = this.pagination.get(document.getPageNumber());
+
+        }
+        catch (NullPointerException e) {
+
+            chapterId = this.pagination.get(this.pagination.size());
+        }
+
+
+        switch (chapterId) {
+
+            case 1:
+            case 3:
+
+                headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
+                break;
+
+            default:
+                break;
+
+        }
+//try {
+//    if (this.pagination.get(document.getPageNumber()) == 3 || this.pagination.get(document.getPageNumber()) == 1) {
+//
+//        headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
+//        //document.setMargins(36, 50, 200, 100);
+//    }
+//}
+//catch (NullPointerException e){
+//
+//    try {
+//
+//    if (this.pagination.get(document.getPageNumber() -1 ) == 3) {
+//
+//        headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
+//        //document.setMargins(36, 50, 0, 100);
+//    }
+//
+//    }
+//    catch (NullPointerException y){
+//
+//        //document.setMargins(36, 50, 00, 100);
+//    }
+//}
     }
 
 
@@ -74,21 +128,12 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
 
 
-    public void fixarConteudo(){
 
-        //cabecalho = new Cabecalho();
-        showHeader = true;
-    }
-
-    public void removerCabecalho(){
-
-        //cabecalho = new Cabecalho();
-        showHeader = false;
-    }
 
 
     @Override
     public void onOpenDocument(PdfWriter writer, Document document) {
+
         template = writer.getDirectContent().createTemplate(30, 16);
         try {
             total = Image.getInstance(template);
@@ -104,51 +149,11 @@ public class PageHeaderfooter extends PdfPageEventHelper {
     @Override
     public void onEndPage(PdfWriter writer, Document document) {
 
-        //header
-
-
-//        if(document.getPageNumber() == 1 /*|| document.getPageNumber() == 4*/){
-//            document.setMargins(36, 50, 200, 70);
-//        }
-//
-//
-//        if(document.getPageNumber() == 2 /*|| document.getPageNumber() == 4*/){
-//            document.setMargins(36, 50, 20, 70);
-//        }
-//
-//
-//        if(document.getPageNumber() == 3 /*|| document.getPageNumber() == 4*/){
-//            document.setMargins(36, 50, 40, 70);
-//        }
-//
-//
-//        if(document.getPageNumber() == 4 /*|| document.getPageNumber() == 4*/){
-//            document.setMargins(36, 50, 80, 70);
-//        }
-
-
-//
-//        if(document.getPageNumber() == 1 || document.getPageNumber() == 4/*showHeader == true*/){
-//
-//        PdfPTable headerTable = headerSection.getSection().getPdfTable();
-//        float height = /*headerTable.getTotalHeight()*/0;
-//
-//            document.setMargins(36, 50, 100/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, 70);
-//        headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
-//        }
-
-
-//        else if(document.getPageNumber() == 2 || document.getPageNumber() == 3 || document.getPageNumber() == 5){
-//            document.setMargins(36, 50, 100 -80/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, 70);
-//
-//        }
-//        else{
-//            document.setMargins(36, 50, 100/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, 70);
-//        }
-//
         setHeader(writer, document);
         setFooter(writer, document);
     }
+
+
 
     @Override
     public void onCloseDocument(PdfWriter writer, Document document) {
@@ -156,4 +161,6 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         FontConfiguration font = new FontConfiguration();
         ColumnText.showTextAligned(template, Element.ALIGN_LEFT, new Phrase(String.valueOf(writer.getPageNumber()/* -1*/), font.getFont(7+6,true, BaseColor.GRAY)), 2, /*4*/3.6f, 0);
     }
+
+
 }

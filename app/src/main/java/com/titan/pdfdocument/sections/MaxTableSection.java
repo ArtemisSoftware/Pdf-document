@@ -16,9 +16,10 @@ public class MaxTableSection extends Section {
     protected void populateSection() {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.height = 30;
         FontConfiguration fontConfiguration = new FontConfiguration();
 
-        for(int index = 0; index < 9; ++index){
+        for(int index = 0; index < 22 *2; ++index){
 
             table.addLine(new Phrase("I am line number " + (index + 1), fontConfiguration.getFont(8)), cellConfiguration);
         }

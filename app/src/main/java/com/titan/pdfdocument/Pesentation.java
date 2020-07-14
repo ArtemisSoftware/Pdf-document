@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.titan.pdfdocument.pages.PresentationPage;
 import com.titan.pdfdocument.pages.SecondPage;
+import com.titan.pdfdocument.pages.TablePage;
 import com.titan.pdfdocument.pages.events.PageHeaderfooter;
 import com.titan.pdfdocumentlibrary.bundle.Page;
 import com.titan.pdfdocumentlibrary.bundle.Template;
@@ -20,6 +21,8 @@ public class Pesentation extends Template {
         super(context, directory);
     }
 
+
+
     @Override
     protected String getFileName() {
         return "one";
@@ -31,6 +34,7 @@ public class Pesentation extends Template {
         List<Page> pages = new ArrayList<>();
         pages.add(new PresentationPage());
         pages.add(new SecondPage(context));
+        pages.add(new TablePage());
         //pages.add(new SecondPage(context));
         //pages.add(new PresentationPage());
         //pages.add(new SecondPage(context));
@@ -45,39 +49,48 @@ public class Pesentation extends Template {
 
 
 
-    /**
-     * Metodo que permite alterar os eventos da pagina
-     * @param pageEvent
-     * @param pagina a pagina a alterar
-     * @param executar true caso seja para executar a alterarcao ou false caso contrario
-     */
-    protected void alterarEventoPagina(PdfPageEvent pageEvent, Page pagina, boolean executar){
+    @Override
+    protected void setNewChapterConfigurations(int chapterNumber) {
 
 
+        int pageId = this.getPages().get(chapterNumber).CHAPTER_ID;
 
-        switch (pagina.PAGE_ID) {
+        switch (pageId) {
 
             case 1:
 
-                if(executar == true){
-
-                    ((PageHeaderfooter)wp.getPageEvent()).fixarConteudo();
-                    //--documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() +/*20*/0/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
-                }
+                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), 115, templateConfiguration.getBaseMargin());
                 break;
 
+            case 2:
+
+                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin()/*00*/, templateConfiguration.getBaseMargin());
+                break;
+
+            case 3:
+
+                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), 115, templateConfiguration.getBaseMargin());
+                break;
 
             default:
 
-                ((PageHeaderfooter)wp.getPageEvent()).removerCabecalho();
-                //--documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin() -40/*((CabecalhoRodape)wp.getPageEvent()).obterAlturaCabecalho()*/, templateConfiguration.getBaseMargin());
+                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
                 break;
         }
 
-
+        documento.newPage();
 
     }
 
+    @Override
+    protected void setNewPageConfigurations(PdfPageEvent pageEvent, Page chapter, int pageNumber) {
+
+        if(paginacao.containsKey(pageNumber) == false){
+            paginacao.put(pageNumber, chapter.CHAPTER_ID);
+        }
+
+        ((PageHeaderfooter)pageEvent).setRelations(paginacao);
+    }
 
 
 }
