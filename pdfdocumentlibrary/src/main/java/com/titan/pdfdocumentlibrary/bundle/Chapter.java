@@ -7,7 +7,7 @@ import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.util.List;
 
-public abstract class Page {
+public abstract class Chapter {
 
 
 
@@ -18,10 +18,10 @@ public abstract class Page {
 
     protected List<Index> indexes;
 
-    public Page(int chapterId){
+    public Chapter(int chapterId){
 
         CHAPTER_ID = chapterId;
-        indexes = getPageIndexes();
+        indexes = getChapterIndexes();
     }
 
 
@@ -71,7 +71,7 @@ public abstract class Page {
             return indexes.get(index);
         }
         catch (IndexOutOfBoundsException e){
-            throw new InexistentSectionException("The element in position: " + index + " does not correspond to an existing section for the page " + this.getClass().getSimpleName(), e);
+            throw new InexistentSectionException("The element in position: " + index + " does not correspond to an existing section for the chapter " + this.getClass().getSimpleName(), e);
         }
         catch (NullPointerException e){
             throw new InexistentSectionException("There are no sections avaliable for the chapter " + this.getClass().getSimpleName(), e);
@@ -86,10 +86,10 @@ public abstract class Page {
 
 
     /**
-     * Method to get all the indexes of a page
+     * Method to get all the indexes of a chapter
      * @return an array of indexes
      */
-    protected abstract List<Index> getPageIndexes();
+    protected abstract List<Index> getChapterIndexes();
 
 
     /**

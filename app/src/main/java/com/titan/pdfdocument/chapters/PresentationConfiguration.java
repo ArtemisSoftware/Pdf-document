@@ -1,4 +1,4 @@
-package com.titan.pdfdocument.pages;
+package com.titan.pdfdocument.chapters;
 
 import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
 

@@ -29,6 +29,6 @@ public class PdfDocumentAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
 
-        this.template.openPdf(mContext);
+        this.template.openPdf();
     }
 }

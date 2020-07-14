@@ -4,12 +4,12 @@ import android.content.Context;
 
 import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
-import com.titan.pdfdocument.pages.PresentationConfiguration;
-import com.titan.pdfdocument.pages.PresentationPage;
-import com.titan.pdfdocument.pages.SecondPage;
-import com.titan.pdfdocument.pages.TablePage;
-import com.titan.pdfdocument.pages.events.PageHeaderfooter;
-import com.titan.pdfdocumentlibrary.bundle.Page;
+import com.titan.pdfdocument.chapters.PresentationConfiguration;
+import com.titan.pdfdocument.chapters.PresentationChapter;
+import com.titan.pdfdocument.chapters.ImageChapter;
+import com.titan.pdfdocument.chapters.TableChapter;
+import com.titan.pdfdocument.chapters.events.PageHeaderfooter;
+import com.titan.pdfdocumentlibrary.bundle.Chapter;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 
 import java.io.File;
@@ -30,23 +30,23 @@ public class Pesentation extends Template {
     }
 
     @Override
-    protected List<Page> getPages() {
+    protected List<Chapter> getChapters() {
 
-        List<Page> pages = new ArrayList<>();
-        pages.add(new PresentationPage());
-        pages.add(new SecondPage(context));
-        pages.add(new TablePage());
-        pages.add(new SecondPage(context));
-        pages.add(new PresentationPage());
-        pages.add(new SecondPage(context));
-        pages.add(new SecondPage(context));
-        pages.add(new TablePage());
+        List<Chapter> pages = new ArrayList<>();
+        pages.add(new PresentationChapter());
+        pages.add(new ImageChapter(context));
+        pages.add(new TableChapter());
+        pages.add(new ImageChapter(context));
+        pages.add(new PresentationChapter());
+        pages.add(new ImageChapter(context));
+        pages.add(new ImageChapter(context));
+        pages.add(new TableChapter());
         return pages;
     }
 
     @Override
     protected PdfPageEventHelper getPageEvent() {
-        return new PageHeaderfooter(this.getPages().get(0).CHAPTER_ID);
+        return new PageHeaderfooter(this.getChapters().get(0).CHAPTER_ID);
     }
 
 
@@ -54,8 +54,7 @@ public class Pesentation extends Template {
     @Override
     protected void setNewChapterConfigurations(PdfPageEvent pageEvent, int chapterNumber) {
 
-
-        int chapterId = this.getPages().get(chapterNumber).CHAPTER_ID;
+        int chapterId = this.getChapters().get(chapterNumber).CHAPTER_ID;
         ((PageHeaderfooter)pageEvent).chapterId = chapterId;
 
         switch (chapterId) {
@@ -63,22 +62,22 @@ public class Pesentation extends Template {
             case 1:
             case 3:
 
-                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), ((PresentationConfiguration)templateConfiguration).getTopMarginHeader(), templateConfiguration.getBaseMargin());
+                document.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), ((PresentationConfiguration)templateConfiguration).getTopMarginHeader(), templateConfiguration.getBaseMargin());
                 break;
 
 
             default:
 
-                documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
+                document.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
                 break;
         }
 
-        documento.newPage();
+        document.newPage();
 
     }
 
     @Override
-    protected void setNewPageConfigurations(PdfPageEvent pageEvent, Page chapter, int pageNumber) {
+    protected void setNewPageConfigurations(PdfPageEvent pageEvent, Chapter chapter, int pageNumber) {
 
         if(paginacao.containsKey(pageNumber) == false){
             paginacao.put(pageNumber, chapter.CHAPTER_ID);

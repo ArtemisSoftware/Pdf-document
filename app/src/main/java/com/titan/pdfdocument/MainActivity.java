@@ -2,10 +2,12 @@ package com.titan.pdfdocument;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,7 +25,6 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.titan.pdfdocumentlibrary.SimplePdf;
 import com.titan.pdfdocumentlibrary.bundle.Template;
-import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.io.File;
 import java.util.List;
@@ -35,16 +36,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SimplePdf.test(this, "ddd-lolo");
+        //SimplePdf.test(this, "ddd-lolo");
+        //--requestStoragePermission();
 
-        requestStoragePermission();
-
+        ((MaterialButton)findViewById(R.id.btn_test_pdf)).setOnClickListener(btn_test_pdf__OnClickListener);
         ((MaterialButton)findViewById(R.id.btn_presentation_pdf)).setOnClickListener(btn_presentation_pdf__OnClickListener);
 
     }
 
 
-    private void initPdf(){
+    private void presentationPdf(){
+        String directoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
+
+
+        boolean created = false;
+
+        File dir = new File(directoryPath);
+        if(!dir.exists())
+            created = dir.mkdirs();
+
+
+        Template presentation = new Pesentation(this, dir);
+        PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation);
+        taskPresentation.execute();
+    }
+
+
+    private void testPdf(){
         String directoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
 
 
@@ -56,13 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         TestPdfAsyncTask task = new TestPdfAsyncTask(this);
-        //task.execute(dir);
+        task.execute(dir);
 
-
-        Template presentation = new Pesentation(this, dir);
-        PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation);
-        taskPresentation.execute();
     }
+
 
 
 
@@ -70,10 +85,39 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            requestStoragePermission();
+            if(checkPdfPermissions() == true) {
+                presentationPdf();
+            }
         }
     };
 
+
+    MaterialButton.OnClickListener btn_test_pdf__OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if(checkPdfPermissions() == true) {
+                testPdf();
+            }
+
+        }
+    };
+
+
+
+    private boolean checkPdfPermissions(){
+
+        int storage = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int read = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (storage == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        else{
+            requestStoragePermission();
+            return false;
+        }
+    }
 
 
 
@@ -94,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         if (report.areAllPermissionsGranted()) {
                             Toast.makeText(getApplicationContext(), "All permissions are granted!", Toast.LENGTH_SHORT).show();
 
-                            initPdf();
+                            //presentationPdf();
                         }
 
                         // check for permanent denial of any permission

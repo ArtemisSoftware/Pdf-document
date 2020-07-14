@@ -1,4 +1,4 @@
-package com.titan.pdfdocument.pages.events;
+package com.titan.pdfdocument.chapters.events;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -52,28 +52,25 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         float height = /*headerTable.getTotalHeight()*/0;
 
 
-        int lolo = 0;
+        int currentChapter = 0;
 
 
         if(this.pagination == null){
-            //return;
-            lolo = chapterId;
+            currentChapter = chapterId;
         }
-
 
         try {
 
             chapterId = this.pagination.get(document.getPageNumber());
-            lolo = chapterId;
+            currentChapter = chapterId;
         }
         catch (NullPointerException e) {
 
-            //chapterId = this.pagination.get(this.pagination.size());
-            lolo = chapterId;
+            currentChapter = chapterId;
         }
 
 
-        switch (lolo) {
+        switch (currentChapter) {
 
             case 1:
             case 3:

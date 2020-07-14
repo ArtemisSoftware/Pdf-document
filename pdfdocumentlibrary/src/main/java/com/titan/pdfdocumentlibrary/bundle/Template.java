@@ -28,8 +28,8 @@ import java.util.List;
 public abstract class Template {
 
 
-    protected File ficheiroPdf;
-    protected Document documento;
+    protected File pdfFile;
+    protected Document document;
     protected PdfWriter wp;
 
 
@@ -41,7 +41,7 @@ public abstract class Template {
     private int chapterNumber;
 
     protected HashMap<Integer, Integer> paginacao;
-    private List<Page> pages;
+    private List<Chapter> chapters;
 
 
     public Template(Context context, File directory){
@@ -50,8 +50,8 @@ public abstract class Template {
         DIRECTORY = directory;
         templateConfiguration = new TemplateConfiguration();
 
-        ficheiroPdf = null;
-        documento = new Document();
+        pdfFile = null;
+        document = new Document();
         chapterNumber = 0;
 
         paginacao = new HashMap<Integer, Integer>();
@@ -64,8 +64,8 @@ public abstract class Template {
         DIRECTORY = directory;
         this.templateConfiguration = templateConfiguration;
 
-        ficheiroPdf = null;
-        documento = new Document();
+        pdfFile = null;
+        document = new Document();
         chapterNumber = 0;
 
         paginacao = new HashMap<Integer, Integer>();
@@ -77,39 +77,39 @@ public abstract class Template {
      */
     public void createFile() {
 
-        ficheiroPdf = PdfUtil.getFile(this, DIRECTORY, getFileName());
-        pages = getPages();
+        pdfFile = PdfUtil.getFile(this, DIRECTORY, getFileName());
+        chapters = getChapters();
         chapterNumber = 0;
         paginacao = new HashMap<Integer, Integer>();
 
-        criarDocumento();
+        createDocument();
     }
 
 
+
     /**
-     * Metodo que cria um ficheiro pdf representativo do acordo
-     * param ficheiro ficheiro a ser criado
+     * Method to create a document
      */
-    private void criarDocumento(){
+    private void createDocument(){
 
         PdfPageEventHelper pageEventHelper = getPageEvent();
 
-        documento.setPageSize(templateConfiguration.getPageSize());
-        documento.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
+        document.setPageSize(templateConfiguration.getPageSize());
+        document.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
 
         try {
 
-            FileOutputStream fOut = new FileOutputStream(ficheiroPdf);
-            wp = PdfWriter.getInstance(documento, fOut);
+            FileOutputStream fOut = new FileOutputStream(pdfFile);
+            wp = PdfWriter.getInstance(document, fOut);
             wp.setPageEvent(pageEventHelper);
 
-            documento.open();
+            document.open();
 
-            for (Page page: pages) {
-                addPage(page);
+            for (Chapter page: chapters) {
+                addChapter(page);
             }
 
-            PdfUtil.addMetaData(context, documento, this);
+            PdfUtil.addMetaData(context, document, this);
 
         }
         catch (DocumentException | IOException de) {
@@ -120,42 +120,42 @@ public abstract class Template {
         }
 
         finally{
-            documento.close();
+            document.close();
         }
     }
 
 
 
     //----------------------
-    //Pages
+    //Chapter
     //----------------------
 
 
 
     /**
-     * Method to add a page to the document
-     * @param pagina the page to add
+     * Method to add a chapter to the document
+     * @param chapter the chapter to add
      */
-    private void addPage(Page pagina){
+    private void addChapter(Chapter chapter){
 
-        setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
+        setNewPageConfigurations(wp.getPageEvent(), chapter, wp.getPageNumber());
         setNewChapterConfigurations(wp.getPageEvent(), chapterNumber);
 
         try {
 
-            for (int index = 0; index < pagina.getIndexes().size(); ++index) {
-                setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
+            for (int index = 0; index < chapter.getIndexes().size(); ++index) {
+                setNewPageConfigurations(wp.getPageEvent(), chapter, wp.getPageNumber());
                 try {
 
-                    documento.add(pagina.getElement(index));
+                    document.add(chapter.getElement(index));
 
                 }
                 catch(NullPointerException e){
-                    documento.add(PdfUtil.getErrorTable(e).getPdfTable());
+                    document.add(PdfUtil.getErrorTable(e).getPdfTable());
                 }
 
                 addSpace();
-                setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
+                setNewPageConfigurations(wp.getPageEvent(), chapter, wp.getPageNumber());
 
             }
         }
@@ -170,13 +170,13 @@ public abstract class Template {
 
 
     /**
-     * Method to add a space between page sections
+     * Method to add a space between chapter sections
      * @throws DocumentException
      */
     private void addSpace() throws DocumentException {
         Paragraph paragraph = new Paragraph();
         paragraph.add(new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, templateConfiguration.getSectionSpacing())));
-        documento.add(paragraph);
+        document.add(paragraph);
     }
 
 
@@ -190,23 +190,23 @@ public abstract class Template {
 
 
     /**
-     * Metodo que permite abrir o pdf gerado
+     * Method to open the pdf
      */
-    public void openPdf(Context context){
+    public void openPdf(){
 
-        Uri ficheiroURI;
+        Uri uriFile;
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            ficheiroURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", ficheiroPdf);
+            uriFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", pdfFile);
         }
         else{
-            ficheiroURI = Uri.fromFile(ficheiroPdf);
+            uriFile = Uri.fromFile(pdfFile);
         }
 
-        intent.setDataAndType(ficheiroURI, PdfConstants.MIME_TYPE_APPLICATION_PDF);
+        intent.setDataAndType(uriFile, PdfConstants.MIME_TYPE_APPLICATION_PDF);
         context.startActivity(intent);
     }
 
@@ -226,10 +226,10 @@ public abstract class Template {
 
 
     /**
-     * Method to get the pages of the document
-     * @return a list of pages
+     * Method to get the chapters of the document
+     * @return a list of chapters
      */
-    protected abstract List<Page> getPages();
+    protected abstract List<Chapter> getChapters();
 
 
     /**
@@ -252,7 +252,7 @@ public abstract class Template {
      * @param chapter the data of the chapter
      * @param pageNumber the number of the page
      */
-    protected abstract void setNewPageConfigurations(PdfPageEvent pageEvent, Page chapter, int pageNumber);
+    protected abstract void setNewPageConfigurations(PdfPageEvent pageEvent, Chapter chapter, int pageNumber);
 
 
 
