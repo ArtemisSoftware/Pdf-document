@@ -139,15 +139,14 @@ public abstract class Template {
     private void addPage(Page pagina){
 
         setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
-        setNewChapterConfigurations(chapterNumber);
+        setNewChapterConfigurations(wp.getPageEvent(), chapterNumber);
 
         try {
 
             for (int index = 0; index < pagina.getIndexes().size(); ++index) {
-
+                setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
                 try {
 
-                    setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
                     documento.add(pagina.getElement(index));
 
                 }
@@ -156,6 +155,8 @@ public abstract class Template {
                 }
 
                 addSpace();
+                setNewPageConfigurations(wp.getPageEvent(), pagina, wp.getPageNumber());
+
             }
         }
         catch (DocumentException e) {
@@ -242,7 +243,7 @@ public abstract class Template {
      * Method to set the configurations of a chapter
      * @param chapterNumber the number of the chapter
      */
-    protected abstract void setNewChapterConfigurations(int chapterNumber);
+    protected abstract void setNewChapterConfigurations(PdfPageEvent pageEvent, int chapterNumber);
 
 
     /**

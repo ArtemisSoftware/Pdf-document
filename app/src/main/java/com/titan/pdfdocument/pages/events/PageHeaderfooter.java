@@ -30,9 +30,12 @@ public class PageHeaderfooter extends PdfPageEventHelper {
     private PdfTemplate template;
     private Image total;
 
+    public int chapterId;
 
-    public PageHeaderfooter(){
 
+    public PageHeaderfooter(int chapterId){
+
+        this.chapterId = chapterId;
         headerSection = new HeaderSection();
         footerSection = new FooterSection();
     }
@@ -49,26 +52,28 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         float height = /*headerTable.getTotalHeight()*/0;
 
 
+        int lolo = 0;
+
 
         if(this.pagination == null){
-            return;
+            //return;
+            lolo = chapterId;
         }
 
-
-        int chapterId = 0;
 
         try {
 
             chapterId = this.pagination.get(document.getPageNumber());
-
+            lolo = chapterId;
         }
         catch (NullPointerException e) {
 
-            chapterId = this.pagination.get(this.pagination.size());
+            //chapterId = this.pagination.get(this.pagination.size());
+            lolo = chapterId;
         }
 
 
-        switch (chapterId) {
+        switch (lolo) {
 
             case 1:
             case 3:
@@ -80,29 +85,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
                 break;
 
         }
-//try {
-//    if (this.pagination.get(document.getPageNumber()) == 3 || this.pagination.get(document.getPageNumber()) == 1) {
-//
-//        headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
-//        //document.setMargins(36, 50, 200, 100);
-//    }
-//}
-//catch (NullPointerException e){
-//
-//    try {
-//
-//    if (this.pagination.get(document.getPageNumber() -1 ) == 3) {
-//
-//        headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
-//        //document.setMargins(36, 50, 0, 100);
-//    }
-//
-//    }
-//    catch (NullPointerException y){
-//
-//        //document.setMargins(36, 50, 00, 100);
-//    }
-//}
+
     }
 
 
@@ -142,6 +125,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         catch (DocumentException de) {
             throw new ExceptionConverter(de);
         }
+
     }
 
 

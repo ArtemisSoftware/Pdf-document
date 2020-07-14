@@ -8,13 +8,8 @@ public class TemplateConfiguration {
 
 
     private Rectangle pageSize;
-
-    private int leftMargin = 36;
-    private int rightMargin = 50; //72
-    private int topMargin = 60; //108
-    private int baseMargin = 70 ;//180
-
-    private float sectionSpacing = 10f ;//180
+    private int leftMargin, rightMargin, topMargin, baseMargin;
+    private float sectionSpacing;
 
 
     public TemplateConfiguration() {
@@ -24,6 +19,7 @@ public class TemplateConfiguration {
         this.rightMargin = PdfConstants.RIGHT_MARGIN;
         this.topMargin = PdfConstants.TOP_MARGIN;
         this.baseMargin = PdfConstants.BASE_MARGIN;
+        this.sectionSpacing = PdfConstants.SECTION_SPACING;
     }
 
     public TemplateConfiguration(Rectangle pageSize, int leftMargin, int rightMargin, int topMargin, int baseMargin, float sectionSpacing) {

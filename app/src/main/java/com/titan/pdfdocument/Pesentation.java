@@ -40,23 +40,25 @@ public class Pesentation extends Template {
         pages.add(new PresentationPage());
         pages.add(new SecondPage(context));
         pages.add(new SecondPage(context));
+        pages.add(new TablePage());
         return pages;
     }
 
     @Override
     protected PdfPageEventHelper getPageEvent() {
-        return new PageHeaderfooter();
+        return new PageHeaderfooter(this.getPages().get(0).CHAPTER_ID);
     }
 
 
 
     @Override
-    protected void setNewChapterConfigurations(int chapterNumber) {
+    protected void setNewChapterConfigurations(PdfPageEvent pageEvent, int chapterNumber) {
 
 
-        int pageId = this.getPages().get(chapterNumber).CHAPTER_ID;
+        int chapterId = this.getPages().get(chapterNumber).CHAPTER_ID;
+        ((PageHeaderfooter)pageEvent).chapterId = chapterId;
 
-        switch (pageId) {
+        switch (chapterId) {
 
             case 1:
             case 3:
