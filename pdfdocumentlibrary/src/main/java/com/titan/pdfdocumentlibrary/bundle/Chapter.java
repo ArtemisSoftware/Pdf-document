@@ -21,9 +21,15 @@ public abstract class Chapter {
     public Chapter(int chapterId){
 
         CHAPTER_ID = chapterId;
-        indexes = getChapterIndexes();
+
     }
 
+    /**
+     * Method to create the chapter
+     */
+    protected void create(){
+        indexes = getChapterIndexes();
+    }
 
 
     /**

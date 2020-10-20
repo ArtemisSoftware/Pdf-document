@@ -488,12 +488,12 @@ public class Table {
         if(cellConfiguration.horizontalAlign != PdfConstants.NO_VALUE){
             pdfPCell.setHorizontalAlignment(cellConfiguration.horizontalAlign);
         }
-/*
-        if(formato.obter_Rotacao() != AppIF.SEM_REGISTO){
-            celula.setRotation(formato.obter_Rotacao());
+
+        if(cellConfiguration.rotation != PdfConstants.NO_VALUE){
+            pdfPCell.setRotation(cellConfiguration.rotation);
         }
 
-
+/*
         if(formato.obter_SobrePosicaoCor() == true){
             celula.setBackgroundColor(formato.obter_CorFundo());
         }
@@ -520,38 +520,34 @@ public class Table {
         if(cellConfiguration.height != PdfConstants.NO_VALUE){
             pdfPCell.setFixedHeight(cellConfiguration.height);
         }
- /*
-        if(formato.obter_Altura() != AppIF.SEM_REGISTO ){
-            celula.setFixedHeight(formato.obter_Altura());
-        }
-*/
+
         if(cellConfiguration.border != PdfConstants.NO_VALUE){
             pdfPCell.setBorder(cellConfiguration.border);
         }
-/*
-        if(formato.obter_Evento() != null){
-            celula.setCellEvent(formato.obter_Evento());
+
+        if(cellConfiguration.event != null){
+            pdfPCell.setCellEvent(cellConfiguration.event);
         }
 
 
 
-        if(formato.obter_AlturaTopo()  != AppIF.SEM_REGISTO){
-            celula.setPaddingTop(formato.obter_AlturaTopo());
+        if(cellConfiguration.alignTop  != PdfConstants.NO_VALUE){
+            pdfPCell.setPaddingTop(cellConfiguration.alignTop);
         }
 
-        if(formato.obter_AlturaInferior()  != AppIF.SEM_REGISTO){
-            celula.setPaddingBottom(formato.obter_AlturaInferior());
+        if(cellConfiguration.alignBottom  != PdfConstants.NO_VALUE){
+            pdfPCell.setPaddingBottom(cellConfiguration.alignBottom);
         }
 
 
-        if(formato.obter_AlinhamentoEsquerda()  != AppIF.SEM_REGISTO){
-            celula.setPaddingLeft(formato.obter_AlinhamentoEsquerda());
+        if(cellConfiguration.alignLeft != PdfConstants.NO_VALUE){
+            pdfPCell.setPaddingLeft(cellConfiguration.alignLeft );
         }
 
-        if(formato.obter_AlinhamentoDireita()  != AppIF.SEM_REGISTO){
-            celula.setPaddingRight(formato.obter_AlinhamentoDireita());
+        if(cellConfiguration.alignRight != PdfConstants.NO_VALUE){
+            pdfPCell.setPaddingRight(cellConfiguration.alignRight);
         }
-*/
+
         return pdfPCell;
     }
 

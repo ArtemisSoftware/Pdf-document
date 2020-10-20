@@ -23,7 +23,6 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.titan.pdfdocumentlibrary.SimplePdf;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 
 import java.io.File;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             created = dir.mkdirs();
 
 
-        TestPdfAsyncTask task = new TestPdfAsyncTask(this);
+        TesterPdfAsyncTask task = new TesterPdfAsyncTask(this);
         task.execute(dir);
 
     }

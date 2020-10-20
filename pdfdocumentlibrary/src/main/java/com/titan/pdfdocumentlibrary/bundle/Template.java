@@ -106,6 +106,7 @@ public abstract class Template {
             document.open();
 
             for (Chapter page: chapters) {
+                page.create();
                 addChapter(page);
             }
 

@@ -1,10 +1,7 @@
-package com.titan.pdfdocument;
+package com.titan.pdfdocumentlibrary;
 
 import android.content.Context;
 import android.os.AsyncTask;
-
-import com.titan.pdfdocumentlibrary.LibPdf;
-import com.titan.pdfdocumentlibrary.SimplePdf;
 
 import java.io.File;
 
