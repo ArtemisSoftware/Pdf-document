@@ -22,6 +22,7 @@ public class CellConfiguration implements Cloneable{
     public BaseColor backgroundColor;
 
     public PdfPCellEvent event;
+    public boolean overLapColor;
 
     public CellConfiguration(){
 
@@ -44,16 +45,9 @@ public class CellConfiguration implements Cloneable{
 
 
         this.event = null;
-        /*
 
-        this.alinhamentoTopo = AppIF.SEM_REGISTO;
-        this.alinhamentoEsquerda = AppIF.SEM_REGISTO;
-        this.alinhamentoInferior = AppIF.SEM_REGISTO;
-        this.alinhamentoDireita = AppIF.SEM_REGISTO;
+        this.overLapColor = true;
 
-
-        this.sobrePosicaoCor = true;
-        */
     }
 
 
@@ -69,4 +63,17 @@ public class CellConfiguration implements Cloneable{
         this.alignBottom = alignBottom;
         this.alignRight = alignRight;
     }
+
+
+    /**
+     * Method that add a background color
+     * @param backgroundColor the background color
+     * @param overLapColor true it will overlap the existing color, false it will overlap only the color White
+     */
+    public void setOverLapColor(BaseColor backgroundColor, boolean overLapColor){
+        this.backgroundColor = backgroundColor;
+        this.overLapColor = overLapColor;
+    }
+
+
 }

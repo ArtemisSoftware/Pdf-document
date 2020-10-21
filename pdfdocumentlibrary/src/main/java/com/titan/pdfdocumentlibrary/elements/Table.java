@@ -396,6 +396,14 @@ public class Table {
     }
 
 
+    /**
+     * Method to insert an empty cell into the table
+     * @param cellConfiguration the cell configuration
+     */
+    public void addEmptyCell(CellConfiguration cellConfiguration){
+        addCell(PdfConstants.NO_DATA, cellConfiguration);
+    }
+
 
     /**
      * Method to insert an empty cell into the table
@@ -467,6 +475,18 @@ public class Table {
 
     }
 
+
+
+    /**
+     * Method that allows or stops a table form breaking
+     * @param brake true to brake the table or false otherwise
+     */
+    public void breakTable(boolean brake){
+        table.setKeepTogether(!brake);
+    }
+
+
+
     //--------------
     //local methods -format
     //--------------
@@ -493,15 +513,15 @@ public class Table {
             pdfPCell.setRotation(cellConfiguration.rotation);
         }
 
-/*
-        if(formato.obter_SobrePosicaoCor() == true){
-            celula.setBackgroundColor(formato.obter_CorFundo());
+        if(cellConfiguration.overLapColor == true){
+            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
         }
         else{
 
-            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
-       }
-*/
+            if(cellConfiguration.backgroundColor == BaseColor.WHITE){
+                pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
+            }
+        }
 
         if(cellConfiguration.backgroundColor != BaseColor.WHITE){
             pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
@@ -550,8 +570,6 @@ public class Table {
 
         return pdfPCell;
     }
-
-
 
 
 
