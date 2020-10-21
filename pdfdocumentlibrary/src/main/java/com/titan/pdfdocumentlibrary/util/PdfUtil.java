@@ -148,10 +148,46 @@ public class PdfUtil {
      */
     public static Image createPdfImage(Resources resources, int imageResource) {
 
-
         Image imagem = null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeResource(resources, imageResource);
+
+        if(bitmap == null){
+            bitmap = BitmapFactory.decodeResource(resources, R.drawable.no_image_found);
+        }
+
+        try{
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100 , stream);
+        }
+        catch(Exception e){
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , stream);
+        }
+
+        try {
+            imagem = Image.getInstance(stream.toByteArray());
+            imagem.setAlignment(Image.MIDDLE);
+            imagem.scaleToFit(250, 150);
+
+        }
+        catch (BadElementException | IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return imagem;
+    }
+
+
+    /**
+     * Method to create a pdf image
+     * @param resources the app resources
+     * @param bitmap the image resource
+     * @return a pdf image
+     */
+    public static Image createPdfImage(Resources resources, Bitmap bitmap) {
+
+        Image imagem = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         if(bitmap == null){
             bitmap = BitmapFactory.decodeResource(resources, R.drawable.no_image_found);
@@ -172,8 +208,5 @@ public class PdfUtil {
 
         return imagem;
     }
-
-
-
 
 }
