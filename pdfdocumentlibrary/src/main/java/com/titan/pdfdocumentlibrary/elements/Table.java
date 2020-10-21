@@ -523,9 +523,6 @@ public class Table {
             }
         }
 
-        if(cellConfiguration.backgroundColor != BaseColor.WHITE){
-            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
-        }
 
 
         if(cellConfiguration.rowspan != PdfConstants.NO_VALUE){
