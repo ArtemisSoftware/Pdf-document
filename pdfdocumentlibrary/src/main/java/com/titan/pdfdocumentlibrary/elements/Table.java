@@ -13,7 +13,6 @@ import com.titan.pdfdocumentlibrary.util.PdfConstants;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Table {
@@ -434,7 +433,7 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = 0;
-        formatBorder(cellConfiguration);
+        formatCells(cellConfiguration);
     }
 
 
@@ -446,7 +445,7 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = 0;
-        formatBorder(cellConfiguration, rowPositions);
+        formatCells(cellConfiguration, rowPositions);
     }
 
 
@@ -458,7 +457,7 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = border;
-        formatBorder(cellConfiguration);
+        formatCells(cellConfiguration);
     }
 
 
@@ -471,7 +470,7 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = border;
-        formatBorder(cellConfiguration, rowPositions);
+        formatCells(cellConfiguration, rowPositions);
 
     }
 
@@ -513,15 +512,16 @@ public class Table {
             pdfPCell.setRotation(cellConfiguration.rotation);
         }
 
-        if(cellConfiguration.overLapColor == true){
-            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
-        }
-        else{
+        if(cellConfiguration.overLapColor == false){
 
             if(cellConfiguration.backgroundColor == BaseColor.WHITE){
                 pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
             }
         }
+        else{
+            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
+        }
+
 
 
 
@@ -634,10 +634,10 @@ public class Table {
 
 
     /**
-     * Method that allows to format the table border
+     * Method that allows to format the table
      * @param cellConfiguration the configuration of the cells
      */
-    public void formatBorder(CellConfiguration cellConfiguration){
+    public void formatCells(CellConfiguration cellConfiguration){
 
         for (int indice = 0; indice < table.getRows().size(); ++indice) {
 
@@ -652,7 +652,12 @@ public class Table {
     }
 
 
-    public void formatBorder(CellConfiguration cellConfiguration, int [] rowPositions){
+    /**
+     * Method that allows to format the table
+     * @param cellConfiguration  the configuration of the cells
+     * @param rowPositions array of cells to alter
+     */
+    public void formatCells(CellConfiguration cellConfiguration, int [] rowPositions){
 
         List<Integer> intList = new ArrayList<Integer>(rowPositions.length);
         for (int i : rowPositions)
