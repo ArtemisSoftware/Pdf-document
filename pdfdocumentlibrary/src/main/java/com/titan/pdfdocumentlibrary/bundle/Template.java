@@ -189,6 +189,13 @@ public abstract class Template {
     //----------------------
 
 
+    /**
+     * Method to get the pdf file
+     * @return a file
+     */
+    public File getPdfFile() {
+        return pdfFile;
+    }
 
     /**
      * Method to open the pdf
