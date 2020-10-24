@@ -514,7 +514,7 @@ public class Table {
 
         if(cellConfiguration.overLapColor == false){
 
-            if(cellConfiguration.backgroundColor == BaseColor.WHITE){
+            if(pdfPCell.getBackgroundColor() == BaseColor.WHITE){
                 pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
             }
         }

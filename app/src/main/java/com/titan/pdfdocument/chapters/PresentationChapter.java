@@ -4,6 +4,7 @@ import com.titan.pdfdocument.sections.EmptyCellsSection;
 import com.titan.pdfdocument.sections.FontSection;
 import com.titan.pdfdocument.sections.MainSection;
 import com.titan.pdfdocument.sections.NoBorderSection;
+import com.titan.pdfdocument.sections.OverlapSection;
 import com.titan.pdfdocument.sections.UnevenSection;
 import com.titan.pdfdocument.sections.UnevenTableSection;
 import com.titan.pdfdocumentlibrary.bundle.Chapter;
@@ -30,6 +31,7 @@ public class PresentationChapter extends Chapter {
         indexList.add(new Index(4, "Empty cells Section"));
         indexList.add(new Index(5, "Uneven table Section"));
         indexList.add(new Index(6, "Font Section"));
+        indexList.add(new Index(7, "Overlap Section"));
         return indexList;
     }
 
@@ -69,6 +71,11 @@ public class PresentationChapter extends Chapter {
             case 6:
 
                 section = new FontSection();
+                break;
+
+            case 7:
+
+                section = new OverlapSection();
                 break;
 
             default:
