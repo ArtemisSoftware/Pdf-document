@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 public class WebPdfActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class WebPdfActivity extends AppCompatActivity {
         WebView webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(urlToload);
-
+        webview.setWebViewClient(new CustomWebClient((ProgressBar) findViewById(R.id.progressBar)));
 
 
 //        "https://www.cgd.pt/Site/Montras-digitais/Documents/DABOX_CGU-Pagamentos.pdf"
