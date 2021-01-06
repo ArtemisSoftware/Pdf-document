@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         ((MaterialButton)findViewById(R.id.btn_test_pdf)).setOnClickListener(btn_test_pdf__OnClickListener);
         ((MaterialButton)findViewById(R.id.btn_presentation_pdf)).setOnClickListener(btn_presentation_pdf__OnClickListener);
-
+        ((MaterialButton)findViewById(R.id.btn_test_pdf_web)).setOnClickListener(btn_web_pdf__OnClickListener);
     }
 
 
@@ -108,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            //Intent intent = new Intent(this, )
+            Intent intent = new Intent(getApplicationContext(), WebPdfActivity.class);
+            startActivity(intent);
 
         }
     };
