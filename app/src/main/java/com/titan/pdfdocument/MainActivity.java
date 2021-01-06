@@ -104,6 +104,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    MaterialButton.OnClickListener btn_web_pdf__OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            //Intent intent = new Intent(this, )
+
+        }
+    };
+
+
+
     private boolean checkPdfPermissions(){
 
         int storage = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
