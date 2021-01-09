@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONException;
@@ -43,8 +44,8 @@ public class PdfViewerActivity extends AppCompatActivity implements View.OnClick
 
         byte[] encodedBytes = Base64.decode(example, Base64.CRLF);
         pdfView.fromBytes(encodedBytes)
-                .swipeHorizontal(false)
-                .spacing(10)
+                .swipeHorizontal(true)
+                 .spacing(0)
                 .load();
 
 
@@ -54,12 +55,12 @@ public class PdfViewerActivity extends AppCompatActivity implements View.OnClick
     private void getBigDocument(){
 
         try {
-            JSONObject example_ = new JSONObject(getTermsString());
+            JSONObject example = new JSONObject(getTermsString());
 
-            byte[] encodedBytes = Base64.decode(example_.getString("document"), Base64.CRLF);
+            byte[] encodedBytes = Base64.decode(example.getString("document"), Base64.CRLF);
             pdfView.fromBytes(encodedBytes)
-                    .swipeHorizontal(true)
-                    .spacing(10)
+                    .swipeHorizontal(false)
+                    .spacing(2)
                     .load();
 
         } catch (JSONException e) {
@@ -104,6 +105,8 @@ public class PdfViewerActivity extends AppCompatActivity implements View.OnClick
                 break;
 
         }
+
+        ((FloatingActionMenu)findViewById(R.id.menu)).close(true);
 
     }
 }
