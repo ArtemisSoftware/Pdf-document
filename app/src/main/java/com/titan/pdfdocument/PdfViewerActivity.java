@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONException;
@@ -16,7 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class PdfViewerActivity extends AppCompatActivity {
+public class PdfViewerActivity extends AppCompatActivity implements View.OnClickListener {
 
     private PDFView pdfView;
 
@@ -28,6 +30,9 @@ public class PdfViewerActivity extends AppCompatActivity {
 
         pdfView = ((PDFView)findViewById(R.id.pdfView));
 
+        ((FloatingActionButton)findViewById(R.id.fab_big_document)).setOnClickListener(this);
+        ((FloatingActionButton)findViewById(R.id.fab_small_document)).setOnClickListener(this);
+
         getBigDocument();
     }
 
@@ -38,7 +43,7 @@ public class PdfViewerActivity extends AppCompatActivity {
 
         byte[] encodedBytes = Base64.decode(example, Base64.CRLF);
         pdfView.fromBytes(encodedBytes)
-                .swipeHorizontal(true)
+                .swipeHorizontal(false)
                 .spacing(10)
                 .load();
 
@@ -82,4 +87,23 @@ public class PdfViewerActivity extends AppCompatActivity {
         return null;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.fab_big_document:
+
+                getBigDocument();
+                break;
+
+
+            case R.id.fab_small_document:
+
+                getSmallDocument();
+                break;
+
+        }
+
+    }
 }
