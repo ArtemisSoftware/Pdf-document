@@ -7,20 +7,16 @@
     tools:context=".MainActivity">
 
 
-
-
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_test_pdf"
         android:layout_width="200dp"
         android:layout_height="70dp"
         android:text="Test Pdf"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32999998" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_presentation_pdf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -28,11 +24,11 @@
         android:layout_width="200dp"
         android:layout_height="70dp"
         android:text="Presentation Pdf"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_test_pdf"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_test_pdf_web"
+        app:layout_constraintEnd_toEndOf="@+id/btn_test_pdf"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_test_pdf"
+        app:layout_constraintTop_toBottomOf="@+id/btn_test_pdf" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -40,9 +36,22 @@
         android:layout_width="200dp"
         android:layout_height="70dp"
         android:text="Web Pdf"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_test_pdf_viewer"
+        app:layout_constraintEnd_toEndOf="@+id/btn_test_pdf"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_test_pdf"
         app:layout_constraintTop_toBottomOf="@+id/btn_presentation_pdf" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_test_pdf_viewer"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:text="Pdf Viewer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_test_pdf"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btn_test_pdf"
+        app:layout_constraintTop_toBottomOf="@+id/btn_test_pdf_web" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,4 +33,9 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.0'
     implementation 'com.itextpdf:itextpdf:5.5.13'
 
+
+
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+
 }

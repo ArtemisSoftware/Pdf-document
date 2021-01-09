@@ -28,7 +28,7 @@ import com.titan.pdfdocumentlibrary.bundle.Template;
 import java.io.File;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
         ((MaterialButton)findViewById(R.id.btn_test_pdf)).setOnClickListener(btn_test_pdf__OnClickListener);
         ((MaterialButton)findViewById(R.id.btn_presentation_pdf)).setOnClickListener(btn_presentation_pdf__OnClickListener);
         ((MaterialButton)findViewById(R.id.btn_test_pdf_web)).setOnClickListener(btn_web_pdf__OnClickListener);
+
+        ((MaterialButton)findViewById(R.id.btn_test_pdf_viewer)).setOnClickListener(this);
+
+
+
     }
 
 
@@ -211,4 +216,18 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 101);
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.btn_test_pdf_viewer:
+
+                Intent intent = new Intent(getApplicationContext(), WebPdfActivity.class);
+                startActivity(intent);
+                break;
+
+        }
+    }
 }
