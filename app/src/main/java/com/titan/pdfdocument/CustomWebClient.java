@@ -24,9 +24,17 @@ public class CustomWebClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        progressBar.setVisibility(View.GONE);
-    }
 
+        if (view.getTitle().equals("")) {
+            view.reload();
+        }
+        else {
+
+            progressBar.setVisibility(View.GONE);
+        }
+
+
+    }
 
 
 }

@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_test_pdf_viewer:
 
-                Intent intent = new Intent(getApplicationContext(), WebPdfActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PdfViewerActivity.class);
                 startActivity(intent);
                 break;
 
