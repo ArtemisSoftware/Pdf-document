@@ -92,7 +92,7 @@ public class FooterSection extends Section {
         cellConfiguration.height = 24;
         cellConfiguration.backgroundColor = BaseColor.RED;
 
-        tableFooter.addCell("lolo", cellConfiguration);
+        tableFooter.addCell(" ", cellConfiguration);
     }
 
 

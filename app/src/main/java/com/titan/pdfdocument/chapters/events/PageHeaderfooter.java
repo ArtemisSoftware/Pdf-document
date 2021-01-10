@@ -117,7 +117,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
                 footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas_1);
 
                 footerSection.setColoredFooter();
-                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 0, /*30*/29, canvas_1);
+                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 0, /*30*/24, canvas_1);
 
 
                 canvas_1.endMarkedContentSequence();
@@ -125,11 +125,11 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
             case 2:
 
-//                PdfContentByte canvas = writer.getDirectContent();
-//                canvas.beginMarkedContentSequence(PdfName.ARTIFACT);
-//                footerSection.addPageNumberFooter(writer.getPageNumber(), total);
-//                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas);
-//                canvas.endMarkedContentSequence();
+                PdfContentByte canvas = writer.getDirectContent();
+                canvas.beginMarkedContentSequence(PdfName.ARTIFACT);
+                footerSection.addPageNumberFooter(writer.getPageNumber(), total);
+                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas);
+                canvas.endMarkedContentSequence();
                 break;
 
             default:
