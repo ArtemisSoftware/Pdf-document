@@ -1,4 +1,4 @@
-package com.titan.pdfdocument;
+package com.titan.pdfdocument.ui;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +23,12 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.titan.pdfdocument.PdfDocumentAsyncTask;
+import com.titan.pdfdocument.PdfViewerActivity;
+import com.titan.pdfdocument.documents.presentation.Presentation;
+import com.titan.pdfdocument.R;
+import com.titan.pdfdocument.TesterPdfAsyncTask;
+import com.titan.pdfdocument.WebPdfActivity;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 
 import java.io.File;
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             created = dir.mkdirs();
 
 
-        Template presentation = new Pesentation(this, dir);
+        Template presentation = new Presentation(this, dir);
         PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation);
         taskPresentation.execute();
     }

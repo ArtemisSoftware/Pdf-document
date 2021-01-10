@@ -48,7 +48,6 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
     private void setHeader(PdfWriter writer, Document document){
 
-        PdfPTable headerTable = headerSection.getSection().getPdfTable();
         float height = /*headerTable.getTotalHeight()*/0;
 
 
@@ -75,7 +74,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
             case 1:
             case 3:
 
-                headerTable.writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
+                headerSection.getSection().getPdfTable().writeSelectedRows(0, -1, document.left(), document.top() + ((document.topMargin() + height) / 2), writer.getDirectContent());
                 break;
 
             default:
@@ -89,6 +88,73 @@ public class PageHeaderfooter extends PdfPageEventHelper {
 
     private void setFooter(PdfWriter writer, Document document){
 
+        int currentChapter = 0;
+
+        if(this.pagination == null){
+            currentChapter = chapterId;
+        }
+
+        try {
+
+            chapterId = this.pagination.get(document.getPageNumber());
+            currentChapter = chapterId;
+        }
+        catch (NullPointerException e) {
+
+            currentChapter = chapterId;
+        }
+
+
+        switch (currentChapter) {
+
+            case 1:
+
+                PdfContentByte canvas_1 = writer.getDirectContent();
+                canvas_1.beginMarkedContentSequence(PdfName.ARTIFACT);
+
+
+                footerSection.setColoredFooterText();
+                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas_1);
+
+                footerSection.setColoredFooter();
+                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 0, /*30*/29, canvas_1);
+
+
+                canvas_1.endMarkedContentSequence();
+                break;
+
+            case 2:
+
+//                PdfContentByte canvas = writer.getDirectContent();
+//                canvas.beginMarkedContentSequence(PdfName.ARTIFACT);
+//                footerSection.addPageNumberFooter(writer.getPageNumber(), total);
+//                footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas);
+//                canvas.endMarkedContentSequence();
+                break;
+
+            default:
+                break;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //----------------
         PdfContentByte cb = writer.getDirectContent();
 
 /*
@@ -98,11 +164,7 @@ public class PageHeaderfooter extends PdfPageEventHelper {
         canvasReferencia.endMarkedContentSequence();
 */
 
-        PdfContentByte canvas = writer.getDirectContent();
-        canvas.beginMarkedContentSequence(PdfName.ARTIFACT);
-        footerSection.addPageNumberFooter(writer.getPageNumber(), total);
-        footerSection.getSection().getPdfTable().writeSelectedRows(0, -1, 36, /*30*/90, canvas);
-        canvas.endMarkedContentSequence();
+
 
     }
 

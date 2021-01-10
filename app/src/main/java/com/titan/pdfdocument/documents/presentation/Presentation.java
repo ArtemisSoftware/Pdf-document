@@ -1,4 +1,4 @@
-package com.titan.pdfdocument;
+package com.titan.pdfdocument.documents.presentation;
 
 import android.content.Context;
 
@@ -16,9 +16,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pesentation extends Template {
+public class Presentation extends Template {
 
-    public Pesentation(Context context, File directory) {
+    public Presentation(Context context, File directory) {
         super(context, directory, new PresentationConfiguration());
     }
 
