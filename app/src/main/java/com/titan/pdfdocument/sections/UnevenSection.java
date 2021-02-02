@@ -11,7 +11,7 @@ import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 public class UnevenSection extends Section {
     @Override
     protected Table getMainTable() {
-        return new Table(3);
+        return new Table(4);
     }
 
     @Override
@@ -33,31 +33,71 @@ public class UnevenSection extends Section {
         cellConfiguration_3.backgroundColor = BaseColor.ORANGE;
         cellConfiguration_3.colSpan = 2;
 
+        CellConfiguration cellConfiguration [] = new CellConfiguration[]{cellConfiguration_1, cellConfiguration_2, cellConfiguration_1};
 
 
-        CellConfiguration cellConfiguration [] = new CellConfiguration[]{cellConfiguration_1, cellConfiguration_2};
-
-        CellConfiguration cellConfiguration_line [] = new CellConfiguration[]{cellConfiguration_3, cellConfiguration_2};
-
-        Phrase phrases [] = new Phrase[]{ new Phrase("1 uneven phrase"), new Phrase("2 uneven phrase") };
 
         try {
-            table.addLine(phrases, cellConfiguration[0]);
-            table.addLine(phrases[0], cellConfiguration[1]);
 
-            Phrase phrases_2[] = new Phrase[]{new Phrase("11 uneven phrase"), new Phrase("12 uneven phrase"), new Phrase("13 uneven phrase")};
-            table.addLine(phrases_2, cellConfiguration);
+            //1
+            Phrase phrases_1[] = new Phrase[]{new Phrase("11 uneven phrase"), new Phrase("12 uneven phrase"), new Phrase("13 uneven phrase"), new Phrase("14 uneven phrase")};
+            table.addLine(phrases_1, cellConfiguration[0]);
 
-            table.addEmptyCell(2);
-            table.addCell(new Phrase("113 uneven phrase"));
+
+            //2
+
+            table.addEmptyCell(3);
+            table.addCell(new Phrase("24 uneven phrase"));
+
+
+            //3
+            CellConfiguration cellConfiguration_l3 [] = new CellConfiguration[]{cellConfiguration_3, cellConfiguration_3};
+
+            Phrase phrases_3[] = new Phrase[]{ new Phrase("31 uneven phrase"), new Phrase("33 uneven phrase") };
+            table.addLine(phrases_3, cellConfiguration_l3);
+
+
+            //4
+            table.addEmptyCell();
+            table.addCell(new Phrase("42 uneven phrase"), cellConfiguration_3);
+            table.addEmptyCell();
+
+
+            //
 
             table.addEmptyLine();
 
-            Phrase phrases_3[] = new Phrase[]{ new Phrase("4 uneven phrase"), new Phrase("41 uneven phrase") };
-            table.addLine(phrases_3, cellConfiguration_line);
         }
         catch (PdfLineException e){
             e.printStackTrace();
         }
+
+
+
+
+//        CellConfiguration cellConfiguration [] = new CellConfiguration[]{cellConfiguration_1, cellConfiguration_2};
+//
+//        CellConfiguration cellConfiguration_line [] = new CellConfiguration[]{cellConfiguration_3, cellConfiguration_2};
+//
+//        Phrase phrases [] = new Phrase[]{ new Phrase("1 uneven phrase"), new Phrase("2 uneven phrase") };
+//
+//        try {
+//            table.addLine(phrases, cellConfiguration[0]);
+//            table.addLine(phrases[0], cellConfiguration[1]);
+//
+//            Phrase phrases_2[] = new Phrase[]{new Phrase("11 uneven phrase"), new Phrase("12 uneven phrase"), new Phrase("13 uneven phrase")};
+//            table.addLine(phrases_2, cellConfiguration);
+//
+//            table.addEmptyCell(2);
+//            table.addCell(new Phrase("113 uneven phrase"));
+//
+//            table.addEmptyLine();
+//
+//            Phrase phrases_3[] = new Phrase[]{ new Phrase("4 uneven phrase"), new Phrase("41 uneven phrase") };
+//            table.addLine(phrases_3, cellConfiguration_line);
+//        }
+//        catch (PdfLineException e){
+//            e.printStackTrace();
+//        }
     }
 }

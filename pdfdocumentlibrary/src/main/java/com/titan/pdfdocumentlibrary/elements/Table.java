@@ -123,6 +123,9 @@ public class Table {
 
 
 
+    public int getNumberCells(){
+        return NUMBER_OF_CELLS;
+    }
 
     //------------------
     //Add cells
@@ -432,9 +435,12 @@ public class Table {
         cellConfiguration.height = 18;
         cellConfiguration.colSpan = NUMBER_OF_CELLS;
 
-        addCell(PdfConstants.NO_DATA, cellConfiguration);
+        addEmptyLine(cellConfiguration);
     }
 
+    public void addEmptyLine(CellConfiguration cellConfiguration)  {
+        addCell(PdfConstants.NO_DATA, cellConfiguration);
+    }
 
 
     /**
