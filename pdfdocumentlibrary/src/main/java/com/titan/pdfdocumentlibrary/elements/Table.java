@@ -439,6 +439,11 @@ public class Table {
     }
 
     public void addEmptyLine(CellConfiguration cellConfiguration)  {
+
+        if(cellConfiguration.colSpan == PdfConstants.NO_VALUE){
+            cellConfiguration.colSpan = NUMBER_OF_CELLS;
+        }
+
         addCell(PdfConstants.NO_DATA, cellConfiguration);
     }
 
