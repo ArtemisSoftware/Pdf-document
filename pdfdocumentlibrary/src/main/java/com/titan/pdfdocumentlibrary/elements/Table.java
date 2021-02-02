@@ -391,6 +391,7 @@ public class Table {
     public void addEmptyCell(){
 
         CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.height = 18;
         addCell(PdfConstants.NO_DATA, cellConfiguration);
     }
 
@@ -418,11 +419,21 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.colSpan = colSpan;
+        cellConfiguration.height = 18;
 
         addCell(PdfConstants.NO_DATA, cellConfiguration);
 
     }
 
+
+    public void addEmptyLine()  {
+
+        CellConfiguration cellConfiguration = new CellConfiguration();
+        cellConfiguration.height = 18;
+        cellConfiguration.colSpan = NUMBER_OF_CELLS;
+
+        addCell(PdfConstants.NO_DATA, cellConfiguration);
+    }
 
 
 

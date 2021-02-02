@@ -27,7 +27,17 @@ public class UnevenSection extends Section {
         cellConfiguration_2.verticalAlign = Element.ALIGN_MIDDLE;
         cellConfiguration_2.backgroundColor = BaseColor.YELLOW;
 
+        CellConfiguration cellConfiguration_3 = new CellConfiguration();
+        cellConfiguration_3.horizontalAlign = Element.ALIGN_LEFT;
+        cellConfiguration_3.verticalAlign = Element.ALIGN_MIDDLE;
+        cellConfiguration_3.backgroundColor = BaseColor.ORANGE;
+        cellConfiguration_3.colSpan = 2;
+
+
+
         CellConfiguration cellConfiguration [] = new CellConfiguration[]{cellConfiguration_1, cellConfiguration_2};
+
+        CellConfiguration cellConfiguration_line [] = new CellConfiguration[]{cellConfiguration_3, cellConfiguration_2};
 
         Phrase phrases [] = new Phrase[]{ new Phrase("1 uneven phrase"), new Phrase("2 uneven phrase") };
 
@@ -37,6 +47,14 @@ public class UnevenSection extends Section {
 
             Phrase phrases_2[] = new Phrase[]{new Phrase("11 uneven phrase"), new Phrase("12 uneven phrase"), new Phrase("13 uneven phrase")};
             table.addLine(phrases_2, cellConfiguration);
+
+            table.addEmptyCell(2);
+            table.addCell(new Phrase("113 uneven phrase"));
+
+            table.addEmptyLine();
+
+            Phrase phrases_3[] = new Phrase[]{ new Phrase("4 uneven phrase"), new Phrase("41 uneven phrase") };
+            table.addLine(phrases_3, cellConfiguration_line);
         }
         catch (PdfLineException e){
             e.printStackTrace();

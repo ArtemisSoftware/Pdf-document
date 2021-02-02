@@ -8,6 +8,9 @@ import android.util.Base64;
 import android.view.View;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.button.MaterialButton;
@@ -35,6 +38,7 @@ public class PdfViewerActivity extends AppCompatActivity implements View.OnClick
         ((FloatingActionButton)findViewById(R.id.fab_small_document)).setOnClickListener(this);
 
         getBigDocument();
+
     }
 
 
@@ -59,8 +63,17 @@ public class PdfViewerActivity extends AppCompatActivity implements View.OnClick
 
             byte[] encodedBytes = Base64.decode(example.getString("document"), Base64.CRLF);
             pdfView.fromBytes(encodedBytes)
-                    .swipeHorizontal(false)
+
+                    .enableSwipe(true)
+                    .scrollHandle(new DefaultScrollHandle(this))
                     .spacing(2)
+                    .onPageChange(new OnPageChangeListener() {
+                        @Override
+                        public void onPageChanged(int page, int pageCount) {
+
+                            int lolo = page;
+                        }
+                    })
                     .load();
 
         } catch (JSONException e) {
