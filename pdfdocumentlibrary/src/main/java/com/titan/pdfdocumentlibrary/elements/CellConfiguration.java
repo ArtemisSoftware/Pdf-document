@@ -10,12 +10,13 @@ import com.titan.pdfdocumentlibrary.util.PdfConstants;
  */
 public class CellConfiguration implements Cloneable{
 
+    protected enum Afect { ALL, BORDER }
 
     public int rowspan, colSpan;
     public int verticalAlign, horizontalAlign;
     public int height, rotation;
     public float alignTop, alignLeft, alignBottom, alignRight;
-
+    public Afect afect;
 
     public int border;
 
@@ -23,6 +24,11 @@ public class CellConfiguration implements Cloneable{
 
     public PdfPCellEvent event;
     public boolean overLapColor;
+
+
+
+
+
 
     public CellConfiguration(){
 
@@ -47,7 +53,7 @@ public class CellConfiguration implements Cloneable{
         this.event = null;
 
         this.overLapColor = true;
-
+        this.afect = Afect.ALL;
     }
 
 

@@ -21,7 +21,10 @@ public class WebPdfActivity extends AppCompatActivity {
         String url = "https://www.cgd.pt/Site/Montras-digitais/Documents/DABOX_CGU-Pagamentos.pdf";
 //        String url = "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
 
-        String urlToload = urlBaseGoogle + url;
+        String page = "#page=3";
+
+
+        String urlToload = urlBaseGoogle + url + page;
         WebView webview = (WebView) findViewById(R.id.webview);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(urlToload);

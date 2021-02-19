@@ -455,6 +455,7 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = 0;
+        cellConfiguration.afect = CellConfiguration.Afect.BORDER;
         formatCells(cellConfiguration);
     }
 
@@ -467,6 +468,7 @@ public class Table {
 
         CellConfiguration cellConfiguration = new CellConfiguration();
         cellConfiguration.border = 0;
+        cellConfiguration.afect = CellConfiguration.Afect.BORDER;
         formatCells(cellConfiguration, rowPositions);
     }
 
@@ -522,7 +524,7 @@ public class Table {
     private PdfPCell formatCell(PdfPCell pdfPCell, CellConfiguration cellConfiguration){
 
 
-        if(cellConfiguration.verticalAlign != PdfConstants.NO_VALUE){
+        if(cellConfiguration.verticalAlign != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setVerticalAlignment(cellConfiguration.verticalAlign);
         }
 
@@ -697,8 +699,8 @@ public class Table {
                     try {
 
                         formatCell(table.getRow(indice).getCells()[index], cellConfiguration);
-                    } catch (NullPointerException e) {
                     }
+                    catch (NullPointerException e) {}
                 }
             }
         }
