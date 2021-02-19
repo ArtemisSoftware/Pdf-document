@@ -528,64 +528,65 @@ public class Table {
             pdfPCell.setVerticalAlignment(cellConfiguration.verticalAlign);
         }
 
-        if(cellConfiguration.horizontalAlign != PdfConstants.NO_VALUE){
+        if(cellConfiguration.horizontalAlign != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setHorizontalAlignment(cellConfiguration.horizontalAlign);
         }
 
-        if(cellConfiguration.rotation != PdfConstants.NO_VALUE){
+        if(cellConfiguration.rotation != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setRotation(cellConfiguration.rotation);
         }
 
-        if(cellConfiguration.overLapColor == false){
+        if(cellConfiguration.afect == CellConfiguration.Afect.ALL) {
 
-            if(pdfPCell.getBackgroundColor() == BaseColor.WHITE){
+            if (cellConfiguration.overLapColor == false) {
+
+                if (pdfPCell.getBackgroundColor() == BaseColor.WHITE) {
+                    pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
+                }
+            } else {
                 pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
             }
         }
-        else{
-            pdfPCell.setBackgroundColor(cellConfiguration.backgroundColor);
-        }
 
 
 
-
-        if(cellConfiguration.rowspan != PdfConstants.NO_VALUE){
+        if(cellConfiguration.rowspan != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setRowspan(cellConfiguration.rowspan);
         }
 
-        if(cellConfiguration.colSpan != PdfConstants.NO_VALUE){
+        if(cellConfiguration.colSpan != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setColspan(cellConfiguration.colSpan);
         }
 
 
-        if(cellConfiguration.height != PdfConstants.NO_VALUE){
+        if(cellConfiguration.height != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setFixedHeight(cellConfiguration.height);
         }
 
-        if(cellConfiguration.border != PdfConstants.NO_VALUE){
+        if(cellConfiguration.border != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL || cellConfiguration.afect == CellConfiguration.Afect.BORDER)){
             pdfPCell.setBorder(cellConfiguration.border);
         }
 
-        if(cellConfiguration.event != null){
+        if(cellConfiguration.event != null && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setCellEvent(cellConfiguration.event);
         }
 
 
 
-        if(cellConfiguration.alignTop  != PdfConstants.NO_VALUE){
+        if(cellConfiguration.alignTop  != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setPaddingTop(cellConfiguration.alignTop);
         }
 
-        if(cellConfiguration.alignBottom  != PdfConstants.NO_VALUE){
+        if(cellConfiguration.alignBottom  != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setPaddingBottom(cellConfiguration.alignBottom);
         }
 
 
-        if(cellConfiguration.alignLeft != PdfConstants.NO_VALUE){
+        if(cellConfiguration.alignLeft != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setPaddingLeft(cellConfiguration.alignLeft );
         }
 
-        if(cellConfiguration.alignRight != PdfConstants.NO_VALUE){
+        if(cellConfiguration.alignRight != PdfConstants.NO_VALUE && (cellConfiguration.afect == CellConfiguration.Afect.ALL)){
             pdfPCell.setPaddingRight(cellConfiguration.alignRight);
         }
 
