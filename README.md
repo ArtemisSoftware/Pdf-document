@@ -9,4 +9,10 @@ Elements:
   -Chapter
   -Table
   -CellConfiguration
+
+The library structures a pdf in chapters that contain sections that contain tables
+
+The image below clarifies how the pdf document is structured
+
+-image
   
