@@ -3,7 +3,6 @@ package com.titan.pdfdocumentlibrary;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 
 import androidx.core.content.FileProvider;
@@ -19,13 +18,12 @@ import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
 import com.titan.pdfdocumentlibrary.elements.TableWidthConverter;
 import com.titan.pdfdocumentlibrary.exception.PdfLineException;
+import com.titan.pdfdocumentlibrary.util.PdfConstants;
 import com.titan.pdfdocumentlibrary.util.PdfReport;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LibPdf {
 
@@ -162,7 +160,7 @@ public class LibPdf {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setDataAndType(documentURI, "application/pdf" );
+        intent.setDataAndType(documentURI, PdfConstants.MIME_TYPE_APPLICATION_PDF );
 
         try {
             context.startActivity(intent);

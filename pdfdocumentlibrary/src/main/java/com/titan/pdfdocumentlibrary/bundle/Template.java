@@ -17,6 +17,7 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
+import com.titan.pdfdocumentlibrary.util.PdfReport;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public abstract class Template {
     protected HashMap<Integer, Integer> paginacao;
     private List<Chapter> chapters;
 
+    public PdfReport pdfReport;
 
     public Template(Context context, File directory){
 
@@ -55,6 +57,8 @@ public abstract class Template {
         chapterNumber = 0;
 
         paginacao = new HashMap<Integer, Integer>();
+
+        pdfReport = new PdfReport();
     }
 
 
@@ -69,6 +73,7 @@ public abstract class Template {
         chapterNumber = 0;
 
         paginacao = new HashMap<Integer, Integer>();
+        pdfReport = new PdfReport();
     }
 
 
@@ -97,6 +102,10 @@ public abstract class Template {
         document.setPageSize(templateConfiguration.getPageSize());
         document.setMargins(templateConfiguration.getLeftMargin(), templateConfiguration.getRightMargin(), templateConfiguration.getTopMargin(), templateConfiguration.getBaseMargin());
 
+        pdfReport.report.add("PDF init creation ");
+        pdfReport.report.add("PDF DIRECTORY: " + DIRECTORY);
+        pdfReport.report.add("PDF file: " + pdfFile.getAbsolutePath());
+
         try {
 
             FileOutputStream fOut = new FileOutputStream(pdfFile);
@@ -106,6 +115,7 @@ public abstract class Template {
             document.open();
 
             for (Chapter page: chapters) {
+                pdfReport.report.add("Chapter: " + page.CHAPTER_ID);
                 page.create();
                 addChapter(page);
             }
@@ -113,16 +123,27 @@ public abstract class Template {
             PdfUtil.addMetaData(context, document, this);
 
         }
-        catch (DocumentException | IOException de) {
-            Log.e("PDFCreator", "Exception:" + de);
+        catch (DocumentException de) {
+            Log.e("PDFCreator", "DocumentException:" + de.getMessage());
+            pdfReport.report.add("DocumentException: " + de);
+            pdfReport.errorCreating = true;
         }
-        catch (Exception de) {
-            Log.e("PDFCreator", "Exception:" + de);
+        catch (IOException e) {
+            Log.e("PDFCreator", "ioException:" + e.getMessage());
+            pdfReport.report.add("ioException: " + e);
+            pdfReport.errorCreating = true;
+        }
+        catch (Exception ex) {
+            Log.e("PDFCreator", "Exception:" + ex.getMessage());
+            pdfReport.report.add("Exception: " + ex.getMessage());
+            pdfReport.errorCreating = true;
         }
 
         finally{
             document.close();
         }
+
+        pdfReport.report.add("Pdf creation complete");
     }
 
 
@@ -202,6 +223,14 @@ public abstract class Template {
      */
     public void openPdf(){
 
+        if(pdfReport.errorCreating){
+            return;
+        }
+
+        pdfReport.report.add("");
+        pdfReport.report.add("Pdf start opening...");
+        pdfReport.report.add("File: " + pdfFile.getAbsolutePath());
+
         Uri uriFile;
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -209,13 +238,22 @@ public abstract class Template {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             uriFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", pdfFile);
+            pdfReport.report.add("DocumentURI (1): " + uriFile.toString());
         }
         else{
             uriFile = Uri.fromFile(pdfFile);
+            pdfReport.report.add("DocumentURI (2): " + uriFile.toString());
         }
 
         intent.setDataAndType(uriFile, PdfConstants.MIME_TYPE_APPLICATION_PDF);
-        context.startActivity(intent);
+
+        try {
+            context.startActivity(intent);
+            pdfReport.report.add("Pdf opened with success");
+        }
+        catch(Exception e) {
+            pdfReport.report.add("Exception: " + e.toString());
+        }
     }
 
 

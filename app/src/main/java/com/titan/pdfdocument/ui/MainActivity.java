@@ -66,16 +66,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void presentationPdf(){
         String directoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
 
-
+        List<String> relatorio = new ArrayList<>();
         boolean created = false;
 
         File dir = new File(directoryPath);
+
+        relatorio.add("Diretoria: " + dir.getPath());
+        relatorio.add("Diretoria: " + dir.getAbsolutePath());
+
         if(!dir.exists())
             created = dir.mkdirs();
 
+        if(created == true){
+            relatorio.add("Diretoria criada");
+        }
+        else{
+            relatorio.add("Diretoria não está criada");
+        }
+
+        txt_directory_report.setText(obterRelatorio(relatorio));
 
         Template presentation = new Presentation(this, dir);
-        PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation);
+        PdfDocumentAsyncTask taskPresentation = new PdfDocumentAsyncTask(this, presentation, this);
         taskPresentation.execute();
     }
 

@@ -3,16 +3,19 @@ package com.titan.pdfdocument;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.titan.pdfdocumentlibrary.PdfReportListener;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 
 public class PdfDocumentAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private Context mContext;
     private Template template;
+    private PdfReportListener listener;
 
-    public PdfDocumentAsyncTask(Context context, Template template){
+    public PdfDocumentAsyncTask(Context context, Template template, PdfReportListener listener){
         mContext = context;
         this.template = template;
+        this.listener = listener;
     }
 
 
@@ -30,5 +33,6 @@ public class PdfDocumentAsyncTask extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(result);
 
         this.template.openPdf();
+        this.listener.pdfReport(template.pdfReport.report);
     }
 }
