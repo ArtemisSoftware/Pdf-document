@@ -13,9 +13,10 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
     private LibPdf testPdf;
     private PdfReportListener listener;
 
-    public TestPdfAsyncTask(Context context){
+    public TestPdfAsyncTask(Context context, PdfReportListener listener){
         mContext = context;
         testPdf = new LibPdf();
+        this.listener = listener;
     }
 
 
