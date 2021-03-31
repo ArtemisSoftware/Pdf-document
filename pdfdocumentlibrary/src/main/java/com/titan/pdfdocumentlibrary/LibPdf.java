@@ -8,15 +8,12 @@ import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
@@ -26,29 +23,18 @@ import com.titan.pdfdocumentlibrary.exception.PdfLineException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LibPdf {
 
+    private List<String> report;
 
-    public LibPdf(){};
-
-
-    /**
-     * Method that allows to open a pdf test file
-     * @param context the app context
-     */
-    public void openPdf(Context context){
-
-        String diretoriaContratos = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
-        File file = new File(diretoriaContratos, "demo.pdf");
-
-        Uri photoURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setDataAndType(photoURI, "application/pdf" );
-        context.startActivity(intent);
+    public LibPdf(){
+        report = new ArrayList<>();
     }
+
+
 
 
     /**
@@ -62,10 +48,15 @@ public class LibPdf {
 
         try {
 
-
+            report.add("PDF init creation ");
+            report.add("PDF Path: " + dir.toString());
             //Log.d("PDFCreator", "PDF Path: " + diretoriaContratos);
 
             File file = new File(dir, "demo.pdf");
+
+            report.add("PDF file: " + file.toString());
+
+
             FileOutputStream fOut = new FileOutputStream(file);
 
             //PdfWriter.getInstance(doc, fOut);
@@ -80,6 +71,8 @@ public class LibPdf {
 
             //open the document
             doc.open();
+
+            report.add("PDF: adding data");
 
             /* Create Paragraph and Set FontConfiguration */
             Paragraph p1 = new Paragraph("Hi! I am Generating my first PDF using PdfDocumentLibrary");
@@ -118,15 +111,59 @@ public class LibPdf {
             doc.add(unevenSecondTableCellsSection().getPdfTable());
         }
         catch (DocumentException de) {
-            Log.e("PDFCreator", "DocumentException:" + de);
+            Log.e("PDFCreator", "DocumentException:" + de.getMessage());
+            report.add("DocumentException: " + de);
         }
         catch (IOException e) {
-            Log.e("PDFCreator", "ioException:" + e);
+            Log.e("PDFCreator", "ioException:" + e.getMessage());
+            report.add("ioException: " + e);
+        }
+        catch (Exception ex) {
+            Log.e("PDFCreator", "Exception:" + ex.getMessage());
+            report.add("Exception: " + ex.getMessage());
         }
         finally{
             doc.close();
         }
+
+        report.add("Pdf creation complete");
     }
+
+
+
+    /**
+     * Method that allows to open a pdf test file
+     * @param context the app context
+     */
+    public void openPdf(Context context){
+
+        report.add("Pdf start opening...");
+
+        String documentDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
+        report.add("Directory: " + documentDirectory);
+
+        File file = new File(documentDirectory, "demo.pdf");
+        report.add("File: " + file.toString());
+
+        Uri documentURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
+        report.add("DocumentURI: " + documentURI.toString());
+
+
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(documentURI, "application/pdf" );
+
+        try {
+            context.startActivity(intent);
+            report.add("Pdf opened with success");
+        }
+        catch(Exception e) {
+            report.add("Exception: " + e.toString());
+        }
+    }
+
+
 
 
 
