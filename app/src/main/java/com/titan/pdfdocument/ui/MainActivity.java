@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -33,9 +34,15 @@ import com.titan.pdfdocumentlibrary.PdfReportListener;
 import com.titan.pdfdocumentlibrary.bundle.Template;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, PdfReportListener {
+
+
+
+    private TextView txt_pdf_report, txt_directory_report;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ((MaterialButton)findViewById(R.id.btn_test_pdf_viewer)).setOnClickListener(this);
 
-
-
+        txt_directory_report = findViewById(R.id.txt_directory_report);
+        txt_pdf_report = findViewById(R.id.txt_pdf_report);
     }
 
 
@@ -77,12 +84,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String directoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
 
 
+        List<String> relatorio = new ArrayList<>();
         boolean created = false;
 
         File dir = new File(directoryPath);
-        if(!dir.exists())
-            created = dir.mkdirs();
 
+        relatorio.add("Diretoria: " + dir.getPath());
+        relatorio.add("Diretoria: " + dir.getAbsolutePath());
+
+
+        if(!dir.exists()) {
+            created = dir.mkdirs();
+        }
+
+        if(created == true){
+            relatorio.add("Diretoria criada");
+        }
+        else{
+            relatorio.add("Diretoria não está criada");
+        }
+
+        txt_directory_report.setText(obterRelatorio(relatorio));
 
         TesterPdfAsyncTask task = new TesterPdfAsyncTask(this, this);
         task.execute(dir);
@@ -93,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void pdfReport(List<String> report) {
-
+        txt_pdf_report.setText(obterRelatorio(report));
     }
 
 
@@ -241,6 +263,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+
+
+    //------------------
+    //Metodos locais
+    //------------------
+
+
+
+    private String obterRelatorio(List<String> relatorios){
+
+        String resultado = "";
+
+        for (String relatorio: relatorios) {
+            resultado += relatorio + "\n";
+        }
+
+        return resultado;
     }
 
 }

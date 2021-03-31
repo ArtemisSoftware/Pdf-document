@@ -29,6 +29,7 @@ import java.util.List;
 public class LibPdf {
 
     public List<String> report;
+    private File dir;
 
     public LibPdf(){
         report = new ArrayList<>();
@@ -44,13 +45,14 @@ public class LibPdf {
     public void generatePdf(Context context, File dir){
 
 
+        this.dir = dir;
         Document doc = new Document();
+
+        report.add("PDF init creation ");
 
         try {
 
-            report.add("PDF init creation ");
             report.add("PDF Path: " + dir.toString());
-            //Log.d("PDFCreator", "PDF Path: " + diretoriaContratos);
 
             File file = new File(dir, "demo.pdf");
 
