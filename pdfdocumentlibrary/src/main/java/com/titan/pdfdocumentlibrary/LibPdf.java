@@ -28,7 +28,7 @@ import java.util.List;
 
 public class LibPdf {
 
-    private List<String> report;
+    public List<String> report;
 
     public LibPdf(){
         report = new ArrayList<>();

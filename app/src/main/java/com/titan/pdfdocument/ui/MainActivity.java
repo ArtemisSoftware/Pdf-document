@@ -34,7 +34,7 @@ import com.titan.pdfdocumentlibrary.bundle.Template;
 import java.io.File;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, PdfReportListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             created = dir.mkdirs();
 
 
-        TesterPdfAsyncTask task = new TesterPdfAsyncTask(this);
+        TesterPdfAsyncTask task = new TesterPdfAsyncTask(this, this);
         task.execute(dir);
 
     }
 
 
+
+    @Override
+    public void pdfReport(List<String> report) {
+
+    }
 
 
     MaterialButton.OnClickListener btn_presentation_pdf__OnClickListener = new View.OnClickListener() {
@@ -236,4 +241,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
+
 }
