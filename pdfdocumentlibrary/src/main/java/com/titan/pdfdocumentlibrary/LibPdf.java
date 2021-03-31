@@ -19,6 +19,7 @@ import com.titan.pdfdocumentlibrary.elements.CellConfiguration;
 import com.titan.pdfdocumentlibrary.elements.Table;
 import com.titan.pdfdocumentlibrary.elements.TableWidthConverter;
 import com.titan.pdfdocumentlibrary.exception.PdfLineException;
+import com.titan.pdfdocumentlibrary.util.PdfReport;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,11 +29,11 @@ import java.util.List;
 
 public class LibPdf {
 
-    public List<String> report;
+    public PdfReport pdfReport;
     private File dir;
 
     public LibPdf(){
-        report = new ArrayList<>();
+        pdfReport = new PdfReport();
     }
 
 
@@ -48,15 +49,15 @@ public class LibPdf {
         this.dir = dir;
         Document doc = new Document();
 
-        report.add("PDF init creation ");
+        pdfReport.report.add("PDF init creation ");
 
         try {
 
-            report.add("PDF Path: " + dir.toString());
+            pdfReport.report.add("PDF Path: " + dir.toString());
 
             File file = new File(dir, "demo.pdf");
 
-            report.add("PDF file: " + file.toString());
+            pdfReport.report.add("PDF file: " + file.toString());
 
 
             FileOutputStream fOut = new FileOutputStream(file);
@@ -74,7 +75,7 @@ public class LibPdf {
             //open the document
             doc.open();
 
-            report.add("PDF: adding data");
+            pdfReport.report.add("PDF: adding data");
 
             /* Create Paragraph and Set FontConfiguration */
             Paragraph p1 = new Paragraph("Hi! I am Generating my first PDF using PdfDocumentLibrary");
@@ -114,21 +115,24 @@ public class LibPdf {
         }
         catch (DocumentException de) {
             Log.e("PDFCreator", "DocumentException:" + de.getMessage());
-            report.add("DocumentException: " + de);
+            pdfReport.report.add("DocumentException: " + de);
+            pdfReport.errorCreating = true;
         }
         catch (IOException e) {
             Log.e("PDFCreator", "ioException:" + e.getMessage());
-            report.add("ioException: " + e);
+            pdfReport.report.add("ioException: " + e);
+            pdfReport.errorCreating = true;
         }
         catch (Exception ex) {
             Log.e("PDFCreator", "Exception:" + ex.getMessage());
-            report.add("Exception: " + ex.getMessage());
+            pdfReport.report.add("Exception: " + ex.getMessage());
+            pdfReport.errorCreating = true;
         }
         finally{
             doc.close();
         }
 
-        report.add("Pdf creation complete");
+        pdfReport.report.add("Pdf creation complete");
     }
 
 
@@ -139,16 +143,20 @@ public class LibPdf {
      */
     public void openPdf(Context context){
 
-        report.add("Pdf start opening...");
+        if(pdfReport.errorCreating){
+            return;
+        }
 
-        String documentDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() +"/" + "pdfs";//AppIF.DIRETORIA_CONTRATOS;
-        report.add("Directory: " + documentDirectory);
+        pdfReport.report.add("");
+        pdfReport.report.add("Pdf start opening...");
 
-        File file = new File(documentDirectory, "demo.pdf");
-        report.add("File: " + file.toString());
+        pdfReport.report.add("Directory: " + dir);
+
+        File file = new File(dir, "demo.pdf");
+        pdfReport.report.add("File: " + file.toString());
 
         Uri documentURI = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", file);
-        report.add("DocumentURI: " + documentURI.toString());
+        pdfReport.report.add("DocumentURI: " + documentURI.toString());
 
 
 
@@ -158,10 +166,10 @@ public class LibPdf {
 
         try {
             context.startActivity(intent);
-            report.add("Pdf opened with success");
+            pdfReport.report.add("Pdf opened with success");
         }
         catch(Exception e) {
-            report.add("Exception: " + e.toString());
+            pdfReport.report.add("Exception: " + e.toString());
         }
     }
 

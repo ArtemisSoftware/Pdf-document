@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         List<String> relatorio = new ArrayList<>();
-        boolean created = false;
+        boolean created = true;
 
         File dir = new File(directoryPath);
 

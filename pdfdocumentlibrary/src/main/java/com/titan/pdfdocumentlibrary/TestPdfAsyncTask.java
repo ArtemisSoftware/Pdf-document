@@ -36,7 +36,7 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
         super.onPostExecute(result);
 
         testPdf.openPdf(mContext);
-        this.listener.pdfReport(testPdf.report);
+        this.listener.pdfReport(testPdf.pdfReport.report);
     }
 
 }
