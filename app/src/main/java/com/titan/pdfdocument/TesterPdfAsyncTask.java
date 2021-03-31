@@ -3,9 +3,8 @@ package com.titan.pdfdocument;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.titan.pdfdocument.ui.PdfReportListener;
+import com.titan.pdfdocumentlibrary.PdfReportListener;
 import com.titan.pdfdocumentlibrary.LibPdf;
-import com.titan.pdfdocumentlibrary.SimplePdf;
 
 import java.io.File;
 

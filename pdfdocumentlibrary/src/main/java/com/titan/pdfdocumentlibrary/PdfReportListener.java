@@ -1,4 +1,4 @@
-package com.titan.pdfdocument.ui;
+package com.titan.pdfdocumentlibrary;
 
 import java.util.List;
 

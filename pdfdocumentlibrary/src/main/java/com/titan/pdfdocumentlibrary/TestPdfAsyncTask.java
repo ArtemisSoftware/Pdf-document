@@ -11,6 +11,7 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
     private Context mContext;
     //private SimplePdf testPdf;
     private LibPdf testPdf;
+    private PdfReportListener listener;
 
     public TestPdfAsyncTask(Context context){
         mContext = context;
@@ -34,6 +35,7 @@ public class TestPdfAsyncTask extends AsyncTask<File, String, Void> {
         super.onPostExecute(result);
 
         testPdf.openPdf(mContext);
+        this.listener.pdfReport(testPdf.report);
     }
 
 }
