@@ -120,7 +120,7 @@ public abstract class Template {
                 page.create();
                 addChapter(page);
             }
-            int i = 1/0;
+
             PdfUtil.addMetaData(context, document, this);
 
         }
