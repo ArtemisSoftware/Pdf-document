@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfPageEvent;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.titan.pdfdocumentlibrary.elements.TemplateConfiguration;
+import com.titan.pdfdocumentlibrary.exception.PdfCreationException;
 import com.titan.pdfdocumentlibrary.util.PdfConstants;
 import com.titan.pdfdocumentlibrary.util.PdfReport;
 import com.titan.pdfdocumentlibrary.util.PdfUtil;
@@ -80,7 +81,7 @@ public abstract class Template {
     /**
      * Method to create the pdf file
      */
-    public void createFile() {
+    public void createFile() throws PdfCreationException {
 
         pdfFile = PdfUtil.getFile(this, DIRECTORY, getFileName());
         chapters = getChapters();
@@ -95,7 +96,7 @@ public abstract class Template {
     /**
      * Method to create a document
      */
-    private void createDocument(){
+    private void createDocument() throws PdfCreationException {
 
         PdfPageEventHelper pageEventHelper = getPageEvent();
 
@@ -119,7 +120,7 @@ public abstract class Template {
                 page.create();
                 addChapter(page);
             }
-
+            int i = 1/0;
             PdfUtil.addMetaData(context, document, this);
 
         }
@@ -144,6 +145,10 @@ public abstract class Template {
         }
 
         pdfReport.report.add("Pdf creation complete");
+
+        if(pdfReport.errorCreating == true){
+            throw new PdfCreationException("Error creating pdf", pdfReport);
+        }
     }
 
 

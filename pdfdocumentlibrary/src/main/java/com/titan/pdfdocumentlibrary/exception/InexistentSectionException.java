@@ -14,7 +14,7 @@ public class InexistentSectionException extends Exception {
 
 
     public InexistentSectionException(Index index){
-        super("Seccao inexistente com o index: " + index.getId() + " - " + index.getDescription());
+        super("Inexistent section with index: " + index.getId() + " - " + index.getDescription());
     }
 
 

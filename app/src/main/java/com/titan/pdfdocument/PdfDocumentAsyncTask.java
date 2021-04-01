@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.titan.pdfdocumentlibrary.PdfReportListener;
 import com.titan.pdfdocumentlibrary.bundle.Template;
+import com.titan.pdfdocumentlibrary.exception.PdfCreationException;
 
 public class PdfDocumentAsyncTask extends AsyncTask<Void, Void, Void> {
 
@@ -22,7 +23,12 @@ public class PdfDocumentAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        this.template.createFile();
+        try {
+            this.template.createFile();
+        }
+        catch (PdfCreationException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
