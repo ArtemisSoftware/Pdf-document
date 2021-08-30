@@ -25,6 +25,11 @@ public class CellConfiguration implements Cloneable{
     public PdfPCellEvent event;
     public boolean overLapColor;
 
+    /**
+     * Spacing between lines of text
+     */
+    public float textLeading;
+
 
 
 
@@ -48,7 +53,7 @@ public class CellConfiguration implements Cloneable{
         this.alignRight = PdfConstants.NO_VALUE;
 
         this.rotation = PdfConstants.NO_VALUE;
-
+        this.textLeading = PdfConstants.NO_VALUE;
 
         this.event = null;
 

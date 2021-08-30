@@ -590,6 +590,13 @@ public class Table {
             pdfPCell.setPaddingRight(cellConfiguration.alignRight);
         }
 
+
+        if(cellConfiguration.textLeading != PdfConstants.NO_VALUE){
+            Phrase phrase = pdfPCell.getPhrase();
+            phrase.setLeading(0, cellConfiguration.textLeading);
+            pdfPCell.addElement(phrase);
+        }
+
         return pdfPCell;
     }
 
